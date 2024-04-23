@@ -1,0 +1,81 @@
+import team33 from "../../assets/images/team/33.webp";
+
+export const members = [
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+  {
+    avatar: team33,
+    name: "Carry Anna",
+    email: "annac34@gmail.com",
+    branch: "A,kvv,vv",
+    Cycle: "Ingenieur",
+  },
+];

@@ -1,0 +1,18 @@
+/* dropzone.css */
+.dropzone {
+    border: 2px dashed #007bff;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    transition: border .24s ease-in-out;
+  }
+  
+  .dropzone.active {
+    border-color: #40c057;
+  }
+  
+  .dropzone p {
+    margin: 0;
+    font-size: 16px;
+  }
+  

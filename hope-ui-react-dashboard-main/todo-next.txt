@@ -1,0 +1,66 @@
+-------------------------ETUDIANTS------------------------
+
+1. Ajouter une page de Sign up pour prof  ❎👍
+
+2. Ajouter une page pour creation de academies (admin)  ❎👍
+(name 
+picture
+description
+domain)
+
+3. Ajouter une page pour creation de formation: ❎👍
+name V
+category V
+picture V
+video V
+difficulty V
+
+ { Fait }
+
+4. Ajouter une page pour creation de cours & chapitres ❎👍
+{fait}
+
+-------------------------ETUDIANTS------------------------
+
+1. Ajouter un gidLayout pour lister les academies (session normale) ❎🤞
+{fait mais reste à bien ajuster }
+2. Ajouter une page pour ajout des adresse social-medias (dashboard ) ❌😒
+{pas urgent}
+
+3. Ajouter une page descriptive de chaque academies (session normale) ❌
+{prochainement}
+
+<<<<<<< HEAD
+------------------ NEW TASKS --------------------------------
+1. Dropdown acceuil pour login
+
+
+
+
+
+
+-------------------- NEXT -------------------------------
+1. Ajout d'une page pour visualiser les demandes d'inscription aux formations de telle sorte que cette page est obtenu une fois cliquant sur une  notification. 
+qui affiche une ligne indiquant le nom et la demande de l'étudiant et deux boutons 
+approuver et rejeter.
+
+2. Ajout d'une page pour le quiz pour chaque cours (n chapitres). (10 questions qcm radio - dropdown )
+=======
+----Besoins UI : ------------------------------------------
+------> PROFESSEUR (Non responsable):
+👆 Création d'une formation : 
+*** il faut préparer une page capable de créer une formation vide. et attacher à cette page une autre page capable d'ajouter des cours (initialaement vides) à cette formation ainsi d'attacher à cette page d'ajout des cours une page pour l'ajout des chapitres selon l'ordre suivant : Ajouter formation --> Formation (vide) --> Ajouter un cours à la formation --> Cours dans la formation (vide) --> Ajouter un chapitre à ce cours --> Chapitre .
+***lors de la définition des champs dans la page d'ajout d'une formation, La catégorie doit etre une selection déroulante (les catégories se lisent à partir de la bd).
+meme chose pour l'académie , par ce que un meme prof peut travailler chez plusieurs académies..
+*** Une page pour afficher les formations crées par ce prof.
+*** Des pages qui permettent de faire le crud sur les éléments : Cours - Chapitres - Chapitre. 
+------> ETUDIANT (Non responsable):
+👆 Navigation de l'étudiant : 
+*** AU NIVEAU DU DASHBOARD : Créer une page qui affiche tous les académies (sous forme de cartes) possibles et qui s'affiche une fois que l'étudiant est connecté. 
+*** Chaque carte de l'académie doit avoir un bouton de demande de persmission similaire à celui précédemment codé dans la page singleCourse.
+*** Une fois l'étudiant est accépté de la part du prof respo de l'académie, le clique sur une la carte d'une certaine académie doit l'induire aux ensemble des formations offertes par l'académie qui doivent s'afficher d'une maniére autre que l'affichage des académies (preférence : lignes). 
+*** ❗❗❗❗ ajouter une option dans le sideBar qui permet à l'étudiant de voir l'ensemble des cours auxquels il est inscrit.
+*** [Optionnel] : Textarea de commentaires ainsi de suite 
+
+
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30

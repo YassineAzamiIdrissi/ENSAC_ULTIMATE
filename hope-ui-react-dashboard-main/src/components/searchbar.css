@@ -1,0 +1,42 @@
+.input-wrapper {
+  background-color: white;
+  width: 100%;
+  border-radius: 10px;
+  height: 2.5rem;
+  padding: 0px 15px;
+  box-shadow: 0px 0px 8px #ddd;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.inputV {
+  background: transparent;
+  border: none;
+  height: 100%;
+  width: 100%;
+  font-size: 1rem;
+}
+#search-icon {
+  color: royalblue;
+}
+.result-list {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px #ddd;
+  border-radius: 10px;
+  margin-top: 1rem;
+  max-height: 300px;
+  overflow-y: scroll;
+  position: absolute;
+}
+.result-list a {
+  padding: 10px;
+  color: black;
+  transition: 0.8s;
+  cursor: pointer;
+}
+.result-list a:hover {
+  background-color: rgb(206, 205, 205);
+}
