@@ -19,7 +19,7 @@ import CourseSidebar from "../components/courses/CourseSidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { comCss } from "../components/ComponentsCss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 const itemtabs = [
   "Introduction",
@@ -138,7 +138,8 @@ const SingleCourse = () => {
                                   <LockOutlinedIcon
                                     className={classes.single_course_tabs_icon}
                                   />
-                                  {chapter.title}
+                                  <Link to={`http://localhost:3000/course/1/chapter/1`} style={{textDecoration: 'none', color: 'inherit'}}>{chapter.title}</Link>
+                                 { /* Remplacer course par training */}
                                 </Typography>
                                 <Typography variant="h4">9m 34s</Typography>
                               </Box>

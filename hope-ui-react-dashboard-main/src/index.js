@@ -12,7 +12,7 @@ import { store } from "./store";
 import { IndexRouters } from "./router";
 import { LandingModulesRouter } from "./router/landing-modules-router";
 import { SimpleRouter } from "./router/simple-router";
-import { DefaultRouter } from "./router/default-router";
+import { DefaultRouter, ViewChaptersRouter } from "./router/default-router";
 import Home from "./page/Home";
 import About from "./page/About";
 import Courses from "./page/Courses";
@@ -126,6 +126,7 @@ const router = createBrowserRouter(
       ),
     },
     ...DefaultRouter,
+    ...ViewChaptersRouter,
     ...IndexRouters,
     ...SimpleRouter,
     ...LandingModulesRouter,

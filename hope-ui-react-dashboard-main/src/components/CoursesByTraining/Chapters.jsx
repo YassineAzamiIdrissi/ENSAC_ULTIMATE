@@ -34,6 +34,12 @@ const ChaptersList = ({ task, className, chapterId }) => {
   const redirectToEdit = async () => {
     navigate(`/dashboard/app/updateChapter/${chapterId}`);
   };
+
+  const handleReadChapter = (chapterId) => {
+    navigate(`http://localhost:3000/course/1/chapter/1`);
+    //navigate(`http://localhost:3000/training/TrainingID/chapter/${chapterId}`);
+    /* Remplacer par course par training et ajuster*/
+  };
   return (
     <div
       className={classNames(
@@ -44,7 +50,10 @@ const ChaptersList = ({ task, className, chapterId }) => {
       <div className="mb-0 fs-8">{task?.title}</div>
       <div className="hover-actions end-0">
         <Button variant="phoenix-secondary" className="btn-icon fs-10 me-1">
-          <FontAwesomeIcon icon={faEye} />
+          <FontAwesomeIcon
+            icon={faEye}
+            onClick={() => handleReadChapter(chapterId)}
+          />
         </Button>
         <Button
           variant="phoenix-secondary"

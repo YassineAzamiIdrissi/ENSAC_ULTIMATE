@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export const Iframe = ({src}) => {     
-      return(         
-        <div>  
-            <iframe src={src}></iframe>           
-        </div>
-      )
-  };
+export const Iframe = ({ src, style }) => {
+  return (
+    <div>
+      <iframe style={style} src={src} allowFullScreen></iframe>
+    </div>
+  );
+};
