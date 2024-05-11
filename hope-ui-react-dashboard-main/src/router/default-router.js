@@ -26,7 +26,6 @@ import TableData from "../views/dashboard/table/table-data";
 import Vector from "../views/dashboard/maps/vector";
 import Google from "../views/dashboard/maps/google";
 
-
 import Billing from "../views/dashboard/special-pages/billing";
 import Kanban from "../views/dashboard/special-pages/kanban";
 import Pricing from "../views/dashboard/special-pages/pricing";
@@ -60,6 +59,8 @@ import SpecTrainingStudents from "../components/members/SpecTrainingStudents";
 import AllProfessors from "../components/members/AllProfessors";
 import ReadTrainingLayout from "../components/lecture/ReadTrainingLayout";
 import ReadChapterVideo from "../components/lecture/readChapterVideo";
+import CreateQuiz from "../components/Quiz/CreateQuiz";
+import ViewQuiz from "../components/Quiz/ViewQuiz";
 export const DefaultRouter = [
   {
     path: "/",
@@ -234,6 +235,14 @@ export const DefaultRouter = [
         path: "logout",
         element: <Logout />,
       },
+      {
+        path: "/add-quiz",
+        element: <CreateQuiz />,
+      },
+      {
+        path: "/view-quiz",
+        element: <ViewQuiz />,
+      },
     ],
   },
 ];
@@ -254,6 +263,5 @@ export const ViewChaptersRouter = [
     ],
   },
 ];
-
 
 // export default DefaultRouter
