@@ -6,6 +6,7 @@ const {
   editStudent,
   sendDemand,
   getCurrentStudentFollowedTrainings,
+  getStudentsInTheAcademy,
 } = require("../controllers/StudentController");
 const authMiddleware = require("../middlewares/Authorize");
 const router = Router();
@@ -19,5 +20,6 @@ router.get(
   authMiddleware,
   getCurrentStudentFollowedTrainings
 );
+router.get("/getStudentsInTheAcademy", authMiddleware, getStudentsInTheAcademy);
 
 module.exports = router;

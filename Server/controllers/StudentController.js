@@ -2,6 +2,8 @@ const Student = require("../models/AppSchemas/Student");
 const Training = require("../models/AppSchemas/Training");
 const HttpError = require("../models/HttpError/ErrorModel");
 const Enrollement = require("../models/AppSchemas/Enrollment");
+const Academy = require("../models/AppSchemas/Academy");
+const Professor = require("../models/AppSchemas/Professor");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -234,7 +236,7 @@ exports.sendDemand = async (req, res, next) => {
       res.status(201).json("env");
     } else {
       for (let i = 0; i < exists.length; i++) {
-        if (exists[i].studentId == studentId) {
+        if (exists[i].studentId == studentId && !exists[i].answered) {
           match = true;
           break;
         }
@@ -261,6 +263,43 @@ exports.getCurrentStudentFollowedTrainings = async (req, res, next) => {
       folTraings.push(training);
     }
     res.status(201).json(folTraings);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getStudentsInTheAcademy = async (req, res, next) => {
+  const respId = req.user.id;
+  try {
+    const concernedResp = await Professor.findById(respId);
+    const academyId = concernedResp.responsableFor;
+    const concernedAcademy = await Academy.findById(academyId);
+    const studentsMap = {};
+    for (let i = 0; i < concernedAcademy.trainings.length; ++i) {
+      const concernedTraining = await Training.findById(
+        concernedAcademy.trainings[i]
+      );
+      for (let j = 0; j < concernedTraining.subscribers.length; ++j) {
+        const studentId = concernedTraining.subscribers[j];
+        studentsMap[studentId] = await Student.findById(studentId);
+      }
+    }
+    const subs = Object.values(studentsMap);
+    let ret = [];
+    for (let i = 0; i < subs.length; ++i) {
+      const name = subs[i].firstName + " " + subs[i].lastName;
+      const avatar = subs[i].profilePicture;
+      const email = subs[i].email;
+      const branch = subs[i].branch;
+      const Cycle = subs[i].cycle;
+      ret.push({
+        name,
+        avatar,
+        email,
+        branch: branch ? branch : "Encore en cycle préparatoire",
+        Cycle,
+      });
+    }
+    res.status(201).json(ret);
   } catch (err) {
     return next(new HttpError(err));
   }

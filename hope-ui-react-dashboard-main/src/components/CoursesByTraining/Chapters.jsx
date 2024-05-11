@@ -34,7 +34,7 @@ const ChaptersList = ({ task, className, chapterId }) => {
   const redirectToEdit = async () => {
     navigate(`/dashboard/app/updateChapter/${chapterId}`);
   };
-
+  
   const handleReadChapter = (chapterId) => {
     navigate(`http://localhost:3000/course/1/chapter/1`);
     //navigate(`http://localhost:3000/training/TrainingID/chapter/${chapterId}`);

@@ -6,6 +6,7 @@ const HttpError = require("../models/HttpError/ErrorModel");
 const Student = require("../models/AppSchemas/Student");
 const Training = require("../models/AppSchemas/Training");
 const Academy = require("../models/AppSchemas/Academy");
+const Notification = require("../models/AppSchemas/Notification");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -258,6 +259,7 @@ exports.acceptEnroll = async (req, res, next) => {
     concernedEnrollment.save();
     concernedStudent.save();
     concernedTraining.save();
+
     // Accord d'une progression :
     // -- Getting first ever chapter id :
     const firstCourseId = concernedTraining.courses[0];
@@ -278,3 +280,64 @@ exports.acceptEnroll = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
+exports.refuseEnroll = async (req, res, next) => {
+  const { idEnroll } = req.params;
+  const { idResp } = req.body;
+  try {
+    const concernedEnrollment = await Enrollement.findById(idEnroll);
+    concernedEnrollment.answered = true;
+    concernedEnrollment.save();
+    const studentId = concernedEnrollment.studentId;
+    const trainingId = concernedEnrollment.trainingId;
+    const concernedTraining = await Training.findById(trainingId);
+    const title = `Incription refusée`;
+    const content = concernedTraining.name;
+    const notification = await Notification.create({
+      toNotified: studentId,
+      fromNotifier: idResp,
+      title,
+      picture: "https://www.pngmart.com/files/23/Cancel-PNG-Photo.png",
+      content,
+      read: false,
+    });
+    res.status(201).json(notification);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getSubscribedStudents = async (req, res, next) => {
+  const professorId = req.user.id;
+  try {
+    const concernedProfessor = await Professor.findById(professorId);
+  } catch (err) {}
+};
+exports.getAllProfessorsInAcademy = async (req, res, next) => {
+  const respId = req.user.id;
+  try {
+    const respo = await Professor.findById(respId);
+    const academyId = respo.responsableFor;
+    const concernedAcademy = await Academy.findById(academyId);
+    const instructorsIds = concernedAcademy.professors;
+    const instructors = [];
+    const ret = [];
+    for (let i = 0; i < instructorsIds.length; ++i) {
+      if (instructorsIds[i] != respId) {
+        const concernedProfessor = await Professor.findById(instructorsIds[i]);
+        instructors.push(concernedProfessor);
+        const newObj = {
+          name:
+            concernedProfessor.firstName + " " + concernedProfessor.lastName,
+          bg: concernedProfessor.profilePicture,
+          start: concernedProfessor.createdAt,
+          contributions: concernedProfessor.trainingsList.length,
+          id: concernedProfessor._id,
+        };
+        ret.push(newObj);
+      }
+    }
+    res.status(200).json(ret);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+

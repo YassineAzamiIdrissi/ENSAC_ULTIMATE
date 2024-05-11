@@ -10,16 +10,13 @@ const Rating = ({
   fillIconColor = "warning",
   emptyIconColor = "warning-light",
   setRatingValue,
+  rating,
+  setRating,
   ...rest
 }) => {
-  const [rating, setRating] = useState(0);
-
-  // Récupérer la nombre détoile données
   const handleRating = (rate) => {
     setRating(rate);
-    //setRatingValue(rate);
   };
-  console.log(rating);
   return (
     <ReactRating
       onClick={handleRating}

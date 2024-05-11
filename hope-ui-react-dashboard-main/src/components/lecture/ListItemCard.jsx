@@ -1,25 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Nav, Badge } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 
-const ListItemCard = ({ courses }) => {
+import axios from "axios";
+import { toast } from "react-toastify";
+const ListItemCard = ({ courses, trainingId }) => {
   const navigate = useNavigate();
-
+  // LOGIQUE BACKEND COMMENCE ICI ::
+  const [course_, setCourse_] = useState(null);
   const { chapterID } = useParams();
   console.log(chapterID);
-
+  useEffect(() => {
+    const readCourseFromChap = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/chapters/getCourseFromChapId/${chapterID}`
+        );
+        setCourse_(response.data);
+      } catch (err) {
+        toast.error(
+          "Une erreur est survenue à l'essaie de lire les cours par chapitres"
+        );
+        console.log(err);
+      }
+    };
+    readCourseFromChap();
+  }, []);
   return (
     <>
-      {courses.chapters.map((ch, i) => (
+      {courses.map((ch, i) => (
         <Nav.Link
           onClick={() => {
-            navigate(`/course/1/chapter/${ch.id}`);
+            navigate(`/course/${trainingId}/chapter/${ch._id}`);
             navigate(0);
           }}
-          key={ch.id}
-          eventKey={ch.id}
+          key={ch._id}
+          eventKey={ch._id}
           className={`btn bg-body-emphasis w-100 px-3 pt-4 pb-3 fs-8 mt-1 mb-1 ${
-            chapterID == ch.id ? "active" : ""
+            chapterID == ch._id ? "active" : ""
           }`}
           style={{
             border: chapterID == ch.id ? "5px solid blue" : "",
@@ -35,7 +53,7 @@ const ListItemCard = ({ courses }) => {
               background: "#000",
             }}
           >
-            {courses.title}
+            {course_?.title}
           </Badge>
           {/* {ch.content} */}
           {ch.title}

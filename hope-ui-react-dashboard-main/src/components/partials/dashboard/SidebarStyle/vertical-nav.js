@@ -844,7 +844,7 @@ const VerticalNav = memo((props) => {
               </Link>
             </li>
           )}
-          {entity =="professor" && 
+          {entity == "professor" && (
             <li className="nav-item">
               <Link
                 className={`${
@@ -869,8 +869,35 @@ const VerticalNav = memo((props) => {
                 <span className="item-name">Mes formations</span>
               </Link>
             </li>
-          }
-          {entity =="Student" && 
+          )}
+          {entity == "professor" && (
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname ===
+                  "/dashboard/app/list-progressions-trainings"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/list-progressions-trainings"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
+
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Suivi des formations</span>
+              </Link>
+            </li>
+          )}
+          {entity == "Student" && (
             <li className="nav-item">
               <Link
                 className={`${
@@ -892,10 +919,10 @@ const VerticalNav = memo((props) => {
                 </svg>
 
                 <i className="sidenav-mini-icon"> E </i>
-                <span className="item-name">Mes formations</span>
+                <span className="item-name">Formations disponibles</span>
               </Link>
             </li>
-          }
+          )}
           {entity == "Student" && (
             <li className="nav-item">
               <Link

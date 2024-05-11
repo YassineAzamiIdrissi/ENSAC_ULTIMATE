@@ -3,6 +3,7 @@ const Academy = require("../models/AppSchemas/Academy");
 const Course = require("../models/AppSchemas/Course");
 const Chapter = require("../models/AppSchemas/Chapter");
 const Enrollement = require("../models/AppSchemas/Enrollment");
+const Professor = require("../models/AppSchemas/Professor");
 const Student = require("../models/AppSchemas/Student");
 const HttpError = require("../models/HttpError/ErrorModel");
 // protégé par un mw..
@@ -76,6 +77,9 @@ exports.addTraining = async (req, res, next) => {
       },
       { new: true }
     );
+    const concernedProfessor = await Professor.findById(id);
+    concernedProfessor.trainingsList.push(newTraining._id);
+    concernedProfessor.save();
     res.status(201).json(newTraining);
   } catch (err) {
     return next(new HttpError(err));
@@ -301,6 +305,86 @@ exports.getNotRegisteredTrainings = async (req, res, next) => {
     console.log("THOSE ARE CRITICAL TRAININGS : ");
     console.log(criticalTrainings);
     res.status(201).json(criticalTrainings);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.unfollowTraining = async (req, res, next) => {
+  const { trainingId } = req.params;
+  const { studentId } = req.body;
+  if (!studentId) {
+    return next(new HttpError("Etudiant concerné est introuvable", 403));
+  }
+  try {
+    const concernedStudent = await Student.findById(studentId);
+    const concernedTraining = await Training.findById(trainingId);
+    const newFollowedTrainings = concernedStudent.followedTrainings.filter(
+      (id) => id != trainingId
+    );
+    const newSubs = concernedTraining.subscribers.filter(
+      (id) => id != studentId
+    );
+    concernedStudent.followedTrainings = newFollowedTrainings;
+    concernedTraining.subscribers = newSubs;
+    concernedTraining.save();
+    const enrollment = await Enrollement.find({ studentId, trainingId });
+    console.log("Here it is the enrollement : ");
+    console.log(enrollment);
+    const newEnrolls = concernedStudent.enrollments.filter(
+      (id) => id != enrollment[0]._id
+    );
+    concernedStudent.enrollments = newEnrolls;
+    concernedStudent.save();
+    await Enrollement.findByIdAndDelete(enrollment[0]._id);
+    res
+      .status(201)
+      .json(
+        `${concernedStudent.firstName} n'est plus abonné à ${concernedTraining.name}`
+      );
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getAllChaptersFromTrainingId = async (req, res, next) => {
+  const { trainingId } = req.params;
+  try {
+    const concernedTraining = await Training.findById(trainingId);
+    let chaps = [];
+    for (let i = 0; i < concernedTraining.courses.length; ++i) {
+      const concernedCourse = await Course.findById(
+        concernedTraining.courses[i]
+      );
+      for (let j = 0; j < concernedCourse.chapters.length; ++j) {
+        const concernedChapter = await Chapter.findById(
+          concernedCourse.chapters[j]
+        );
+        chaps.push(concernedChapter);
+      }
+    }
+    res.status(201).json(chaps);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getFirstChapFromTraining = async (req, res, next) => {
+  const { trainingId } = req.params;
+  try {
+    const concernedTraining = await Training.findById(trainingId);
+    const firstCourse = await Course.findById(concernedTraining.courses[0]);
+    const first_chap_id = firstCourse.chapters[0];
+    res.status(201).json(first_chap_id);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getLastChapterId = async (req, res, next) => {
+  const { trainingId } = req.params;
+  try {
+    const concernedTraining = await Training.findById(trainingId);
+    const lastCourseId =
+      concernedTraining.courses[concernedTraining.courses.length - 1];
+    const lastCourse = await Course.findById(lastCourseId);
+    res.status(201).json(lastCourse.chapters[lastCourse.chapters.length - 1]);
   } catch (err) {
     return next(new HttpError(err));
   }

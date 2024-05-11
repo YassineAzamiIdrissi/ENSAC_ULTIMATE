@@ -13,13 +13,21 @@ import Comment from "./Comment";
 import useProjectProgress from "./useProjectProgress";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
+import { useContext } from "react";
 const CardViewModal = ({ handleClose, show, project, prof, progress }) => {
   const { bgClassName, variant } = useProjectProgress(project);
   // logique backend commence ici :
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const id = currentUser?.id;
   const [categories, setCategories] = useState([]);
   const [domain, setDomain] = useState("");
   const [academy, setAcademy] = useState("");
   const [courses, setCourses] = useState([]);
+  const [firstChap, setFirstChap] = useState("");
+  const [progression, setProgession] = useState(0);
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -76,6 +84,58 @@ const CardViewModal = ({ handleClose, show, project, prof, progress }) => {
       }
     };
     getCourses();
+  }, []);
+  // ne plus suivre le cours :
+  const handleUnfollowTraining = async (trainingId) => {
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/trainings/unfollowTraining/${trainingId}`,
+        { studentId: id }
+      );
+      toast.success("Formation n'est plus suivie");
+      setTimeout(() => {
+        navigate(0);
+      }, 2000);
+    } catch (err) {
+      toast.error(
+        "Une erreur est survenue à la tentative de se desabonner de cette formation, check console"
+      );
+      console.log(err);
+    }
+  };
+  // lecture de la progression de cet etudiant dans la formation actuelle :
+  useEffect(() => {
+    const fetchThisProg = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/progressions/getSpecProgression/${project._id}/${id}`
+        );
+        setProgession(response.data);
+      } catch (err) {
+        toast.error(
+          "Une erreur est survenue à l'essaie de lire les progressions "
+        );
+        console.log(err);
+      }
+    };
+    fetchThisProg();
+  }, []);
+  // lecture de l'id du tout premier chapitre :
+  useEffect(() => {
+    const readFirstChap = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/trainings/getFirstChapFromTraining/${project._id}`
+        );
+        setFirstChap(response.data);
+      } catch (err) {
+        toast.error(
+          "Erreur dans la lecture des tous premiers chapitres de ces formations"
+        );
+        console.log(err);
+      }
+    };
+    readFirstChap();
   }, []);
   return (
     <Modal show={show} onHide={handleClose} size="lg" className="p-0">
@@ -165,10 +225,23 @@ const CardViewModal = ({ handleClose, show, project, prof, progress }) => {
           </Col>
           <div>
             <Link
-              to="./composant des chapitres de ce cours...."
+              to={
+                progression &&
+                `/course/${project._id}/chapter/${progression?.stopChap}`
+              }
               className="btn btn-primary"
             >
-              Commencer || Pouruivre
+              {progression.progression ? "Poursuivre" : "Commencer"}
+            </Link>
+          </div>
+          <div>
+            <Link
+              onClick={() => {
+                handleUnfollowTraining(project._id);
+              }}
+              className="btn btn-danger"
+            >
+              Ne plus suivre
             </Link>
           </div>
         </Row>

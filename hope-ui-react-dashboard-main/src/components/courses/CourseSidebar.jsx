@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Modal, Typography } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { comCss } from "../ComponentsCss";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
@@ -48,15 +48,38 @@ const CourseSidebar = () => {
   // LOGIQUE BACKEND COMMENCE ICI  :
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
+  const params = useParams();
+  const trainingId = params.id;
+  const [training, setTraining] = useState(null);
+  useEffect(() => {
+    console.log("SALUT MEC");
+    console.log(trainingId);
+  }, []);
+  useEffect(() => {
+    const fetchConcernedTraining = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/trainings/getTraining/${trainingId}`
+        );
+        setTraining(response.data);
+      } catch (err) {
+        toast.error("Erreur ya yema");
+        console.log(err);
+      }
+    };
+    fetchConcernedTraining();
+  }, []);
   return (
     <Box className={classes.course_sidebar}>
       <Box className={classes.course_sidebar_box}>
         <Box className={classes.course_sidebar_box_1_image}>
-          <img
-            src={courseimg}
-            alt="img"
-            className={`${classes.img_responsive} ${classes.single_course_img}`}
-          />
+          {training && (
+            <img
+              src={training?.picture}
+              alt={`${training?.name}`}
+              className={`${classes.img_responsive} ${classes.single_course_img}`}
+            />
+          )}
           <IconButton onClick={handleOpen}>
             <PlayArrowIcon />
           </IconButton>
@@ -75,7 +98,7 @@ const CourseSidebar = () => {
               </IconButton>
               <Box className={classes.course_sidebar_box_1_modal}>
                 {/* consol error dakhay, check korban please */}
-                <Iframe src="https://www.youtube.com/embed/uXWycyeTeCs" />
+                <Iframe src={`${training?.video}`} />
               </Box>
             </Box>
           </Modal>
@@ -116,16 +139,6 @@ const CourseSidebar = () => {
             <Link to="/auth/sign-in" className={"button-27"}>
               Connectez vous pour bénéficier
             </Link>
-          )}
-          {currentUser?.entity == "Student" && (
-            <Button
-              component={NavLink}
-              onClick={handleFavorite}
-              className={`${classes.button} ${classes.course_sidebar_button_2}`}
-            >
-              <Heart size={18} /> {"  "}
-              Ajouter aux favoris
-            </Button>
           )}
         </Box>
       </Box>

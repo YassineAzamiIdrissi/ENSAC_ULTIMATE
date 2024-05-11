@@ -22,6 +22,7 @@ const FormationList = () => {
   // LOGIQUE BACKEND  ::
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
+  const id = currentUser?.id;
   const token = currentUser?.token;
   useEffect(() => {
     if (!token) {
@@ -108,7 +109,7 @@ const FormationList = () => {
         `${process.env.REACT_APP_BASE_URL}/notifications/newNotification`,
         {
           toNotified,
-          title: "demande d'inscption accépté",
+          title: "demande d'inscption accéptée",
           picture: "https://cdn-icons-png.flaticon.com/512/2550/2550322.png",
           content,
         },
@@ -120,6 +121,22 @@ const FormationList = () => {
     } catch (err) {
       toast.error(
         "Une erreur est survenue à l'issue de l'essaie d'accepter cette demande"
+      );
+      console.log(err);
+    }
+  };
+  const refuseDemand = async (idP) => {
+    try {
+      const response = await axios.patch(
+        `${process.env.REACT_APP_BASE_URL}/professors/refuseEnroll/${idP}`,
+        { idResp: idP }
+      );
+      const newList = naDisp.filter((item) => item.enrollId != idP);
+      setNaDisp(newList);
+      toast.success("Demande refusée avec succés");
+    } catch (err) {
+      toast.error(
+        "Une erreur est survenue à l'essaie de refuser cette demande"
       );
       console.log(err);
     }
@@ -192,6 +209,9 @@ const FormationList = () => {
                                 <IoMdCheckmarkCircleOutline />
                               </Link>
                               <Link
+                                onClick={() => {
+                                  refuseDemand(item.enrollId);
+                                }}
                                 style={{
                                   height: "40px",
                                   width: "40px",

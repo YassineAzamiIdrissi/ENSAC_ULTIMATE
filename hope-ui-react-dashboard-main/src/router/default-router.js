@@ -26,7 +26,6 @@ import TableData from "../views/dashboard/table/table-data";
 import Vector from "../views/dashboard/maps/vector";
 import Google from "../views/dashboard/maps/google";
 
-
 import Billing from "../views/dashboard/special-pages/billing";
 import Kanban from "../views/dashboard/special-pages/kanban";
 import Pricing from "../views/dashboard/special-pages/pricing";
@@ -46,6 +45,7 @@ import Logout from "../components/partials/dashboard/FunctionnalityComponent/Log
 import AddAcademy from "../views/dashboard/app/add-academy";
 import AddNewTraining from "../views/dashboard/app/add-new-training";
 import TrainingsList from "../views/dashboard/app/trainings-list";
+import Progressions from "../components/listViews/Progressions";
 //import AddCourseToTraining from "../views/dashboard/app/add-chapter";
 import TrainingCardView from "../components/TrainingCardView";
 import ListView from "../components/listViews/ListView";
@@ -57,7 +57,7 @@ import UpdateTraining from "../views/dashboard/app/UpdateTraining";
 // petite remarque : ouvre le composant Default, tu trouveras un Outlet dans lequel les "children" varient ainsi que tu trouveras l'élément Header qui est fixe...
 import UpdateChapter from "../views/dashboard/app/update-chapter";
 import SpecTrainingStudents from "../components/members/SpecTrainingStudents";
-import AllProfessors from "../components/members/AllProfessors";
+import AllProfessors from "../components/listViews/AllProfessors";
 import ReadTrainingLayout from "../components/lecture/ReadTrainingLayout";
 import ReadChapterVideo from "../components/lecture/readChapterVideo";
 export const DefaultRouter = [
@@ -136,6 +136,10 @@ export const DefaultRouter = [
       {
         path: "/dashboard/app/list-training",
         element: <TrainingsList />,
+      },
+      {
+        path: "/dashboard/app/list-progressions-trainings",
+        element: <Progressions />,
       },
       {
         path: "/dashboard/app/card-list-training",
@@ -254,6 +258,5 @@ export const ViewChaptersRouter = [
     ],
   },
 ];
-
 
 // export default DefaultRouter
