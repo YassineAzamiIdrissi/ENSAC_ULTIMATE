@@ -5,14 +5,14 @@ const quizSchema = new Schema(
       type: String,
       required: true,
     },
-    studentId:{
-        type:String, 
-        required:true
+    studentId: {
+      type: String,
+      required: true,
     },
-    mark:{
-        type:Number, 
-        default:0,  
-        max: 20
+    mark: {
+      type: Number,
+      default: 0,
+      max: 20,
     },
     questions: {
       type: [String], // linked to questions
@@ -20,7 +20,7 @@ const quizSchema = new Schema(
     },
     images: {
       type: [String],
-      default:[]
+      default: [],
     },
   },
   { timestamps: true }

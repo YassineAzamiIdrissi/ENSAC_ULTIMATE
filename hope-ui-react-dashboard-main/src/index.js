@@ -31,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import UserProvider from "./context/userContext";
 import AcademiesBoardView from "./components/AcademiesView";
 import FaqPage from "./components/faq/FaqTab";
+import ViewQuiz from "./components/Quiz/ViewQuiz";
 const router = createBrowserRouter(
   [
     {
@@ -122,6 +123,14 @@ const router = createBrowserRouter(
       element: (
         <UserProvider>
           <AdmissionForm />
+        </UserProvider>
+      ),
+    },
+    {
+      path: "/view-quiz/:trainingID",
+      element: (
+        <UserProvider>
+          <ViewQuiz />,
         </UserProvider>
       ),
     },

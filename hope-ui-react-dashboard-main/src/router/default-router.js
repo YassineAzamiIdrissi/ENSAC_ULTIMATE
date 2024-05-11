@@ -61,7 +61,7 @@ import AllProfessors from "../components/listViews/AllProfessors";
 import ReadTrainingLayout from "../components/lecture/ReadTrainingLayout";
 import ReadChapterVideo from "../components/lecture/readChapterVideo";
 import CreateQuiz from "../components/Quiz/CreateQuiz";
-import ViewQuiz from "../components/Quiz/ViewQuiz";
+
 export const DefaultRouter = [
   {
     path: "/",
@@ -244,10 +244,7 @@ export const DefaultRouter = [
         path: "/add-quiz",
         element: <CreateQuiz />,
       },
-      {
-        path: "/view-quiz",
-        element: <ViewQuiz />,
-      },
+
     ],
   },
 ];

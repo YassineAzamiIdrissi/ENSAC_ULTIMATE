@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
@@ -133,13 +133,17 @@ const CreateQuiz = () => {
       </Button>
 
       <Button
-        variant="secondary"
-        startIcon={<FontAwesomeIcon icon={faPlus} />}
-        className="w-100  fs-9"
-        size="sm"
+        variant="success"
+        className="w-100  fs-9 mt-2"
+        size="lg"
         onClick={handleAddNewQuestion}
       >
-        Ajouter question
+        <FontAwesomeIcon
+          size="24px"
+          icon={faDownload}
+          style={{ paddingRight: "20px" }}
+        />
+        Poster le quiz
       </Button>
     </div>
   );
