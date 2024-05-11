@@ -3,7 +3,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Col,
@@ -18,10 +18,32 @@ import {
 import Reviews, { reviews } from "./Reviews";
 import Rating from "./Rating";
 import ReviewModal from "../../ModalAction/ReviewModal";
-
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 const UnderVideo = ({ chapter }) => {
   const [openReviewModal, setOpenReviewModal] = useState(false);
-
+  // LOGIQUE BACKEND ::
+  const [commentsList, setCommentsList] = useState([]);
+  const { chapterID } = useParams();
+  useEffect(() => {
+    const fetchAllComments = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/comments/getAllCommentsOfChap/${chapterID}`
+        );
+        setCommentsList(response.data);
+        console.log("THOSE ARE FETCHED COMMENTS FOR THIS CHAP :");
+        console.log(response.data);
+      } catch (err) {
+        toast.error(
+          "Une erreur est survenue à l'essaie de récup. les commentaires d'un chapitre spec"
+        );
+        console.log(err);
+      }
+    };
+    fetchAllComments();
+  }, [commentsList]);
   return (
     <>
       <Container tabClassName defaultActiveKey="description">
@@ -45,7 +67,6 @@ const UnderVideo = ({ chapter }) => {
             Commenter ce chapitre
           </Button>
         </Nav>
-
         <Row className="gx-3 gy-7 w-600 ">
           <Col xs={12} lg={7} xl={8}>
             <Tab.Content>
@@ -75,9 +96,11 @@ const UnderVideo = ({ chapter }) => {
                     </Stack>
                   </Card.Header>
                   <Card.Body>
-                    {reviews.map((review) => (
-                      <Reviews key={review.id} review={review} />
-                    ))}
+                    {commentsList.length
+                      ? commentsList.map((review) => (
+                          <Reviews key={review._id} review={review} />
+                        ))
+                      : "Aucun commentaire pour l'instant"}
                     <Pagination className="mb-0 justify-content-center m-1">
                       <Pagination.Prev>
                         <FontAwesomeIcon icon={faChevronLeft} />
@@ -96,11 +119,11 @@ const UnderVideo = ({ chapter }) => {
           </Col>
         </Row>
       </Container>
-
       <ReviewModal
+        setCommentsList={setCommentsList}
+        commentsList={commentsList}
         show={openReviewModal}
         handleClose={() => setOpenReviewModal(false)}
-        chapterID={chapter.id}
       />
     </>
   );

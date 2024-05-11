@@ -11,6 +11,10 @@ const {
   deleteTraining,
   updateTraining,
   getNotRegisteredTrainings,
+  unfollowTraining,
+  getAllChaptersFromTrainingId,
+  getFirstChapFromTraining,
+  getLastChapterId,
 } = require("../controllers/TrainingController");
 const authMiddleware = require("../middlewares/Authorize");
 router.post("/addTraining", authMiddleware, addTraining);
@@ -27,4 +31,8 @@ router.get(
   authMiddleware,
   getNotRegisteredTrainings
 );
+router.patch("/unfollowTraining/:trainingId", unfollowTraining);
+router.get("/chapsFromTraining/:trainingId", getAllChaptersFromTrainingId);
+router.get("/getFirstChapFromTraining/:trainingId", getFirstChapFromTraining);
+router.get("/getLastChapterId/:trainingId", getLastChapterId);
 module.exports = router;

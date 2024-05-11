@@ -13,8 +13,12 @@ const commentSchema = new Schema(
       type: String,
       required: true,
     },
+    rating: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );
-const model = model("Comment", commentSchema);
-module.exports = model;
+const commentModel = model("Comment", commentSchema);
+module.exports = commentModel;

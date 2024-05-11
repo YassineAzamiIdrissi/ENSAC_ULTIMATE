@@ -73,6 +73,7 @@ const Header = memo((props) => {
   const [fetchedUser, setFetchedUser] = useState(null);
   const [demNotifs, setDemNotifs] = useState();
   const [numResps, setNumResps] = useState(0);
+  const [profNotifs, setProfNotifs] = useState([]);
   // student Resps :
   const [resps, setResps] = useState([]);
   useEffect(() => {
@@ -195,6 +196,29 @@ const Header = memo((props) => {
       console.log(err);
     }
   };
+  useEffect(() => {
+    const readProfessorNotifications = async () => {
+      console.log("PROFESSOR MUST GET THEIR NOTIFS NOW");
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/notifications/getResps`,
+          {
+            withCredentials: true,
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setProfNotifs(response.data);
+        setNumResps(response.data.length);
+      } catch (err) {
+        toast.error(
+          "Une erreur est survenue à l'essaie de lire les notifications des professeurs"
+        );
+      }
+    };
+    if (entity == "professor") {
+      readProfessorNotifications();
+    }
+  }, []);
   // Socket : ---------------------------------------------
   useEffect(() => {
     socket.on("receive_message", (data) => {
@@ -317,33 +341,62 @@ const Header = memo((props) => {
                       </div>
                     </div>
                     <div className="p-0 card-body">
-                      {resps?.map((item, index) => (
-                        <Link
-                          to="/dashboard/app/card-list-training"
-                          key={index}
-                          className="iq-sub-card"
-                        >
-                          <div className="d-flex align-items-center">
-                            <img
-                              className="p-1 avatar-40 rounded-pill bg-soft-primary"
-                              src={item.picture}
-                              alt=""
-                            />
-                            <div className="ms-3 w-100">
-                              <h6 className="mb-0 ">{item.title}</h6>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <p className="mb-0">{item.content}</p>
-                                <small className="float-right font-size-12">
-                                  <ReactTimeAgo
-                                    date={new Date(item.createdAt)}
-                                    locale="en-US"
-                                  />
-                                </small>
+                      {entity != "professor" &&
+                        resps?.map((item, index) => (
+                          <Link
+                            to="/dashboard/app/card-list-training"
+                            key={index}
+                            className="iq-sub-card"
+                          >
+                            <div className="d-flex align-items-center">
+                              <img
+                                className="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                src={item.picture}
+                                alt=""
+                              />
+                              <div className="ms-3 w-100">
+                                <h6 className="mb-0 ">{item.title}</h6>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <p className="mb-0">{item.content}</p>
+                                  <small className="float-right font-size-12">
+                                    <ReactTimeAgo
+                                      date={new Date(item.createdAt)}
+                                      locale="en-US"
+                                    />
+                                  </small>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        ))}
+                      {entity == "professor" &&
+                        profNotifs?.map((item, index) => (
+                          <Link
+                            to="mazal..."
+                            key={index}
+                            className="iq-sub-card"
+                          >
+                            <div className="d-flex align-items-center">
+                              <img
+                                className="p-1 avatar-40 rounded-pill bg-soft-primary"
+                                src={item.picture}
+                                alt=""
+                              />
+                              <div className="ms-3 w-100">
+                                <h6 className="mb-0 ">{item.title}</h6>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <p className="mb-0">{item.content}</p>
+                                  <small className="float-right font-size-12">
+                                    <ReactTimeAgo
+                                      date={new Date(item.createdAt)}
+                                      locale="en-US"
+                                    />
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
                     </div>
                   </div>
                 </Dropdown.Menu>

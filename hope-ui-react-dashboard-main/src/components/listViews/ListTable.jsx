@@ -5,11 +5,12 @@ import RevealDropdown, { RevealDropdownTrigger } from "../base/RevealDropdown";
 import AdvanceTable from "./AdvanceTable";
 import AdvanceTableFooter from "./AdvanceTableFooter";
 import team33 from "../../assets/images/team/33.webp";
+import Button from "react-bootstrap/Button";
 
 export const ListTableColumns = [
   {
     accessorKey: "name",
-    header: "Formation",
+    header: "Nom complet",
     cell: ({ row: { original } }) => {
       const { name } = original;
       return (
@@ -24,12 +25,12 @@ export const ListTableColumns = [
     },
   },
   {
-    id: "assigness",
-    header: "Auteur",
+    accessorKey: "bg",
+    header: "Profile",
     cell: ({ row }) => {
       return (
         <Avatar
-          src={team33}
+          src={row.original.bg}
           variant={team33 ? "image" : "name"}
           size="s"
         ></Avatar>
@@ -50,72 +51,30 @@ export const ListTableColumns = [
   },
 
   {
-    accessorKey: "task",
-    header: "Nb souscris",
+    accessorKey: "contributions",
+    header: "Contributions",
     meta: {
       cellProps: { className: "ps-3 text-body py-4" },
       headerProps: { style: { width: "12%" }, className: "ps-3" },
     },
   },
   {
-    id: "progress",
-    header: "Progression",
-    cell: ({ row: { original } }) => {
-      const { progress } = original;
-
-      return (
-        <>
-          <p className="text-body-secondary fs-10 mb-0">
-            {progress.min} / {progress.max}
-          </p>
-          <ProgressBar
-            now={(progress.min / progress.max) * 100}
-            style={{ height: 3 }}
-            variant="success"
-          />
-        </>
-      );
-    },
-    meta: {
-      cellProps: { className: "ps-3 py-4" },
-      headerProps: { style: { width: "5%" }, className: "ps-3" },
-    },
-  },
-  {
-    id: "status",
-    header: "Status",
-    accessorFn: ({ status }) => status.label,
-    cell: ({ row: { original } }) => {
-      const { status } = original;
-      return (
-        <Badge variant="phoenix" bg={status.type}>
-          {status.label}
-        </Badge>
-      );
-    },
-    meta: {
-      cellProps: { className: "ps-8 py-4" },
-      headerProps: { style: { width: "10%" }, className: "ps-8" },
-    },
-  },
-  {
+    header: "actions",
     id: "action",
-    cell: () => (
-      <RevealDropdownTrigger>
-        <RevealDropdown>
-          {/* <ActionDropdownItems /> */}
-          <>
-            <Dropdown.Item eventKey="1">
-              <Link to={"/singleCourse/1"}>Voir</Link>
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item eventKey="4" className="text-danger">
-              Supprimer
-            </Dropdown.Item>
-          </>
-        </RevealDropdown>
-      </RevealDropdownTrigger>
-    ),
+    cell: (table) => {
+      console.log("From actions column this is the row :");
+      console.log(table);
+      return (
+        <Button
+          variant="danger"
+          onClick={() => {
+            console.log(table.row.original.id);
+          }}
+        >
+          Banner
+        </Button>
+      );
+    },
     meta: {
       headerProps: { style: { width: "10%" }, className: "text-end" },
       cellProps: { className: "text-end" },

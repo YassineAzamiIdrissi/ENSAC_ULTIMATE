@@ -8,6 +8,8 @@ const {
   acceptSubscription,
   getUnreadDemands,
   acceptEnroll,
+  refuseEnroll,
+  getAllProfessorsInAcademy,
 } = require("../controllers/ProfessorController");
 const authMiddleware = require("../middlewares/Authorize");
 const router = Router();
@@ -19,4 +21,10 @@ router.put("/edit", authMiddleware, editProfessor);
 router.patch("/acceptSubs/:id", authMiddleware, acceptSubscription);
 router.get("/getDemands", getUnreadDemands);
 router.patch("/acceptEnroll/:idEnroll", acceptEnroll);
+router.patch("/refuseEnroll/:idEnroll", refuseEnroll);
+router.get(
+  "/getAllProfessorsInAcademy",
+  authMiddleware,
+  getAllProfessorsInAcademy
+);
 module.exports = router;

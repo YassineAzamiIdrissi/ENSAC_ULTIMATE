@@ -9,16 +9,42 @@ import { Col, Row, Button } from "react-bootstrap";
 import SearchBox from "../SearchBox";
 import MembersTable, { membersTablecolumns } from "./MembersTable";
 
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { UserContext } from "../../context/userContext";
 const Members = () => {
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  const [subsList, setSubsList] = useState(null);
+  useEffect(() => {
+    const fetchSubscribedStudentsToAcademy = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/students/getStudentsInTheAcademy`,
+          {
+            withCredentials: true,
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setSubsList(response.data);
+      } catch (err) {
+        toast.error(
+          "Une erreur est survenue à l'essaie de lire les étudiants abonnés à cette académie"
+        );
+        console.log(err);
+      }
+    };
+    fetchSubscribedStudentsToAcademy();
+  }, []);
   const table = useAdvanceTable({
-    data: members,
+    data: subsList,
     columns: membersTablecolumns,
     pageSize: 10,
     pagination: true,
     sortable: true,
     selection: false,
   });
-
   const handleSearchInputChange = (e) => {
     table.setGlobalFilter(e.target.value || undefined);
   };
@@ -26,34 +52,37 @@ const Members = () => {
   return (
     <div>
       <div className="mb-9 mt-7">
-        <h2 className="mb-5">Etudiants memebre de : 'name of tarining'</h2>
+        <h2 className="mb-5">
+          Tous les étudiants inscrit dans l'académie 'name of tarining'
+        </h2>
+        {subsList && (
+          <AdvanceTableProvider {...table}>
+            <div className="mb-4">
+              <Row className="g-3">
+                <Col xs="auto">
+                  <SearchBox
+                    placeholder="Rechercher un membre"
+                    onChange={handleSearchInputChange}
+                  />
+                </Col>
+                <Col
+                  xs="auto"
+                  className="scrollbar overflow-hidden-y flex-grow-1"
+                ></Col>
+                <Col xs="auto">
+                  <Button variant="primary">
+                    <FontAwesomeIcon icon={faPlus} className="me-2" />
+                    Ajouter un membre
+                  </Button>
+                </Col>
+              </Row>
+            </div>
 
-        <AdvanceTableProvider {...table}>
-          <div className="mb-4">
-            <Row className="g-3">
-              <Col xs="auto">
-                <SearchBox
-                  placeholder="Rechercher un membre"
-                  onChange={handleSearchInputChange}
-                />
-              </Col>
-              <Col
-                xs="auto"
-                className="scrollbar overflow-hidden-y flex-grow-1"
-              ></Col>
-              <Col xs="auto">
-                <Button variant="primary">
-                  <FontAwesomeIcon icon={faPlus} className="me-2" />
-                  Ajouter un membre
-                </Button>
-              </Col>
-            </Row>
-          </div>
-
-          <div className="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
-            <MembersTable />
-          </div>
-        </AdvanceTableProvider>
+            <div className="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
+              <MembersTable />
+            </div>
+          </AdvanceTableProvider>
+        )}
       </div>
     </div>
   );

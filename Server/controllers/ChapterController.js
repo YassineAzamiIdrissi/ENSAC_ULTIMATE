@@ -1,5 +1,6 @@
 const Chapter = require("../models/AppSchemas/Chapter");
 const Course = require("../models/AppSchemas/Course");
+const Training = require("../models/AppSchemas/Training");
 const HttpError = require("../models/HttpError/ErrorModel");
 exports.addChapterToCourse = async (req, res, next) => {
   const { courseId } = req.params;
@@ -130,6 +131,62 @@ exports.getTrainingIdFromChapterId = async (req, res, next) => {
     const parentCourse = await Course.findById(courseId);
     const trainingId = parentCourse.trainingId;
     res.status(201).json(trainingId);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getCourseFromChapterId = async (req, res, next) => {
+  const { chapterId } = req.params;
+  try {
+    const concernedChapter = await Chapter.findById(chapterId);
+    const courseId = concernedChapter.courseId;
+    const concernedCourse = await Course.findById(courseId);
+    res.status(201).json(concernedCourse);
+  } catch (err) {
+    console.log(err);
+    return next(new HttpError(err));
+  }
+};
+exports.getPrevNextChapId = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const concernedChapter = await Chapter.findById(id);
+    const concernedCourse = await Course.findById(concernedChapter.courseId);
+    const concernedTraining = await Training.findById(
+      concernedCourse.trainingId
+    );
+    const list = [];
+    for (let i = 0; i < concernedTraining.courses.length; ++i) {
+      const concerendCourse = await Course.findById(
+        concernedTraining.courses[i]
+      );
+      for (let j = 0; j < concerendCourse.chapters.length; ++j) {
+        const concernedChapter = await Chapter.findById(
+          concerendCourse.chapters[j]
+        );
+        console.log("HAHWAAAAA____idString");
+        console.log(concernedChapter._id.toString());
+        list.push(concernedChapter._id.toString());
+      }
+    }
+    let prev = "";
+    let next = "";
+    for (let i = 0; i < list.length; ++i) {
+      if (list[i] == id) {
+        if (i == 0) {
+          prev = "first";
+          next = list[i + 1];
+        } else if (i == list.length - 1) {
+          prev = list[i - 1];
+          next = "last";
+        } else {
+          prev = list[i - 1];
+          next = list[i + 1];
+        }
+        break;
+      }
+    }
+    res.status(201).json({ prev, next, length: list.length });
   } catch (err) {
     return next(new HttpError(err));
   }

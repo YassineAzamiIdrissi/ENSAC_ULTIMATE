@@ -138,8 +138,16 @@ const SingleCourse = () => {
                                   <LockOutlinedIcon
                                     className={classes.single_course_tabs_icon}
                                   />
-                                  <Link to={`http://localhost:3000/course/1/chapter/1`} style={{textDecoration: 'none', color: 'inherit'}}>{chapter.title}</Link>
-                                 { /* Remplacer course par training */}
+                                  <Link
+                                    to={`http://localhost:3000/course/1/chapter/1`}
+                                    style={{
+                                      textDecoration: "none",
+                                      color: "inherit",
+                                    }}
+                                  >
+                                    {chapter.title}
+                                  </Link>
+                                  {/* Remplacer course par training */}
                                 </Typography>
                                 <Typography variant="h4">9m 34s</Typography>
                               </Box>
