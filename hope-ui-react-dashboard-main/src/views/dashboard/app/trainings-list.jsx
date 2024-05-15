@@ -85,7 +85,6 @@ const TrainingsList = () => {
     } else {
       fetchAllTrainings();
     }
-    console.log("Je suis un " + entity);
   }, []);
   return (
     <>

@@ -62,8 +62,6 @@ export const ListTableColumns = [
     header: "actions",
     id: "action",
     cell: (table) => {
-      console.log("From actions column this is the row :");
-      console.log(table);
       return (
         <Button
           variant="danger"

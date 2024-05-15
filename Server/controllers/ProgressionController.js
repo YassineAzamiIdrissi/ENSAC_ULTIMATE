@@ -75,7 +75,7 @@ exports.updateProgression = async (req, res, next) => {
   let { studentId, trainingId, step, nextChap, thisChap } = req.params;
   step = Number(step);
   if (nextChap == "last") {
-    nextChap = "quiz_path_here";
+    nextChap = `/view-quiz/${trainingId}`;
   }
   try {
     let prog;

@@ -26,8 +26,6 @@ const CardViewItem = ({ project }) => {
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/professors/get/${providerId}`
       );
-      console.log("This is the provider of this course fella : ");
-      console.log(response.data);
       setProvider(response.data);
     };
     getTrainingProvider();

@@ -27,11 +27,10 @@ const ReadChapterVideo = () => {
   const [chapter, setChapter] = useState({});
   const [extObject, setExtObject] = useState(null);
   const [compChaps, setCompChaps] = useState(null);
+  const [progression, setProgression] = useState(null);
   //Recupérer la position du chapter dans la liste correspondante
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("THIS IS THE CHAPTER IDDDD FROM VIDDDD ::");
-    console.log(chapterID);
     // lecture de ce chapitre :
     const fetchChapter = async () => {
       try {
@@ -54,8 +53,9 @@ const ReadChapterVideo = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/chapters/getPrevNext/${chapterID}`
         );
-        console.log(response.data);
         setExtObject(response.data);
+        console.log("THIS IS THE EXT OBJECT ::: ");
+        console.log(response.data);
       } catch (err) {
         toast.error("AHEYA L'ERREUR HENAA");
         console.log(err);
@@ -79,6 +79,23 @@ const ReadChapterVideo = () => {
     };
     fetchCompletedChaps();
   }, []);
+  useEffect(() => {
+    const getProgression = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/progressions/getSpecProgression/${courseID}/${studentId}`
+        );
+        console.log(response.data);
+        setProgression(response.data);
+      } catch (err) {
+        toast.error(
+          "Une erreur est survenue à l'essaie de de lireee la proggg..."
+        );
+        console.log(err);
+      }
+    };
+    getProgression();
+  }, []);
   const handleProgress = async () => {
     try {
       const count = extObject.length;
@@ -99,21 +116,14 @@ const ReadChapterVideo = () => {
   };
   const moveForward = () => {
     navigate(`/course/${courseID}/chapter/${extObject.next}`);
-    console.log("THIS IS THE LIST  !!!");
-    console.log(compChaps);
-
-    //if (!compChaps.some(chap => chap === chapterID))
-    //if (!compChaps.includes(chapterID)) {
-    //  handleProgress();
-    //  toast.success("Bravo un chapitre terminé 👏");
-    //}
     handleProgress();
     toast.success("Bravo un chapitre terminé 👏");
-    //navigate(0);
-    //Attendre 600 ms avant de naviguer vers next chap
     setTimeout(() => {
       navigate(0);
     }, 2000);
+  };
+  const goExam = () => {
+    navigate(`/view-quiz/${courseID}`);
   };
   return (
     <li className="d-flex mt-6">
@@ -121,7 +131,7 @@ const ReadChapterVideo = () => {
         <div className="item">
           <Iframe style={style} src={chapter.video} />
         </div>
-        {extObject?.next != "last" ? (
+        {extObject?.length != 1 && extObject?.next != "last" ? (
           <Row className="gx-2 p-3 ">
             {extObject && extObject.prev != "first" && (
               <Col
@@ -174,7 +184,13 @@ const ReadChapterVideo = () => {
               }}
               xs={6}
             >
-              <Button variant="danger" onClick={handleProgress}>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  handleProgress();
+                  goExam();
+                }}
+              >
                 <FontAwesomeIcon
                   style={{ marginRight: "10px" }}
                   icon={<FaPen />}

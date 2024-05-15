@@ -18,6 +18,8 @@ const notificationsRoute = require("./Routes/NotificationRoute");
 const enrollmentRoute = require("./Routes/EnrollmentRoute");
 const progressionRoute = require("./Routes/ProgressionRoute");
 const commentRoute = require("./Routes/CommentRoute");
+const quizRoute = require("./Routes/QuizRoute");
+const questionRoute = require("./Routes/QuestionRoute");
 // --------------------------------------------------------
 const app = express();
 app.use(express.json({ extended: true }));
@@ -36,6 +38,8 @@ app.use("/api/notifications", notificationsRoute);
 app.use("/api/enrollments", enrollmentRoute);
 app.use("/api/progressions", progressionRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/quiz", quizRoute);
+app.use("/api/questions", questionRoute);
 //----- logique socket :
 const server = http.createServer(app);
 const io = new Server(server, {

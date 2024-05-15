@@ -8,6 +8,7 @@ const {
   getAcademyByOneTrainingId,
   getCatsByAcademy,
   getDomainNameByAcademyId,
+  getAcademyNameByProf,
 } = require("../controllers/AcademyController");
 
 router.post("/addAcademy", addAcademy);
@@ -17,4 +18,5 @@ router.get("/getAcademyId/:name", getAcademyIdByName);
 router.get("/academyNameByOneTraining/:trainingId", getAcademyByOneTrainingId);
 router.get("/getCatsByAcademyId/:academyId", getCatsByAcademy);
 router.get("/getDomainNameByAcademyId/:academyId", getDomainNameByAcademyId);
+router.get("/getAcByProf/:profId", getAcademyNameByProf);
 module.exports = router;

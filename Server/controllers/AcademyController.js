@@ -2,6 +2,7 @@ const Academy = require("../models/AppSchemas/Academy");
 const Domain = require("../models/AppSchemas/Domain");
 const HttpError = require("../models/HttpError/ErrorModel");
 const Training = require("../models/AppSchemas/Training");
+const Professor = require("../models/AppSchemas/Professor");
 // ce controlr sera uniquement utilisé via Postman (interface d'administration)
 exports.addAcademy = async (req, res, next) => {
   try {
@@ -108,6 +109,18 @@ exports.getDomainNameByAcademyId = async (req, res, next) => {
     const academy = await Academy.findById(academyId);
     const domain = await Domain.findById(academy.domain);
     res.status(200).json(domain.name);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getAcademyNameByProf = async (req, res, next) => {
+  const { profId } = req.params;
+  try {
+    const concernedProfessor = await Professor.findById(profId);
+    const concernedAcademy = await Academy.findById(
+      concernedProfessor.responsableFor
+    );
+    res.status(201).json(concernedAcademy);
   } catch (err) {
     return next(new HttpError(err));
   }

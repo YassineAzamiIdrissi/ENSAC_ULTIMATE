@@ -47,8 +47,6 @@ const FormationList = () => {
         const sortedData = response.data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
-        console.log("THOSE ARE NA DEMANDS : ");
-        console.log(sortedData);
         setNaDemands(sortedData);
       } catch (err) {
         toast.error(

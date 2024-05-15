@@ -136,7 +136,6 @@ const UpdateTraining = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/academies/academyNameByOneTraining/${id}`
         );
-        console.log(response.data);
         setCurrentAcademy(response.data);
         getCatsByAcademy(response.data);
       } catch (err) {
@@ -166,7 +165,6 @@ const UpdateTraining = () => {
         `${process.env.REACT_APP_BASE_URL}/trainings/updateSpecTraining/${id}`,
         payload
       );
-      console.log(response.data);
       toast.success("Ressource est mise à jour avec soccés ");
       setTimeout(() => {
         navigate("/dashboard/app/list-training");

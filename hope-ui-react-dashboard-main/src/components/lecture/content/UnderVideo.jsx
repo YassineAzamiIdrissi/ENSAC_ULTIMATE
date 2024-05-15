@@ -33,8 +33,6 @@ const UnderVideo = ({ chapter }) => {
           `${process.env.REACT_APP_BASE_URL}/comments/getAllCommentsOfChap/${chapterID}`
         );
         setCommentsList(response.data);
-        console.log("THOSE ARE FETCHED COMMENTS FOR THIS CHAP :");
-        console.log(response.data);
       } catch (err) {
         toast.error(
           "Une erreur est survenue à l'essaie de récup. les commentaires d'un chapitre spec"

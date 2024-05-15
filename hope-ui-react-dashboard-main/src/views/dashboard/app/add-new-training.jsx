@@ -90,7 +90,6 @@ const AddNewTraining = () => {
   };
   const addTraining = async (e) => {
     e.preventDefault();
-    console.log("ADDING.....");
     setLoading(true);
     const video_ = await uploadVideo(rawVideo);
     const picture_ = await upload(rawPicture);
@@ -104,7 +103,6 @@ const AddNewTraining = () => {
       subtitle,
       description,
     };
-    console.log(payload);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/trainings/addTraining`,

@@ -68,6 +68,25 @@ export const membersTablecolumns = [
       },
     },
   },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row: { original } }) => {
+      const { id } = original;
+      // à coder : la fct d'exclusion de l'étudiant d'une certaine académie...
+      return (
+        <Link to={`_`} className="btn btn-danger">
+          Exclure
+        </Link>
+      );
+    },
+    meta: {
+      headerProps: {
+        style: { width: "15%", minWidth: "200px" },
+      },
+      cellProps: { className: "white-space-nowrap" },
+    },
+  },
 ];
 
 const MembersTable = () => {
