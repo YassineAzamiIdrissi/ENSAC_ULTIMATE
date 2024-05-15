@@ -1,9 +1,4 @@
-import {
-  faEnvelope,
-  faPaperPlane,
-  faPlane,
-  faShare,
-} from "@fortawesome/free-solid-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
@@ -17,7 +12,7 @@ const QuizContent = ({ content }) => {
             <p style={{ fontWeight: "bold", fontSize: "20px" }}>
               Question {index + 1}
             </p>
-            <hr  />
+            <hr />
             <p style={{ fontWeight: "bold", fontSize: "18px" }}>
               {question.question}
             </p>

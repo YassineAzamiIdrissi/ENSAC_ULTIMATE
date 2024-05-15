@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { faDownload, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faDownload,
+  faPaperPlane,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const CreateQuiz = () => {
+  //Toutes les questions sont dans la variable d'état "questions"
   const [questions, setQuestions] = useState([
     { question: "", answers: [], correctAnswer: "" },
   ]);
@@ -59,10 +65,11 @@ const CreateQuiz = () => {
         <div
           key={index}
           style={{
-            border: "0.5px solid gray",
+            // border: "0.5px solid gray",
             borderRadius: "5px",
             padding: "20px",
             marginBottom: "10px",
+            background: "#E3E9F1",
           }}
         >
           <Form.Control
@@ -93,9 +100,10 @@ const CreateQuiz = () => {
             </Col>
             <Col sx={4}>
               <Button
-                variant="primary"
+                variant=""
                 className="w-100  fs-9"
                 size="md"
+                style={{ border: "1px solid #1C1C1C" }}
                 onClick={() => handleAddNewAnswer(index)}
               >
                 <FontAwesomeIcon
@@ -121,26 +129,29 @@ const CreateQuiz = () => {
           </Form.Select>
         </div>
       ))}
+      <hr />
+
+      <Button
+        variant=""
+        className="w-100  fs-9"
+        size="sm"
+        style={{ background: "#E3E9F1" }}
+        onClick={handleAddNewQuestion}
+      >
+        <FontAwesomeIcon icon={faAdd} style={{ marginRight: "10px" }} />
+        Ajouter question
+      </Button>
+      <hr />
 
       <Button
         variant="secondary"
-        startIcon={<FontAwesomeIcon icon={faPlus} />}
-        className="w-100  fs-9"
-        size="sm"
-        onClick={handleAddNewQuestion}
-      >
-        Ajouter question
-      </Button>
-
-      <Button
-        variant="success"
         className="w-100  fs-9 mt-2"
         size="lg"
         onClick={handleAddNewQuestion}
       >
         <FontAwesomeIcon
           size="24px"
-          icon={faDownload}
+          icon={faPaperPlane}
           style={{ paddingRight: "20px" }}
         />
         Poster le quiz

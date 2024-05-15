@@ -23,6 +23,7 @@ import Avatar from "./Avatar";
 import ItemsDropdownMenu from "./ItemsDropdown";
 import A_Nav_Bar_Search from "./A_Nav_Bar_Search";
 import B_Search_Results_List from "./B_Search_Results_List";
+import logo from "../assets/logoEnsac.png";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -78,11 +79,14 @@ const Navbar = () => {
         <Box className={classes.navbar_box}>
           <Box className={classes.navbar_laft}>
             <Box className={classes.navbar_laft_logo}>
-              <Link to="/">
-                <span className="text-xl font-bold text-purple-700">
+              <Link
+                to="/"
+                style={{ width: "5rem", height: "3rem" }}
+              >
+                {/* <span className="text-xl font-bold text-purple-700">
                   ENSACademy{" "}
-                </span>
-                {/*<img src={logo} alt="logo" className={classes.img_responsive} />*/}
+                </span> */}
+                <img src={logo} alt="logo" className={classes.img_responsive} style={{width:'13rem', height:'auto', objectFit:'cover'}} />
               </Link>
             </Box>
             <Box className={classes.navbar_laft_menu}>
