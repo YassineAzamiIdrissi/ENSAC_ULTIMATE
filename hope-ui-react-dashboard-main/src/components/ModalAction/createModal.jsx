@@ -20,10 +20,6 @@ const CreateCourseModal = ({
   //LOGIQUE BACKEND COMMENCE ICI /
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("this is the token in the modal component : ");
-    console.log(token);
-  }, []);
   const addCourseToTraining = async () => {
     try {
       const response = await axios.post(
@@ -64,8 +60,6 @@ const CreateCourseModal = ({
     }
   };
   useEffect(() => {
-    console.log("THIS IS THE TITLE ");
-    console.log(courseTitle);
     if (type == "edit") {
       setTitle(courseTitle);
     }

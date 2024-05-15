@@ -10,15 +10,15 @@ const questionSchema = new Schema(
       required: true,
     },
     answers: {
-      type: String,
+      type: [String],
       required: true,
     },
-    Correct: {
+    correct: {
       type: String,
       required: true,
     },
   },
   { timestamps: true }
 );
-const model = model("Question", questionSchema);
-module.exports = model;
+const Questionmodel = model("Question", questionSchema);
+module.exports = Questionmodel;

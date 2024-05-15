@@ -9,7 +9,6 @@ const ListItemCard = ({ courses, trainingId }) => {
   // LOGIQUE BACKEND COMMENCE ICI ::
   const [course_, setCourse_] = useState(null);
   const { chapterID } = useParams();
-  console.log(chapterID);
   useEffect(() => {
     const readCourseFromChap = async () => {
       try {

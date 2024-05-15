@@ -17,6 +17,7 @@ const Members = () => {
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
   const [subsList, setSubsList] = useState(null);
+  const [academy, setAcademy] = useState(null);
   useEffect(() => {
     const fetchSubscribedStudentsToAcademy = async () => {
       try {
@@ -37,6 +38,20 @@ const Members = () => {
     };
     fetchSubscribedStudentsToAcademy();
   }, []);
+  useEffect(() => {
+    const fetchAcademy = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/academies/getAcByProf/${currentUser?.id}`
+        );
+        setAcademy(response.data);
+      } catch (err) {
+        toast.error("Une erreur ajemi =)");
+        console.log(err);
+      }
+    };
+    fetchAcademy();
+  }, []);
   const table = useAdvanceTable({
     data: subsList,
     columns: membersTablecolumns,
@@ -53,7 +68,7 @@ const Members = () => {
     <div>
       <div className="mb-9 mt-7">
         <h2 className="mb-5">
-          Tous les étudiants inscrit dans l'académie 'name of tarining'
+          Tous les étudiants inscrit dans l'académie "{academy?.name}"
         </h2>
         {subsList && (
           <AdvanceTableProvider {...table}>
@@ -69,15 +84,8 @@ const Members = () => {
                   xs="auto"
                   className="scrollbar overflow-hidden-y flex-grow-1"
                 ></Col>
-                <Col xs="auto">
-                  <Button variant="primary">
-                    <FontAwesomeIcon icon={faPlus} className="me-2" />
-                    Ajouter un membre
-                  </Button>
-                </Col>
               </Row>
             </div>
-
             <div className="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
               <MembersTable />
             </div>

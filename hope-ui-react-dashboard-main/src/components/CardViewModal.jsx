@@ -226,8 +226,9 @@ const CardViewModal = ({ handleClose, show, project, prof, progress }) => {
           <div>
             <Link
               to={
-                progression &&
-                `/course/${project._id}/chapter/${progression?.stopChap}`
+                progression && progression.progression != 100
+                  ? `/course/${project._id}/chapter/${progression?.stopChap}`
+                  : `${progression?.stopChap}`
               }
               className="btn btn-primary"
             >

@@ -44,8 +44,6 @@ const Index = () => {
           `${process.env.REACT_APP_BASE_URL}/trainings/chapsFromTraining/${paramsObj.courseID}`
         );
         setChapsList(response.data);
-        console.log("THOSE ARE ALL THE CHAPS IN THIS TRAINING : ");
-        console.log(response.data);
       } catch (err) {
         toast.error(
           "Une erreur est survenue à la tentative de lire les chapitres des formations"

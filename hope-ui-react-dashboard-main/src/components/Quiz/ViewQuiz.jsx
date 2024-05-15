@@ -48,16 +48,7 @@ const ViewQuiz = ({ trainingId }) => {
   const trainingID = { trainingId };
   return (
     <>
-      <Navbar />
       {/* <Pagebanner title={`Evaluation de : nom de  ${trainingId} `} /> */}
-      <Pagebanner
-        title={"`Quiz : ${training.name}`"}
-        course_time="12 heures 34 minutes"
-        course_enroll="5 Inscrits"
-        course_rating="4"
-        course_expart={"`${training.difficulty}`"}
-        className={style.page_banner_singleCourse}
-      />
       <Box className={classes.course_section}>
         <Container
           maxWidth="lg"
@@ -66,7 +57,6 @@ const ViewQuiz = ({ trainingId }) => {
           <Index />
         </Container>
       </Box>
-      <Footer />
     </>
   );
 };

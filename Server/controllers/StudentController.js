@@ -4,6 +4,10 @@ const HttpError = require("../models/HttpError/ErrorModel");
 const Enrollement = require("../models/AppSchemas/Enrollment");
 const Academy = require("../models/AppSchemas/Academy");
 const Professor = require("../models/AppSchemas/Professor");
+const Chapter = require("../models/AppSchemas/Chapter");
+const Comment = require("../models/AppSchemas/Comment");
+const Course = require("../models/AppSchemas/Course");
+const Progression = require("../models/AppSchemas/Progression");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -286,12 +290,14 @@ exports.getStudentsInTheAcademy = async (req, res, next) => {
     const subs = Object.values(studentsMap);
     let ret = [];
     for (let i = 0; i < subs.length; ++i) {
+      const id = subs[i]._id;
       const name = subs[i].firstName + " " + subs[i].lastName;
       const avatar = subs[i].profilePicture;
       const email = subs[i].email;
       const branch = subs[i].branch;
       const Cycle = subs[i].cycle;
       ret.push({
+        id,
         name,
         avatar,
         email,
@@ -300,6 +306,51 @@ exports.getStudentsInTheAcademy = async (req, res, next) => {
       });
     }
     res.status(201).json(ret);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+// protected !!
+exports.deleteAcess = async (req, res, next) => {
+  const { studentId } = req.params;
+  const respId = req.user.id;
+  try {
+    const resp = await Professor.findById(respId);
+    const academy = await Academy.findById(resp.responsableFor);
+    const academyTrainings = academy.trainings;
+    const concernedStudent = await Student.findById(studentId);
+    const trList = concernedStudent.followedTrainings;
+    // deleting comments on this academy chaps :
+    const comments = await Comment.find({ studentId });
+    for (let i = 0; i < comments.length; ++i) {
+      const chapter = await Chapter.findById(comments[i].elementId);
+      const course = await Course.findById(chapter.courseId);
+      const training = await Training.findById(course.trainingId);
+      const ac_ = await Academy.findById(training.academyId);
+      if (ac_._id == academy._id) {
+        comments[i].deleteOne();
+      }
+    }
+    // deleting student Id from all this academy courses :
+    for (let i = 0; i < trList.length; ++i) {
+      const training = await Training.findById(trList[i]);
+      const nwLis = training.subscribers.filter((id) => id != studentId);
+      training.subscribers = nwLis;
+      training.save();
+    }
+    // deleting academy trainings from the student followed trainings :
+    const nwList = trList.filter((id) => !academyTrainings.includes(id));
+    concernedStudent.followedTrainings = nwList; // SAVE STUDENT.
+    // deleting the student's Enrollments related to this academy :
+    const conEnrs = await Enrollement.find({ studentId });
+    for (let i = 0; i < conEnrs.length; ++i) {
+      const training = await Training.findById(conEnrs[i].trainingId);
+      const trainAcd = training.academyId;
+      if (trainAcd == academy._id) {
+        await conEnrs[i].deleteOne();
+      }
+    }
+    // deleting the student's progressions in the
   } catch (err) {
     return next(new HttpError(err));
   }

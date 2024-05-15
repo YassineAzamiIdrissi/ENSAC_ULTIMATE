@@ -1,11 +1,7 @@
-const { Schema, model } = require("");
+const { Schema, model } = require("mongoose");
 const quizSchema = new Schema(
   {
-    courseId: {
-      type: String,
-      required: true,
-    },
-    studentId: {
+    trainingId: {
       type: String,
       required: true,
     },
@@ -16,14 +12,9 @@ const quizSchema = new Schema(
     },
     questions: {
       type: [String], // linked to questions
-      required: true,
-    },
-    images: {
-      type: [String],
-      default: [],
     },
   },
   { timestamps: true }
 );
-model = model("Quiz", quizSchema);
-module.exports = model;
+const Quizmodel = model("Quiz", quizSchema);
+module.exports = Quizmodel;

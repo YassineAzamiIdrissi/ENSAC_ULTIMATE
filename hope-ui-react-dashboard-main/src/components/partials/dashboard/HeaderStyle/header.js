@@ -108,8 +108,6 @@ const Header = memo((props) => {
       const sortedData = response.data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
-      console.log("Those are the initials demands : ");
-      console.log(sortedData);
       setDemands(sortedData);
       setNumDems(sortedData.length);
     } catch (err) {
@@ -126,7 +124,6 @@ const Header = memo((props) => {
   }, []);
   useEffect(() => {
     if (entity == "professor" && isResp) {
-      console.log("I am just here : ");
       const fetchDemandSides = async () => {
         const sidesList = [];
         for (let i = 0; i < demands?.length; ++i) {
@@ -143,8 +140,6 @@ const Header = memo((props) => {
           sidesList.push({ studentName, trainingName, createdAt });
         }
         setDemNotifs(sidesList);
-        console.log("Those are displayale notifs : ");
-        console.log(demNotifs);
       };
       fetchDemandSides();
     }
@@ -198,7 +193,6 @@ const Header = memo((props) => {
   };
   useEffect(() => {
     const readProfessorNotifications = async () => {
-      console.log("PROFESSOR MUST GET THEIR NOTIFS NOW");
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/notifications/getResps`,
@@ -222,8 +216,6 @@ const Header = memo((props) => {
   // Socket : ---------------------------------------------
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log("Received : ");
-      console.log(data);
       fetchDemands();
       toast.success(data.message);
     });

@@ -8,7 +8,6 @@ import axios from "axios";
 const AddAcademy = () => {
   const [files, setFiles] = useState([]);
   const handleDrop = (acceptedFiles) => {
-    console.log(acceptedFiles);
     setFiles(
       acceptedFiles.map((file) =>
         Object.assign(file, {
@@ -41,7 +40,6 @@ const AddAcademy = () => {
   }, []);
   const addNewChapter = async (e) => {
     e.preventDefault();
-    console.log("Adding chap....");
     setLoading(true);
     try {
       const video_ = await uploadVideo(files);

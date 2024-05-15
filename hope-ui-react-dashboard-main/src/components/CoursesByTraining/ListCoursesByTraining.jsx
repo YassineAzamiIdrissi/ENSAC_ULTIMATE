@@ -52,8 +52,6 @@ const ListCoursesByTraining = () => {
           `${process.env.REACT_APP_BASE_URL}/courses/getCoursesByTraining/${id}`
         );
         setCourses(response.data);
-        console.log("Those are courses : ");
-        console.log(response.data);
       } catch (err) {
         console.log("Error fetching courses : ");
         console.log(err);

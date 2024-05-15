@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import {
-  faAdd,
-  faDownload,
-  faPaperPlane,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const CreateQuiz = () => {
   //Toutes les questions sont dans la variable d'état "questions"
@@ -44,7 +42,24 @@ const CreateQuiz = () => {
   };
 
   console.log("NOTRE QUIZZ : ", questions);
-
+  // LOGIQUE BACKEND COMMENCE ICI :::
+  const { trainingId } = useParams();
+  const handleAddQuestion = async () => {
+    try {
+      const question = questions[questions.length - 1].question;
+      const answers = questions[questions.length - 1].answers;
+      const correct = questions[questions.length - 1].correctAnswer;
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/questions/newQuestion/${trainingId}`,
+        { question, answers, correct }
+      );
+    } catch (err) {
+      toast.error(
+        "Une erreur est arrivée à l'essaie d'ajouter une nouvelle question "
+      );
+      console.log(err);
+    }
+  };
   return (
     <div
       style={{
@@ -136,12 +151,14 @@ const CreateQuiz = () => {
         className="w-100  fs-9"
         size="sm"
         style={{ background: "#E3E9F1" }}
-        onClick={handleAddNewQuestion}
+        onClick={() => {
+          handleAddNewQuestion();
+          handleAddQuestion();
+        }}
       >
         <FontAwesomeIcon icon={faAdd} style={{ marginRight: "10px" }} />
         Ajouter question
       </Button>
-      <hr />
 
       <Button
         variant="secondary"

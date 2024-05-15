@@ -26,6 +26,7 @@ const GridAndModalItem = ({ project, token }) => {
   // LOGIQUE BACKEND :
   const { currentUser } = useContext(UserContext);
   const entity = currentUser?.entity;
+  const [quiz, setQuiz] = useState(false);
   const [academy, setAcademy] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -72,7 +73,6 @@ const GridAndModalItem = ({ project, token }) => {
     socket.emit("send_message", { message: "Nouvelle demande", room });
   };
   const deleteTraining = async () => {
-    console.log("Deletion...");
     try {
       const response = await axios.delete(
         `${process.env.REACT_APP_BASE_URL}/trainings/deleteTraining/${project._id}`
@@ -88,6 +88,33 @@ const GridAndModalItem = ({ project, token }) => {
       console.log(err);
     }
   };
+  const addQuiz = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/quiz/createQuiz/${project._id}`
+      );
+      toast.info("Definissez vos questions à mettre dans ce quiz");
+    } catch (err) {
+      toast.error(
+        "une erreur est survenue à l'essaie de définir un nouveau quiz "
+      );
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    const verifyQuiz = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/quiz/trainingQuizCreated/${project._id}`
+        );
+        setQuiz(response.data);
+      } catch (err) {
+        toast.error("Very spec error happened !!");
+        console.log(err);
+      }
+    };
+    verifyQuiz();
+  }, []);
   return (
     <>
       <RevealDropdownTrigger
@@ -116,6 +143,17 @@ const GridAndModalItem = ({ project, token }) => {
                 <RevealDropdown btnClassName="btn-icon" icon={faEllipsisV}>
                   {entity == "professor" && (
                     <>
+                      {quiz == "non" && (
+                        <Dropdown.Item eventKey="1">
+                          <Link
+                            style={{ textDecoration: "none", color: "inherit" }}
+                            onClick={addQuiz}
+                            to={`/add-quiz/${project._id}`}
+                          >
+                            Ajouter un quiz
+                          </Link>
+                        </Dropdown.Item>
+                      )}
                       <Dropdown.Item eventKey="1">
                         <Link
                           style={{ textDecoration: "none", color: "inherit" }}
