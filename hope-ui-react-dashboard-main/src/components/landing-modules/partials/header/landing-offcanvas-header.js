@@ -1,6 +1,7 @@
 import React, { Fragment, memo ,useState} from 'react'
 import { Nav,Offcanvas,Container,Collapse} from 'react-bootstrap'
 import { Link,useLocation } from 'react-router-dom'
+import Logo from '../../../partials/components/logo';
 
 const LandingOffcanvasHeader = memo(() => {
   const [open, setOpen] = useState(false);
@@ -20,15 +21,9 @@ const LandingOffcanvasHeader = memo(() => {
       <Offcanvas show={show} onHide={handleClose} className="mobile-offcanvas nav navbar navbar-expand-xl hover-nav py-0">
          <Container fluid className="p-lg-0">
           <Offcanvas.Header closeButton className='px-0 mx-3'>       
-          <Link to="home" className="navbar-brand ms-3"> 
-            <svg className="icon-30 text-primary" width="30"  viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"></rect>
-                <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"></rect>
-                <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"></rect>
-                <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"></rect>
-            </svg> 
-            <h5 className="logo-title">Hope UI</h5>
-        </Link>
+          <Link to="/dashboard" className="navbar-brand">
+            <Logo />
+          </Link>
           </Offcanvas.Header>
           <Offcanvas.Body>
           <div className="landing-header">

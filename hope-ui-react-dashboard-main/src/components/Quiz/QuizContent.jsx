@@ -38,7 +38,8 @@ const QuizContent = ({ content }) => {
         );
         setCorrectAnswers(response.data);
       } catch (err) {
-        return next(new HttpError(err));
+        toast.error("Une erreur est survenue à l'essaie de je sais pas....");
+        console.log(err);
       }
     };
     getCorrectAnswers();
@@ -64,7 +65,7 @@ const QuizContent = ({ content }) => {
       });
     }
   };
-  // RESTE A IMPLEMENTER LA LOGIQUE OBTENTION DE LA NOTE. 
+  // RESTE A IMPLEMENTER LA LOGIQUE OBTENTION DE LA NOTE.
   // STOCKAGE EN BD.
   // DONE, 13/05/2024......
   return (

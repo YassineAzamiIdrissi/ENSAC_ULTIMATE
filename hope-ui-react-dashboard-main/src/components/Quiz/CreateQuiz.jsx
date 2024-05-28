@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { faDownload, faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import {
+  faAdd,
+  faDownload,
+  faPaperPlane,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import axios from "axios";
@@ -159,7 +164,7 @@ const CreateQuiz = () => {
         <FontAwesomeIcon icon={faAdd} style={{ marginRight: "10px" }} />
         Ajouter question
       </Button>
-
+      <hr />
       <Button
         variant="secondary"
         className="w-100  fs-9 mt-2"

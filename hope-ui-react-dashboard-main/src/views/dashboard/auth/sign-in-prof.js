@@ -63,7 +63,9 @@ const SignInFormProf = () => {
                 <p className="text-body-tertiary">Acceder à mon compte ENSAC</p>
               </div>
 
-              <div className="position-relative">
+              <div className="position-relative text-center">
+                <p className="text-body-tertiary">Entrer vos informations</p>
+
                 <hr className="bg-body-secondary mt-5 mb-4" />
               </div>
               {error && (
@@ -81,9 +83,7 @@ const SignInFormProf = () => {
                   {error}
                 </p>
               )}
-              <div className="divider-content-center">
-                Entrer mes informations{" "}
-              </div>
+
               <Form onSubmit={handleSubmit}>
                 {" "}
                 <Form.Group className="mb-3 text-start">

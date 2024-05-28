@@ -141,11 +141,7 @@ button {
   color: rgb(250, 251, 191) !important;
 }
 
-.icon {
-  opacity: 0;
-  padding: 5px;
-  transition: 0.2s all ease-in;
-}
+
 .TextCenter:hover .icon {
   opacity: 1;
   background: rgb(250, 251, 191);
@@ -1766,7 +1762,7 @@ h3,
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: var(--phoenix-emphasis-color);
-  background-color: rgba(0, 0, 0, 0);
+  background-color: #348C82 !important;
 }
 .nav-phoenix-pills {
   background: var(--phoenix-body-highlight-bg);
@@ -1784,8 +1780,10 @@ h3,
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
-.nav-phoenix-pills .nav-item .nav-link.active {
-  background: var(--phoenix-emphasis-bg);
+
+
+.nav-phoenix-pills .nav-item .nav-link .active {
+  background: #348C82;
   color: var(--phoenix-primary);
   border-left: 1px solid var(--phoenix-border-color);
   border-right: 1px solid var(--phoenix-border-color);
@@ -61661,3 +61659,14 @@ html:not(.navbar-vertical-collapsed)
 }
 
 /*# sourceMappingURL=theme.min.css.map*/
+ /* .nav-item .active {
+  background: #348C82 ! important;
+
+} */
+
+.icon {
+  opacity:1;
+  padding: 5px;
+  transition: 0.2s all ease-in;
+  /* background: #348C82  !important; */
+}

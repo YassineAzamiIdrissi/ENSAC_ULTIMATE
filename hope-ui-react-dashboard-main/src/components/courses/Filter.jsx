@@ -8,7 +8,7 @@ const Filter = ({ fetchedDomains, fetchTrainingsByDomain }) => {
   return (
     <Box className={classes.course_filter}>
       <Typography variant="h3" component="h3" className={classes.filter_title}>
-        Filter
+        Filtrer par Domaine
       </Typography>
       <Box className={classes.divider}></Box>
       <Box className={classes.filter_category}>

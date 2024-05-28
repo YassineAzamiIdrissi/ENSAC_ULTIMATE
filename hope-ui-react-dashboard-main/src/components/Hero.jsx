@@ -1,7 +1,8 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { comCss } from "./ComponentsCss";
-import heroimg from "../image/hero-img.png";
+// import heroimg from "../image/hero-img.png";
+import heroimg from "../assets/hero2.png";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 const Hero = () => {

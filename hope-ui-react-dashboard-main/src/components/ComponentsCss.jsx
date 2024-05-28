@@ -544,6 +544,7 @@ export const comCss = makeStyles(() => ({
         verticalAlign: "middle !important",
         cursor: "pointer !important",
         userSelect: "none !important",
+        height: "50px !important",
         backgroundColor: "transparent !important",
         border: "1px solid transparent !important",
         padding: "0.75rem 1.25rem !important",

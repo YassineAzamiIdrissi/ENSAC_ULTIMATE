@@ -65,7 +65,7 @@ const Paginations =() =>{
                                         <ul className="pagination pagination-sm">
                                             <li className="page-item"><Link className="page-link" to="#">1</Link></li>
                                             <li className="page-item active" aria-current="page">
-                                                <Link className="page-link" to="#">2</Link>
+                                                <Link className="page-link" style={{ background: "#348C82" }} to="#">2</Link>
                                             </li>
                                             <li className="page-item"><Link className="page-link" to="#">3</Link></li>
                                         </ul>
@@ -80,9 +80,9 @@ const Paginations =() =>{
                                                 <span aria-hidden="true">«</span>
                                             </Link>
                                         </li>
-                                            <li className="page-item"><Link className="page-link" to="#">1</Link></li>
-                                            <li className="page-item"><Link className="page-link" to="#">2</Link></li>
-                                            <li className="page-item"><Link className="page-link" to="#">3</Link></li>
+                                            <li className="page-item"><Link className="page-link" style={{ background: "#348C82" }} to="#">1</Link></li>
+                                            <li className="page-item"><Link className="page-link" style={{ background: "#348C82" }} to="#">2</Link></li>
+                                            <li className="page-item"><Link className="page-link" style={{ background: "#348C82" }} to="#">3</Link></li>
                                             <li className="page-item">
                                             <Link className="page-link" to="#" aria-label="Next">
                                                 <span aria-hidden="true">»</span>

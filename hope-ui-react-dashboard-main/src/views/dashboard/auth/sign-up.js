@@ -341,54 +341,6 @@ const SignUp = () => {
                 </Card>
               </Col>
             </Row>
-            <div className="sign-bg sign-bg-right">
-              <svg
-                width="280"
-                height="230"
-                viewBox="0 0 421 359"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g opacity="0.05">
-                  <rect
-                    x="-15.0845"
-                    y="154.773"
-                    width="543"
-                    height="77.5714"
-                    rx="38.7857"
-                    transform="rotate(-45 -15.0845 154.773)"
-                    fill="#3A57E8"
-                  />
-                  <rect
-                    x="149.47"
-                    y="319.328"
-                    width="543"
-                    height="77.5714"
-                    rx="38.7857"
-                    transform="rotate(-45 149.47 319.328)"
-                    fill="#3A57E8"
-                  />
-                  <rect
-                    x="203.936"
-                    y="99.543"
-                    width="310.286"
-                    height="77.5714"
-                    rx="38.7857"
-                    transform="rotate(45 203.936 99.543)"
-                    fill="#3A57E8"
-                  />
-                  <rect
-                    x="204.316"
-                    y="-229.172"
-                    width="543"
-                    height="77.5714"
-                    rx="38.7857"
-                    transform="rotate(45 204.316 -229.172)"
-                    fill="#3A57E8"
-                  />
-                </g>
-              </svg>
-            </div>
           </Col>
         </Row>
       </section>

@@ -103,7 +103,7 @@ const Courses = () => {
   return (
     <>
       <Navbar />
-      <Pagebanner title="Cours" />
+      <Pagebanner title="Découvrez nos formations." />
       <Box className={classes.course_section}>
         <Container maxWidth="lg">
           <Typography

@@ -10,7 +10,7 @@ export const Theme = {
     // base7:"#754ffe !important",
     base7: "#66C6BA !important",
     base8: "#66C6BA !important",
-    base9: "#19cb98 !important",
+    base9: "#348C82 !important",
     babe10: "rgba(255,255,255,.5)!important",
     des: "#5c5776 !important",
     bg1: "#F5F4F8 !important",

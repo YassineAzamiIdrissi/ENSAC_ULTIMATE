@@ -228,9 +228,9 @@ const Header = memo((props) => {
         className={`nav iq-navbar ${headerNavbar} ${navbarHide.join(" ")}`}
       >
         <Container fluid className="navbar-inner">
+          
           <Link to="/dashboard" className="navbar-brand">
-            <Logo color={true} />
-            <h4 className="logo-title">Power UI</h4>
+            <Logo />
           </Link>
           <div
             className="sidebar-toggle"

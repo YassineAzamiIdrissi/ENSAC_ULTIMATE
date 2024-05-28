@@ -9,6 +9,7 @@ import { Link,useLocation } from 'react-router-dom'
 // components
 import LandingOffcanvasHeader from '../../partials/header/landing-offcanvas-header'
 import CustomToggle from '../../../dropdowns'
+import Logo from '../../../partials/components/logo'
 
 const Header2 = memo((props) => {
   let location = useLocation();
@@ -17,26 +18,14 @@ const Header2 = memo((props) => {
         <Navbar expand="xl" className="nav navbar navbar-expand-xl navbar-light iq-navbar header-hover-menu">
   <Container fluid className="navbar-inner">
     <div className="d-flex align-items-center justify-content-between w-100 landing-header"> 
-        <Link to="home" className="navbar-brand m-0 d-xl-flex d-none"> 
-            <svg className="icon-30 text-primary" width="30"  viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"></rect>
-                <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"></rect>
-                <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"></rect>
-                <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"></rect>
-            </svg> 
-            <h5 className="logo-title">Hope UI</h5>
-        </Link>
+    <Link to="/dashboard" className="navbar-brand">
+            <Logo />
+          </Link>
         <div className="d-flex align-items-center d-xl-none">
         <LandingOffcanvasHeader/>
-        <Link to="home" className="navbar-brand ms-3"> 
-            <svg className="icon-30 text-primary" width="30"  viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="-0.757324" y="19.2427" width="28" height="4" rx="2" transform="rotate(-45 -0.757324 19.2427)" fill="currentColor"></rect>
-                <rect x="7.72803" y="27.728" width="28" height="4" rx="2" transform="rotate(-45 7.72803 27.728)" fill="currentColor"></rect>
-                <rect x="10.5366" y="16.3945" width="16" height="4" rx="2" transform="rotate(45 10.5366 16.3945)" fill="currentColor"></rect>
-                <rect x="10.5562" y="-0.556152" width="28" height="4" rx="2" transform="rotate(45 10.5562 -0.556152)" fill="currentColor"></rect>
-            </svg> 
-            <h5 className="logo-title">Hope UI</h5>
-        </Link>
+        <Link to="/dashboard" className="navbar-brand">
+            <Logo />
+          </Link>
         </div> 
         <ul className="d-block d-xl-none list-unstyled m-0">
                       <Dropdown as="li" className="nav-item iq-responsive-menu ">
@@ -67,7 +56,7 @@ const Header2 = memo((props) => {
         <Offcanvas.Header className="px-0">
             <Navbar.Brand className="ms-3">
               {/* {{> partials/components/logo color="true"}} */}
-              <h5 className="logo-title">{props.appName}</h5>
+              
             </Navbar.Brand>
             <button className="btn-close float-end px-3"></button>
         </Offcanvas.Header>

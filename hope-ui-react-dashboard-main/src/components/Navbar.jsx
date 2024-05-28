@@ -24,6 +24,8 @@ import ItemsDropdownMenu from "./ItemsDropdown";
 import A_Nav_Bar_Search from "./A_Nav_Bar_Search";
 import B_Search_Results_List from "./B_Search_Results_List";
 import logo from "../assets/logoEnsac.png";
+import RevealDropdown from "./base/RevealDropdown";
+import { faEllipsisV, faUser } from "@fortawesome/free-solid-svg-icons";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -79,14 +81,13 @@ const Navbar = () => {
         <Box className={classes.navbar_box}>
           <Box className={classes.navbar_laft}>
             <Box className={classes.navbar_laft_logo}>
-              <Link
-                to="/"
-                style={{ width: "5rem", height: "3rem" }}
-              >
-                {/* <span className="text-xl font-bold text-purple-700">
-                  ENSACademy{" "}
-                </span> */}
-                <img src={logo} alt="logo" className={classes.img_responsive} style={{width:'13rem', height:'auto', objectFit:'cover'}} />
+              <Link to="/" style={{ width: "5rem", height: "3rem" }}>
+                <img
+                  src={logo}
+                  alt="logo"
+                  className={classes.img_responsive}
+                  style={{ width: "8rem", height: "auto", objectFit: "cover" }}
+                />
               </Link>
             </Box>
             <Box className={classes.navbar_laft_menu}>
@@ -98,20 +99,18 @@ const Navbar = () => {
                   A propos
                 </Link>
                 <Link to="/courses" className={`${classes.nav_link}`}>
-                  Cours
+                  Nos formations
                 </Link>
-                <Link to="/blog" className={`${classes.nav_link}`}>
+
+                {/* <Link to="/blog" className={`${classes.nav_link}`}>
                   Blog
-                </Link>
-                <Link to="/contact" className={`${classes.nav_link}`}>
-                  Contact
                 </Link>
                 <Link to="/Academies" className={`${classes.nav_link}`}>
                   Academies
                 </Link>
                 <Link to="/faqPage" className={`${classes.nav_link}`}>
                   FAQ
-                </Link>
+                </Link> */}
               </Box>
               <Box className={classes.navbar_link_mobail}>
                 <IconButton onClick={() => setOpenMenu(!openMenu)}>
@@ -135,44 +134,26 @@ const Navbar = () => {
                     to="/"
                     className={`${classes.nav_link} ${classes.nav_link_mobail}`}
                   >
-                    Home
+                    Acceuil
                   </Link>
                   <Link
                     to="/main_about"
                     className={`${classes.nav_link} ${classes.nav_link_mobail}`}
                   >
-                    About
+                    A propos
                   </Link>
                   <Link
                     to="/courses"
                     className={`${classes.nav_link} ${classes.nav_link_mobail}`}
                   >
-                    Courses
+                    Nos formations
                   </Link>
-                  <Link
-                    to="/compareplan"
-                    className={`${classes.nav_link} ${classes.nav_link_mobail}`}
-                  >
-                    Compareplan
-                  </Link>
-                  <Link
-                    to="/pricing"
-                    className={`${classes.nav_link} ${classes.nav_link_mobail}`}
-                  >
-                    Pricing
-                  </Link>
-                  <Link
+                  {/* <Link
                     to="/blog"
                     className={`${classes.nav_link} ${classes.nav_link_mobail}`}
                   >
                     Blog
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className={`${classes.nav_link} ${classes.nav_link_mobail}`}
-                  >
-                    Contact
-                  </Link>
+                  </Link> */}
                 </Drawer>
               </Box>
             </Box>
@@ -187,18 +168,41 @@ const Navbar = () => {
               <Button
                 variant="outlined"
                 href="/auth/sign-up"
-                sx={{ marginRight: "12px" }}
+                sx={{ marginRight: "12px", marginTop: "9px" }}
                 className={`${classes.button} ${classes.button_1}`}
               >
                 S'inscrire
               </Button>
-              <Button
+
+              <RevealDropdown icon={faUser} placeholder="Connexion">
+                <Dropdown.Item eventKey="1">
+                  <Link
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    // onClick={addQuiz}
+                    to="/auth/sign-in-prof"
+                  >
+                    Professeur
+                  </Link>
+                </Dropdown.Item>
+
+                <Dropdown.Item eventKey="2">
+                  <Link
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    // onClick={addQuiz}
+                    to="/auth/sign-in"
+                  >
+                    Etudiant
+                  </Link>
+                </Dropdown.Item>
+              </RevealDropdown>
+
+              {/* <Button
                 href="/auth/sign-in"
                 className={`${classes.button} ${classes.button_2}`}
                 onClick={handleClick}
               >
                 Se connecter
-              </Button>
+              </Button> */}
             </Box>
           ) : (
             <Nav.Item>

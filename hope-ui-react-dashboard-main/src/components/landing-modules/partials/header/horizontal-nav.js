@@ -14,9 +14,9 @@ const HorizontalNav = memo(() => {
 <Container fluid className="p-lg-0">
    <Offcanvas.Header className="px-0">
       <Navbar.Brand className="ms-3">
-        <Logo color="true"/>
-         {/* {{> partials/components/logo color="true"}} */}
-         <h5 className="logo-title">Hope Ui</h5>
+      <Link to="/dashboard" className="navbar-brand">
+            <Logo />
+          </Link>
       </Navbar.Brand>
       <button className="btn-close float-end px-3"></button>
    </Offcanvas.Header>

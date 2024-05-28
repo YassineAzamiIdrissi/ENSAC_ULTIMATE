@@ -153,7 +153,11 @@ const AddNewTraining = () => {
         {trainingIsCreated && (
           <Col sm={4}>
             {" "}
-            <Button variant="primary" className="w-100 mb-3">
+            <Button
+              variant="Outline"
+              style={{ background: "#348C82", color: "white" }}
+              className="w-100 mb-3"
+            >
               <FontAwesomeIcon icon={faPlus} className="me-2" />
               Ajouter un cours à cette formation
             </Button>
@@ -349,7 +353,12 @@ const AddNewTraining = () => {
             </div>
           ))}
         </Col>
-        <Button type="submit" variant="primary" className="w-100 mb-3">
+        <Button
+          type="submit"
+          variant="outline"
+          style={{ background: "#348C82", color: "white" }}
+          className="w-100 mb-3"
+        >
           Ajouter La formation
         </Button>
       </Row>
