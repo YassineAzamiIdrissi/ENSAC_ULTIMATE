@@ -91,11 +91,11 @@ exports.addProfessor = async (req, res, next) => {
   }
 };
 exports.deleteProfessor = async (req, res, next) => {
-  const {profIf} = req.body; 
-  try{
+  const { profIf } = req.body;
+  try {
     // on la laisse à plus tard.. c'est pas assez diff
-  }catch(err){
-    return next(new HttpError(err)); 
+  } catch (err) {
+    return next(new HttpError(err));
   }
 };
 exports.changeProfResponsability = async (req, res, next) => {

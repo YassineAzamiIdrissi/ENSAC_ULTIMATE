@@ -228,7 +228,6 @@ const Header = memo((props) => {
         className={`nav iq-navbar ${headerNavbar} ${navbarHide.join(" ")}`}
       >
         <Container fluid className="navbar-inner">
-          
           <Link to="/dashboard" className="navbar-brand">
             <Logo />
           </Link>
@@ -364,7 +363,9 @@ const Header = memo((props) => {
                       {entity == "professor" &&
                         profNotifs?.map((item, index) => (
                           <Link
-                            to="mazal..."
+                            to={
+                              item.title == "Nouveau commentaire" && item.link
+                            }
                             key={index}
                             className="iq-sub-card"
                           >

@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
       next();
     });
   } else {
-    return next(new HttpError("No token available within the request",402)); 
+    return next(new HttpError("No token available within the request", 402));
   }
 };
 

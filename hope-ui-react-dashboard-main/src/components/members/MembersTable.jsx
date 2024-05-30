@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import Avatar from "../Avatar";
 import AdvanceTable from "../listViews/AdvanceTable";
 import AdvanceTableFooter from "../listViews/AdvanceTableFooter";
-
+import axios from "axios";
+import { toast } from "react-toastify";
 export const membersTablecolumns = [
   {
     accessorKey: "Nom",
@@ -72,10 +73,19 @@ export const membersTablecolumns = [
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row: { original } }) => {
-      const { id } = original;
-      // à coder : la fct d'exclusion de l'étudiant d'une certaine académie...
+      const { id, respId } = original;
+      const exclude = async () => {
+        try {
+          const response = await axios.patch(
+            `${process.env.REACT_APP_BASE_URL}/professors/excludeStudent/${id}/${respId}`
+          );
+          toast.success("Etudiant exclu de l'académie");
+        } catch (err) {
+          toast.error("3A");
+        }
+      };
       return (
-        <Link to={`_`} className="btn btn-danger">
+        <Link onClick={exclude} to={``} className="btn btn-danger">
           Exclure
         </Link>
       );

@@ -48,7 +48,6 @@ const SingleCourse = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/trainings/getTraining/${id}`
         );
-
         const fetchedTraining = response.data;
         setTraining(fetchedTraining);
         const courses = fetchedTraining.courses;
@@ -83,12 +82,12 @@ const SingleCourse = () => {
       <Navbar />
       {training && (
         <Pagebanner
-          title={`${training.name}`}
-          subtitle={training.subtitle}
-          course_time="12 heures 34 minutes"
-          course_enroll="5 Inscrits"
-          course_rating="4"
-          course_expart={`${training.difficulty}`}
+          title={`${training?.name}`}
+          subtitle={training?.subtitle}
+          course_time={`${training?.subscribers.length + 11} minutes`}
+          course_enroll={`${training?.subscribers.length}`}
+          course_rating={`${training?.rating}`}
+          course_expart={`${training?.difficulty}`}
           className={style.page_banner_singleCourse}
         />
       )}
@@ -149,7 +148,7 @@ const SingleCourse = () => {
                                   </Link>
                                   {/* Remplacer course par training */}
                                 </Typography>
-                                <Typography variant="h4">9m 34s</Typography>
+                                <Typography variant="h4">2m 24s</Typography>
                               </Box>
                             ))}
                           </AccordionDetails>

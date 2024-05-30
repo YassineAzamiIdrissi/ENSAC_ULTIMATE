@@ -10,6 +10,8 @@ const {
   acceptEnroll,
   refuseEnroll,
   getAllProfessorsInAcademy,
+  excludeStudent,
+  excludeProfessor,
 } = require("../controllers/ProfessorController");
 const authMiddleware = require("../middlewares/Authorize");
 const router = Router();
@@ -27,4 +29,6 @@ router.get(
   authMiddleware,
   getAllProfessorsInAcademy
 );
+router.patch("/excludeStudent/:studentId/:respId", excludeStudent);
+router.patch("/excludeProfessor/:profId/:respId", excludeProfessor);
 module.exports = router;

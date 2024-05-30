@@ -331,6 +331,7 @@ exports.getAllProfessorsInAcademy = async (req, res, next) => {
           start: concernedProfessor.createdAt,
           contributions: concernedProfessor.trainingsList.length,
           id: concernedProfessor._id,
+          respId,
         };
         ret.push(newObj);
       }
@@ -340,4 +341,51 @@ exports.getAllProfessorsInAcademy = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
-
+exports.excludeStudent = async (req, res, next) => {
+  const { studentId, respId } = req.params;
+  try {
+    const resp = await Professor.findById(respId);
+    const concStudent = await Student.findById(studentId);
+    const followedTrainings = concStudent.followedTrainings;
+    const academy = await Academy.findById(resp.responsableFor);
+    const academyTrainings = academy.trainings;
+    for (let i = 0; i < academyTrainings.length; ++i) {
+      const concernedTraining = await Training.findById(academyTrainings[i]);
+      const subs = concernedTraining.subscribers;
+      const subs_minus = subs.filter((id) => id != studentId);
+      concernedTraining.subscribers = subs_minus;
+      concernedTraining.save();
+    }
+    const nwList_1 = [];
+    for (let i = 0; i < followedTrainings.length; ++i) {
+      if (!academyTrainings.includes(followedTrainings[i])) {
+        nwList_1.push(followedTrainings[i]);
+      }
+    }
+    concStudent.followedTrainings = nwList_1;
+    concStudent.save();
+    res.status(200).json(concStudent);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.excludeProfessor = async (req, res, next) => {
+  const { profId, respId } = req.params;
+  try {
+    const professor = await Professor.findById(profId);
+    const responsable = await Professor.findById(respId);
+    const academyId = responsable.responsableFor;
+    const academy = await Academy.findById(academyId);
+    let filter_1 = professor.worksFor;
+    let filter_2 = academy.professors;
+    filter_1 = filter_1.filter((id) => id != academyId);
+    filter_2 = filter_2.filter((id) => id != profId);
+    professor.worksFor = filter_1;
+    academy.professors = filter_2;
+    professor.save();
+    academy.save();
+    res.status(201).json(professor);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};

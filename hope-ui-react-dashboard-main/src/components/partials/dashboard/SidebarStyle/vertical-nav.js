@@ -38,6 +38,7 @@ const VerticalNav = memo((props) => {
   // logique backendd :
   const { currentUser } = useContext(UserContext);
   const entity = currentUser?.entity;
+  const id = currentUser?.entity;
   const isResp = currentUser?.isResp;
   return (
     <Fragment>
@@ -54,7 +55,7 @@ const VerticalNav = memo((props) => {
             className={`${
               location.pathname === "/dashboard" ? "active" : ""
             } nav-link`}
-            to="/dashboard"
+            to={`/dashboard/app/user-profile/${id}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +67,8 @@ const VerticalNav = memo((props) => {
                 <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
               </g>
             </svg>
-
             <i className="sidenav-mini-icon"> E </i>
-            <span className="item-name">Tableau de bord</span>
+            <span className="item-name">Mon profil</span>
           </Link>
         </li>
         {/* <li className="nav-item static-item">
@@ -674,33 +674,35 @@ const VerticalNav = memo((props) => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className={`${
-                    location.pathname === "/dashboard/app/list-table-training"
-                      ? "active"
-                      : ""
-                  } nav-link`}
-                  to="/dashboard/app/list-table-training"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
+                {false && (
+                  <Link
+                    className={`${
+                      location.pathname === "/dashboard/app/list-table-training"
+                        ? "active"
+                        : ""
+                    } nav-link`}
+                    to="/dashboard/app/list-table-training"
                   >
-                    <g>
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8"
-                        fill="currentColor"
-                      ></circle>
-                    </g>
-                  </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="10"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <g>
+                        <circle
+                          cx="12"
+                          cy="12"
+                          r="8"
+                          fill="currentColor"
+                        ></circle>
+                      </g>
+                    </svg>
 
-                  <i className="sidenav-mini-icon"> E </i>
-                  <span className="item-name">Liste des formations </span>
-                </Link>
+                    <i className="sidenav-mini-icon"> E </i>
+                    <span className="item-name">Liste des formations </span>
+                  </Link>
+                )}
               </li>
               <li className="nav-item">
                 <Link
@@ -859,29 +861,36 @@ const VerticalNav = memo((props) => {
           )}
           {entity == "professor" && (
             <li className="nav-item">
-              <Link
-                className={`${
-                  location.pathname ===
-                  "/dashboard/app/list-progressions-trainings"
-                    ? "active"
-                    : ""
-                } nav-link`}
-                to="/dashboard/app/list-progressions-trainings"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="10"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+              {false && (
+                <Link
+                  className={`${
+                    location.pathname ===
+                    "/dashboard/app/list-progressions-trainings"
+                      ? "active"
+                      : ""
+                  } nav-link`}
+                  to="/dashboard/app/list-progressions-trainings"
                 >
-                  <g>
-                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                  </g>
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <g>
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="8"
+                        fill="currentColor"
+                      ></circle>
+                    </g>
+                  </svg>
 
-                <i className="sidenav-mini-icon"> E </i>
-                <span className="item-name">Suivi des formations</span>
-              </Link>
+                  <i className="sidenav-mini-icon"> E </i>
+                  <span className="item-name">Suivi des formations</span>
+                </Link>
+              )}
             </li>
           )}
           {entity == "Student" && (
@@ -936,925 +945,33 @@ const VerticalNav = memo((props) => {
               </Link>
             </li>
           )}
-        </ul>
-        {/* )} */}
-
-        {/* PARTIES DES COURS */}
-        {/* <li className="nav-item static-item">
-          <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-            <span className="default-icon">Cours</span>
-            <span className="mini-icon">-</span>
-          </Link>
-        </li>
-        <ul className="sub-nav">
-          <li className="nav-item">
-            <Link
-              className={`${
-                location.pathname === "/dashboard/app/add-new-course-to/trainingId"
-                  ? "active"
-                  : ""
-              } nav-link`}
-              to="/dashboard/app/add-new-course-to/trainingId"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <g>
-                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                </g>
-              </svg>
-
-              <i className="sidenav-mini-icon"> E </i>
-              <span className="item-name">Ajouter cours</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={`${
-                location.pathname === "#"
-                  ? "active"
-                  : ""
-              } nav-link`}
-              to="#"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <g>
-                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                </g>
-              </svg>
-
-              <i className="sidenav-mini-icon"> E </i>
-              <span className="item-name">Liste des cours</span>
-            </Link>
-          </li>
-        </ul> */}
-
-        {/* PARTIES DES ... */}
-
-        {/* <Accordion.Item
-          as="li"
-          eventKey="utilities-error"
-          bsPrefix={`nav-item ${active === "error" ? "active" : ""} `}
-          onClick={() => setActive("error")}
-        >
-          <CustomToggle
-            eventKey="utilities-error"
-            active={activeMenu === "utilities-error" ? true : false}
-            onClick={(activeKey) => setActiveMenu(activeKey)}
-          >
-            <svg
-              width="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                opacity="0.4"
-                d="M11.9912 18.6215L5.49945 21.864C5.00921 22.1302 4.39768 21.9525 4.12348 21.4643C4.0434 21.3108 4.00106 21.1402 4 20.9668V13.7087C4 14.4283 4.40573 14.8725 5.47299 15.37L11.9912 18.6215Z"
-                fill="currentColor"
-              ></path>
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M8.89526 2H15.0695C17.7773 2 19.9735 3.06605 20 5.79337V20.9668C19.9989 21.1374 19.9565 21.3051 19.8765 21.4554C19.7479 21.7007 19.5259 21.8827 19.2615 21.9598C18.997 22.0368 18.7128 22.0023 18.4741 21.8641L11.9912 18.6215L5.47299 15.3701C4.40573 14.8726 4 14.4284 4 13.7088V5.79337C4 3.06605 6.19625 2 8.89526 2ZM8.22492 9.62227H15.7486C16.1822 9.62227 16.5336 9.26828 16.5336 8.83162C16.5336 8.39495 16.1822 8.04096 15.7486 8.04096H8.22492C7.79137 8.04096 7.43991 8.39495 7.43991 8.83162C7.43991 9.26828 7.79137 9.62227 8.22492 9.62227Z"
-                fill="currentColor"
-              ></path>
-            </svg>
-
-            <span className="item-name">Utilities</span>
-            <i className="right-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </i>
-          </CustomToggle>
-          <Accordion.Collapse eventKey="utilities-error">
-            <ul className="sub-nav">
-              <li className="nav-item">
-                <Link
-                  className={`${
-                    location.pathname === "/errors/error404" ? "active" : ""
-                  } nav-link`}
-                  to="/errors/error404"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <g>
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8"
-                        fill="currentColor"
-                      ></circle>
-                    </g>
-                  </svg>
-
-                  <span className="item-name">Error 404</span>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className={`${
-                    location.pathname === "/errors/error500" ? "active" : ""
-                  } nav-link`}
-                  to="/errors/error500"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <g>
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8"
-                        fill="currentColor"
-                      ></circle>
-                    </g>
-                  </svg>
-
-                  <span className="item-name">Error 500</span>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className={`${
-                    location.pathname === "/errors/maintenance" ? "active" : ""
-                  } nav-link`}
-                  to="/errors/maintenance"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <g>
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="8"
-                        fill="currentColor"
-                      ></circle>
-                    </g>
-                  </svg>
-
-                  <span className="item-name">Maintenance</span>
-                </Link>
-              </li>
-            </ul>
-          </Accordion.Collapse>
-        </Accordion.Item> */}
-        {/* {
-          <>
+          {entity == "Student" && (
             <li className="nav-item">
               <Link
                 className={`${
-                  location.pathname === "/dashboard/admin/admin" ? "active" : ""
+                  location.pathname === "/dashboard/app/mycertifications"
+                    ? "active"
+                    : ""
                 } nav-link`}
-                to="/dashboard/admin/admin"
-              >
-                <svg
-                  width="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M7.7688 8.71387H16.2312C18.5886 8.71387 20.5 10.5831 20.5 12.8885V17.8254C20.5 20.1308 18.5886 22 16.2312 22H7.7688C5.41136 22 3.5 20.1308 3.5 17.8254V12.8885C3.5 10.5831 5.41136 8.71387 7.7688 8.71387ZM11.9949 17.3295C12.4928 17.3295 12.8891 16.9419 12.8891 16.455V14.2489C12.8891 13.772 12.4928 13.3844 11.9949 13.3844C11.5072 13.3844 11.1109 13.772 11.1109 14.2489V16.455C11.1109 16.9419 11.5072 17.3295 11.9949 17.3295Z"
-                    fill="currentColor"
-                  ></path>
-                  <path
-                    opacity="0.4"
-                    d="M17.523 7.39595V8.86667C17.1673 8.7673 16.7913 8.71761 16.4052 8.71761H15.7447V7.39595C15.7447 5.37868 14.0681 3.73903 12.0053 3.73903C9.94257 3.73903 8.26594 5.36874 8.25578 7.37608V8.71761H7.60545C7.20916 8.71761 6.83319 8.7673 6.47754 8.87661V7.39595C6.4877 4.41476 8.95692 2 11.985 2C15.0537 2 17.523 4.41476 17.523 7.39595Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-
-                <span className="item-name">Admin</span>
-              </Link>
-            </li>
-            <li>
-              <hr className="hr-horizontal" />
-            </li>
-          </>
-        }
-        {
-          <>
-            <li className="nav-item static-item">
-              <Link
-                className="nav-link static-item disabled"
-                to="#"
-                tabIndex="-1"
-              >
-                <span className="default-icon">Elements</span>
-                <span className="mini-icon">-</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                <i className="icon">
-                  <svg
-                    width="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      opacity="0.4"
-                      d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z"
-                      fill="currentColor"
-                    ></path>
-                    <path
-                      d="M11.2451 15.3843V16.6783C11.2451 17.0923 11.5811 17.4283 11.9951 17.4283C12.4091 17.4283 12.7451 17.0923 12.7451 16.6783V15.3843C12.7451 14.9703 12.4091 14.6343 11.9951 14.6343C11.5811 14.6343 11.2451 14.9703 11.2451 15.3843Z"
-                      fill="currentColor"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M10.211 14.5565C10.111 14.9195 9.762 15.1515 9.384 15.1015C6.833 14.7455 4.395 13.8405 2.337 12.4815C2.126 12.3435 2 12.1075 2 11.8555V8.38949C2 6.28949 3.712 4.58149 5.817 4.58149H7.784C7.972 3.12949 9.202 2.00049 10.704 2.00049H13.286C14.787 2.00049 16.018 3.12949 16.206 4.58149H18.183C20.282 4.58149 21.99 6.28949 21.99 8.38949V11.8555C21.99 12.1075 21.863 12.3425 21.654 12.4815C19.592 13.8465 17.144 14.7555 14.576 15.1105C14.541 15.1155 14.507 15.1175 14.473 15.1175C14.134 15.1175 13.831 14.8885 13.746 14.5525C13.544 13.7565 12.821 13.1995 11.99 13.1995C11.148 13.1995 10.433 13.7445 10.211 14.5565ZM13.286 3.50049H10.704C10.031 3.50049 9.469 3.96049 9.301 4.58149H14.688C14.52 3.96049 13.958 3.50049 13.286 3.50049Z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </i>
-                <span className="item-name">Components</span>
-              </Link>
-            </li>
-            <Accordion.Item
-              as="li"
-              eventKey="sidebar-widget"
-              bsPrefix={` ${
-                location.pathname === "/dashboard/widget/widgetbasic" ||
-                location.pathname === "/dashboard/widget/widgetchart" ||
-                location.pathname === "/dashboard/widget/widgetcard"
-                  ? "active"
-                  : "" || active === "widget"
-                  ? "active"
-                  : ""
-              } nav-item`}
-              onClick={() => setActive("widget")}
-            >
-              <CustomToggle
-                eventKey="sidebar-widget"
-                active={activeMenu === "sidebar-widget" ? true : false}
-                onClick={(activeKey) => setActiveMenu(activeKey)}
-              >
-                <svg
-                  width="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    opacity="0.4"
-                    d="M21.25 13.4764C20.429 13.4764 19.761 12.8145 19.761 12.001C19.761 11.1865 20.429 10.5246 21.25 10.5246C21.449 10.5246 21.64 10.4463 21.78 10.3076C21.921 10.1679 22 9.97864 22 9.78146L21.999 7.10415C21.999 4.84102 20.14 3 17.856 3H6.144C3.86 3 2.001 4.84102 2.001 7.10415L2 9.86766C2 10.0648 2.079 10.2541 2.22 10.3938C2.36 10.5325 2.551 10.6108 2.75 10.6108C3.599 10.6108 4.239 11.2083 4.239 12.001C4.239 12.8145 3.571 13.4764 2.75 13.4764C2.336 13.4764 2 13.8093 2 14.2195V16.8949C2 19.158 3.858 21 6.143 21H17.857C20.142 21 22 19.158 22 16.8949V14.2195C22 13.8093 21.664 13.4764 21.25 13.4764Z"
-                    fill="currentColor"
-                  ></path>
-                  <path
-                    d="M15.4303 11.5887L14.2513 12.7367L14.5303 14.3597C14.5783 14.6407 14.4653 14.9177 14.2343 15.0837C14.0053 15.2517 13.7063 15.2727 13.4543 15.1387L11.9993 14.3737L10.5413 15.1397C10.4333 15.1967 10.3153 15.2267 10.1983 15.2267C10.0453 15.2267 9.89434 15.1787 9.76434 15.0847C9.53434 14.9177 9.42134 14.6407 9.46934 14.3597L9.74734 12.7367L8.56834 11.5887C8.36434 11.3907 8.29334 11.0997 8.38134 10.8287C8.47034 10.5587 8.70034 10.3667 8.98134 10.3267L10.6073 10.0897L11.3363 8.61268C11.4633 8.35868 11.7173 8.20068 11.9993 8.20068H12.0013C12.2843 8.20168 12.5383 8.35968 12.6633 8.61368L13.3923 10.0897L15.0213 10.3277C15.2993 10.3667 15.5293 10.5587 15.6173 10.8287C15.7063 11.0997 15.6353 11.3907 15.4303 11.5887Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-
-                <span className="item-name">widget</span>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </CustomToggle>
-              <Accordion.Collapse eventKey="sidebar-widget">
-                <ul className="sub-nav">
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/widget/widgetbasic"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/widget/widgetbasic"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> W </i>
-                      <span className="item-name">Widget Basic</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/widget/widgetchart"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/widget/widgetchart"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> W </i>
-                      <span className="item-name">Widget Chart</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/widget/widgetcard"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/widget/widgetcard"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> W </i>
-                      <span className="item-name">Widget Card</span>
-                    </Link>
-                  </li>
-                </ul>
-              </Accordion.Collapse>
-            </Accordion.Item>
-            <Accordion.Item
-              as="li"
-              eventKey="sidebar-maps"
-              bsPrefix={`nav-item ${active === "maps" ? "active" : ""} `}
-              onClick={() => setActive("maps")}
-            >
-              <CustomToggle
-                eventKey="sidebar-maps"
-                active={activeMenu === "sidebar-maps" ? true : false}
-                onClick={(activeKey) => setActiveMenu(activeKey)}
-              >
-                <svg
-                  width="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M8.53162 2.93677C10.7165 1.66727 13.402 1.68946 15.5664 2.99489C17.7095 4.32691 19.012 6.70418 18.9998 9.26144C18.95 11.8019 17.5533 14.19 15.8075 16.0361C14.7998 17.1064 13.6726 18.0528 12.4488 18.856C12.3228 18.9289 12.1848 18.9777 12.0415 19C11.9036 18.9941 11.7693 18.9534 11.6508 18.8814C9.78243 17.6746 8.14334 16.134 6.81233 14.334C5.69859 12.8314 5.06584 11.016 5 9.13442C4.99856 6.57225 6.34677 4.20627 8.53162 2.93677ZM9.79416 10.1948C10.1617 11.1008 11.0292 11.6918 11.9916 11.6918C12.6221 11.6964 13.2282 11.4438 13.6748 10.9905C14.1214 10.5371 14.3715 9.92064 14.3692 9.27838C14.3726 8.29804 13.7955 7.41231 12.9073 7.03477C12.0191 6.65723 10.995 6.86235 10.3133 7.55435C9.63159 8.24635 9.42664 9.28872 9.79416 10.1948Z"
-                    fill="currentColor"
-                  ></path>
-                  <ellipse
-                    opacity="0.4"
-                    cx="12"
-                    cy="21"
-                    rx="5"
-                    ry="1"
-                    fill="currentColor"
-                  ></ellipse>
-                </svg>
-
-                <span className="item-name">Maps</span>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </CustomToggle>
-              <Accordion.Collapse eventKey="sidebar-maps">
-                <ul className="sub-nav">
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/map/google"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/map/google"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> G </i>
-                      <span className="item-name">Google</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/map/vector"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/map/vector"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> V </i>
-                      <span className="item-name">Vector</span>
-                    </Link>
-                  </li>
-                </ul>
-              </Accordion.Collapse>
-            </Accordion.Item>
-            <Accordion.Item
-              as="li"
-              eventKey="sidebar-form"
-              bsPrefix={`nav-item ${active === "form" ? "active" : ""} `}
-              onClick={() => setActive("form")}
-            >
-              <CustomToggle
-                eventKey="sidebar-form"
-                active={activeMenu === "sidebar-form" ? true : false}
-                onClick={(activeKey) => setActiveMenu(activeKey)}
-              >
-                <svg
-                  width="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    opacity="0.4"
-                    d="M16.191 2H7.81C4.77 2 3 3.78 3 6.83V17.16C3 20.26 4.77 22 7.81 22H16.191C19.28 22 21 20.26 21 17.16V6.83C21 3.78 19.28 2 16.191 2Z"
-                    fill="currentColor"
-                  ></path>
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M8.07996 6.6499V6.6599C7.64896 6.6599 7.29996 7.0099 7.29996 7.4399C7.29996 7.8699 7.64896 8.2199 8.07996 8.2199H11.069C11.5 8.2199 11.85 7.8699 11.85 7.4289C11.85 6.9999 11.5 6.6499 11.069 6.6499H8.07996ZM15.92 12.7399H8.07996C7.64896 12.7399 7.29996 12.3899 7.29996 11.9599C7.29996 11.5299 7.64896 11.1789 8.07996 11.1789H15.92C16.35 11.1789 16.7 11.5299 16.7 11.9599C16.7 12.3899 16.35 12.7399 15.92 12.7399ZM15.92 17.3099H8.07996C7.77996 17.3499 7.48996 17.1999 7.32996 16.9499C7.16996 16.6899 7.16996 16.3599 7.32996 16.1099C7.48996 15.8499 7.77996 15.7099 8.07996 15.7399H15.92C16.319 15.7799 16.62 16.1199 16.62 16.5299C16.62 16.9289 16.319 17.2699 15.92 17.3099Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-
-                <span className="item-name">Form</span>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </CustomToggle>
-              <Accordion.Collapse eventKey="sidebar-form">
-                <ul className="sub-nav">
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/form/form-element"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/form/form-element"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> E </i>
-                      <span className="item-name">Elements</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/form/form-wizard"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/form/form-wizard"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> W </i>
-                      <span className="item-name">Wizard</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/form/form-validation"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/form/form-validation"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> V </i>
-                      <span className="item-name">Validation</span>
-                    </Link>
-                  </li>
-                </ul>
-              </Accordion.Collapse>
-            </Accordion.Item>
-            <Accordion.Item
-              as="li"
-              eventKey="sidebar-table"
-              bsPrefix={`nav-item ${active === "table" ? "active" : ""} `}
-              onClick={() => setActive("table")}
-            >
-              <CustomToggle
-                eventKey="sidebar-table"
-                onClick={(activeKey) => setActiveMenu(activeKey)}
+                to="/dashboard/app/mycertifications"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M2 5C2 4.44772 2.44772 4 3 4H8.66667H21C21.5523 4 22 4.44772 22 5V8H15.3333H8.66667H2V5Z"
-                    fill="currentColor"
-                    stroke="currentColor"
-                  />
-                  <path
-                    d="M6 8H2V11M6 8V20M6 8H14M6 20H3C2.44772 20 2 19.5523 2 19V11M6 20H14M14 8H22V11M14 8V20M14 20H21C21.5523 20 22 19.5523 22 19V11M2 11H22M2 14H22M2 17H22M10 8V20M18 8V20"
-                    stroke="currentColor"
-                  />
-                </svg>
-
-                <span className="item-name">Table</span>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </CustomToggle>
-              <Accordion.Collapse eventKey="sidebar-table">
-                <ul className="sub-nav">
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/table/bootstrap-table"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/table/bootstrap-table"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> B </i>
-                      <span className="item-name">Bootstrap Table</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/table/table-data"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/table/table-data"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> D </i>
-                      <span className="item-name">Datatable</span>
-                    </Link>
-                  </li>
-                </ul>
-              </Accordion.Collapse>
-            </Accordion.Item>
-            <Accordion.Item
-              as="li"
-              eventKey="sidebar-icons"
-              bsPrefix={`nav-item mb-5 ${active === "icons" ? "active" : ""} `}
-              onClick={() => setActive("icons")}
-            >
-              <CustomToggle
-                eventKey="sidebar-icons"
-                onClick={(activeKey) => setActiveMenu(activeKey)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
+                  width="10"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
-                  <path
-                    d="M8 10.5378C8 9.43327 8.89543 8.53784 10 8.53784H11.3333C12.4379 8.53784 13.3333 9.43327 13.3333 10.5378V19.8285C13.3333 20.9331 14.2288 21.8285 15.3333 21.8285H16C16 21.8285 12.7624 23.323 10.6667 22.9361C10.1372 22.8384 9.52234 22.5913 9.01654 22.3553C8.37357 22.0553 8 21.3927 8 20.6832V10.5378Z"
-                    fill="currentColor"
-                  />
-                  <rect
-                    opacity="0.4"
-                    x="8"
-                    y="1"
-                    width="5"
-                    height="5"
-                    rx="2.5"
-                    fill="currentColor"
-                  />
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
                 </svg>
 
-                <span className="item-name">Icons</span>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </CustomToggle>
-              <Accordion.Collapse eventKey="sidebar-icons">
-                <ul className="sub-nav">
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/icon/solid"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/icon/solid"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> S </i>
-                      <span className="item-name">Solid</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/icon/outline"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/icon/outline"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> O </i>
-                      <span className="item-name">Outlined</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link
-                      className={`${
-                        location.pathname === "/dashboard/icon/dual-tone"
-                          ? "active"
-                          : ""
-                      } nav-link`}
-                      to="/dashboard/icon/dual-tone"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="10"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <g>
-                          <circle
-                            cx="12"
-                            cy="12"
-                            r="8"
-                            fill="currentColor"
-                          ></circle>
-                        </g>
-                      </svg>
-
-                      <i className="sidenav-mini-icon"> D </i>
-                      <span className="item-name">Dual Tone</span>
-                    </Link>
-                  </li>
-                </ul>
-              </Accordion.Collapse>
-            </Accordion.Item>
-          </>
-        } */}
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Mes certifications</span>
+              </Link>
+            </li>
+          )}
+        </ul>
       </Accordion>
     </Fragment>
   );

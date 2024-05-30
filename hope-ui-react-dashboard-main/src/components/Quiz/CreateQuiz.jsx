@@ -65,6 +65,9 @@ const CreateQuiz = () => {
       console.log(err);
     }
   };
+  const redirect = () => {
+    navigate("/dashboard");
+  };
   return (
     <div
       style={{
@@ -169,7 +172,7 @@ const CreateQuiz = () => {
         variant="secondary"
         className="w-100  fs-9 mt-2"
         size="lg"
-        onClick={handleAddNewQuestion}
+        onClick={redirect}
       >
         <FontAwesomeIcon
           size="24px"

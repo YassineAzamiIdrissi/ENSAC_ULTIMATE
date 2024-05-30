@@ -303,6 +303,7 @@ exports.getStudentsInTheAcademy = async (req, res, next) => {
         email,
         branch: branch ? branch : "Encore en cycle préparatoire",
         Cycle,
+        respId,
       });
     }
     res.status(201).json(ret);

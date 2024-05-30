@@ -6,6 +6,8 @@ import AdvanceTable from "./AdvanceTable";
 import AdvanceTableFooter from "./AdvanceTableFooter";
 import team33 from "../../assets/images/team/33.webp";
 import Button from "react-bootstrap/Button";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export const ListTableColumns = [
   {
@@ -62,13 +64,18 @@ export const ListTableColumns = [
     header: "actions",
     id: "action",
     cell: (table) => {
+      const excludeProfessor = async () => {
+        try {
+          const response = await axios.patch(
+            `${process.env.REACT_APP_BASE_URL}/professors/excludeProfessor/${table.row.original.id}/${table.row.original.respId}`
+          );
+          toast.success("Activité du professeur est arrétée");
+        } catch (err) {
+          toast.error("CHISS999");
+        }
+      };
       return (
-        <Button
-          variant="danger"
-          onClick={() => {
-            console.log(table.row.original.id);
-          }}
-        >
+        <Button variant="danger" onClick={excludeProfessor}>
           Banner
         </Button>
       );

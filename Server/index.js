@@ -20,6 +20,8 @@ const progressionRoute = require("./Routes/ProgressionRoute");
 const commentRoute = require("./Routes/CommentRoute");
 const quizRoute = require("./Routes/QuizRoute");
 const questionRoute = require("./Routes/QuestionRoute");
+const markRoute = require("./Routes/MarkRoute");
+const certifRoute = require("./Routes/CertificationRoute");
 // --------------------------------------------------------
 const app = express();
 app.use(express.json({ extended: true }));
@@ -40,6 +42,8 @@ app.use("/api/progressions", progressionRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/quiz", quizRoute);
 app.use("/api/questions", questionRoute);
+app.use("/api/marks", markRoute);
+app.use("/api/certifs", certifRoute);
 //----- logique socket :
 const server = http.createServer(app);
 const io = new Server(server, {

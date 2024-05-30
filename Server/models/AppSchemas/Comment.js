@@ -1,7 +1,11 @@
 const { model, Schema } = require("mongoose");
 const commentSchema = new Schema(
   {
-    studentId: {
+    commentator: {
+      type: String,
+      required: true,
+    },
+    entity: {
       type: String,
       required: true,
     },

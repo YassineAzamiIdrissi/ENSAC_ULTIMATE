@@ -24,6 +24,7 @@ const ReadChapterVideo = () => {
   const { courseID, chapterID } = useParams();
   const { currentUser } = useContext(UserContext);
   const studentId = currentUser?.id;
+  const entity = currentUser?.entity;
   const [chapter, setChapter] = useState({});
   const [extObject, setExtObject] = useState(null);
   const [compChaps, setCompChaps] = useState(null);
@@ -77,7 +78,9 @@ const ReadChapterVideo = () => {
         console.log(err);
       }
     };
-    fetchCompletedChaps();
+    if (entity == "Student") {
+      fetchCompletedChaps();
+    }
   }, []);
   useEffect(() => {
     const getProgression = async () => {
@@ -94,7 +97,9 @@ const ReadChapterVideo = () => {
         console.log(err);
       }
     };
-    getProgression();
+    if (entity == "Student") {
+      getProgression();
+    }
   }, []);
   const handleProgress = async () => {
     try {
@@ -116,7 +121,9 @@ const ReadChapterVideo = () => {
   };
   const moveForward = () => {
     navigate(`/course/${courseID}/chapter/${extObject.next}`);
-    handleProgress();
+    if (entity == "Student") {
+      handleProgress();
+    }
     toast.success("Bravo un chapitre terminé 👏");
     setTimeout(() => {
       navigate(0);
@@ -187,7 +194,9 @@ const ReadChapterVideo = () => {
               <Button
                 variant="danger"
                 onClick={() => {
-                  handleProgress();
+                  if (entity == "Student") {
+                    handleProgress();
+                  }
                   goExam();
                 }}
               >

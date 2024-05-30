@@ -59,3 +59,13 @@ exports.getQuizCorrectAnswers = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
+exports.getQuizFromTrainingId = async (req, res, next) => {
+  const { trainingId } = req.params;
+  try {
+    const quiz = await Quiz.find({ trainingId });
+    const concQuiz = quiz[0];
+    res.status(200).json(concQuiz._id);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};

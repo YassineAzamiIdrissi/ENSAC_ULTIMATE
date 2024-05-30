@@ -2,17 +2,82 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePagination from "@mui/material/usePagination/usePagination";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { UserContext } from "../../context/userContext";
+import CertificateGenerator from "../Certification/CertificateGenerator";
 const QuizContent = ({ content }) => {
   // LOGIQUE BACKEND COMMENCE ICI :::
+  // user data :
+  const { currentUser } = useContext(UserContext);
+  const studentId = currentUser?.id;
+  const entity = currentUser?.entity;
   const { trainingID } = useParams();
+  const [quizId, setQuizId] = useState(null);
   const [questions, setQuestions] = useState(null);
+  const [mark, setMark] = useState(null);
   const [studentAnswers, setStudentAnswers] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
+  const [wrongIndexes, setWrongIndexes] = useState(null);
+  // certifs info :
+  const [studentName, setStudentName] = useState(null);
+  const [trainingName, setTrainingName] = useState(null);
+  const [academyId, setAcademyId] = useState(null);
+  const [academyName, setAcademyName] = useState(null);
+  useEffect(() => {
+    const fetchStudentName = async () => {
+      try {
+        const resp = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/students/get/${studentId}`
+        );
+        const f_name = resp.data.firstName + " " + resp.data.lastName;
+        setStudentName(f_name);
+      } catch (err) {
+        toast.error("=) 99");
+        console.log(err);
+      }
+    };
+    if (entity == "Student") {
+      fetchStudentName();
+    }
+  }, []);
+  useEffect(() => {
+    const fetchTrainingName = async () => {
+      try {
+        const resp = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/trainings/getTraining/${trainingID}`
+        );
+        setAcademyId(resp.data.academyId);
+        setTrainingName(resp.data.name);
+        console.log("Academy ID :: ");
+        console.log(resp.data.academyId);
+      } catch (err) {
+        toast.error("=) 98...");
+        console.log(err);
+      }
+    };
+    if (entity == "Student") {
+      fetchTrainingName();
+    }
+  }, []);
+  useEffect(() => {
+    const fetchAcName = async () => {
+      try {
+        const resp = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/academies/get/${academyId}`
+        );
+        setAcademyName(resp.data.name);
+      } catch (err) {
+        toast.error("=) 97...");
+        console.log(err);
+      }
+    };
+    if (trainingName && entity == "Student") {
+      fetchAcName();
+    }
+  }, [trainingName]);
   useEffect(() => {
     console.log(trainingID);
     const fetchQuizQuestions = async () => {
@@ -45,7 +110,6 @@ const QuizContent = ({ content }) => {
     getCorrectAnswers();
   }, []);
   const handleAnswer = (answer, index) => {
-    console.log("Fam");
     let answered = false;
     let indice = 0;
     for (let i = 0; i < studentAnswers.length; i++) {
@@ -65,9 +129,46 @@ const QuizContent = ({ content }) => {
       });
     }
   };
-  // RESTE A IMPLEMENTER LA LOGIQUE OBTENTION DE LA NOTE.
-  // STOCKAGE EN BD.
-  // DONE, 13/05/2024......
+  useEffect(() => {
+    const getQuizId = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/quiz/getQuizFromTrainingId/${trainingID}`
+        );
+        setQuizId(response.data);
+      } catch (err) {
+        toast.error("9EEELEEEB");
+        console.log(err);
+      }
+    };
+    getQuizId();
+  }, []);
+  const handleMark = async () => {
+    try {
+      let mark = 0;
+      let wrongs = [];
+      for (let i = 0; i < studentAnswers.length; ++i) {
+        if (studentAnswers[i].answer == correctAnswers[i]) {
+          mark++;
+        } else {
+          wrongs.push(i);
+        }
+      }
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/marks/defineMark`,
+        { studentId, mark, quizId }
+      );
+      const response_ = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/certifs/newCertification`,
+        { studentId, trainingId: trainingID }
+      );
+      setMark(mark);
+      setWrongIndexes(wrongs);
+    } catch (err) {
+      toast.error("Error brk");
+    }
+  };
+
   return (
     <Row className="kanban-create-board">
       <Col xs={12} xl={12} xxl={12} style={{}}>
@@ -77,7 +178,17 @@ const QuizContent = ({ content }) => {
               Question {index + 1}
             </p>
             <hr />
-            <p style={{ fontWeight: "bold", fontSize: "18px" }}>
+            <p
+              style={{
+                fontWeight: "bold",
+                fontSize: "18px",
+                color: !wrongIndexes
+                  ? "black"
+                  : wrongIndexes?.includes(index)
+                  ? "red"
+                  : "green",
+              }}
+            >
               {question.question}
             </p>
             <Form>
@@ -90,27 +201,50 @@ const QuizContent = ({ content }) => {
                   onChange={(e) => {
                     handleAnswer(e.target.nextSibling.textContent, index);
                   }}
+                  style={{ color: "red" }}
                 />
               ))}
             </Form>
           </div>
         ))}
       </Col>
-      <Button
-        variant="success"
-        className="w-100  fs-9 mt-2"
-        size="lg"
-        type="submit"
-        //onClick={handleSubmitQuiz}
-        style={{ fontSize: "28px" }}
-      >
-        <FontAwesomeIcon
+      {entity == "Student" && !mark && (
+        <Button
+          variant="success"
+          className="w-100  fs-9 mt-2"
           size="lg"
-          icon={faShare}
-          style={{ paddingRight: "20px", fontSize: "22px" }}
-        />
-        Soumettre mes réponses
-      </Button>
+          type="submit"
+          //onClick={handleSubmitQuiz}
+          style={{ fontSize: "28px" }}
+          onClick={handleMark}
+        >
+          <FontAwesomeIcon
+            size="lg"
+            icon={faShare}
+            style={{ paddingRight: "20px", fontSize: "22px" }}
+          />
+          Soumettre mes réponses
+        </Button>
+      )}
+      {entity == "Student" && mark && (
+        <>
+          <h4 style={{ color: mark >= 5 ? "green" : "red" }}>
+            {mark >= 5 &&
+              `Bravo vous avez réussi ce Quiz.. votre note est : ${mark} vous pouvez obtenir votre certification de formation : `}
+            {mark < 5 &&
+              `Ooops, il semble que vous n'avez pas bien saisi quelque notions dans le cours.. vous pouvez reprendre par la suite, votre note : ${mark}/10`}
+          </h4>
+          <div>
+            {mark >= 5 && academyName && trainingName && studentName && (
+              <CertificateGenerator
+                studentName={studentName}
+                trainingName={trainingName}
+                academyName={academyName}
+              />
+            )}
+          </div>
+        </>
+      )}
     </Row>
   );
 };

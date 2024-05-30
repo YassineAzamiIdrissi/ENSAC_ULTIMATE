@@ -170,12 +170,16 @@ const UserProfile = () => {
                     <Nav.Item as="li">
                       <Nav.Link eventKey="first">Profile</Nav.Link>
                     </Nav.Item>
-                    <Nav.Item as="li">
-                      <Nav.Link eventKey="second">Feed</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item as="li">
-                      <Nav.Link eventKey="third">Activity</Nav.Link>
-                    </Nav.Item>
+                    {false && (
+                      <Nav.Item as="li">
+                        <Nav.Link eventKey="second">Feed</Nav.Link>
+                      </Nav.Item>
+                    )}
+                    {false && (
+                      <Nav.Item as="li">
+                        <Nav.Link eventKey="third">Activity</Nav.Link>
+                      </Nav.Item>
+                    )}
                   </Nav>
                 </div>
               </Card.Body>
@@ -263,13 +267,6 @@ const UserProfile = () => {
                           <ShareOffcanvas />
                         </div>
                       </div>
-                      <hr />
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Morbi nulla dolor, ornare at commodo non, feugiat non
-                        nisi. Phasellus faucibus mollis pharetra. Proin blandit
-                        ac massa sed rhoncus
-                      </p>
                       <hr />
                       <ul className="list-inline p-0 m-0">
                         <li className="mb-2">
@@ -632,7 +629,7 @@ const UserProfile = () => {
                           {" "}
                           - {currentUser?.entity}
                         </p>
-                        <p className="mb-0">
+                        <p className="mb-0" style={{ color: "white" }}>
                           Lorem Ipsum is simply dummy text of the printing and
                           typesetting industry. Lorem Ipsum has
                         </p>
@@ -654,7 +651,7 @@ const UserProfile = () => {
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue="linkdle"
+                          defaultValue={fetchedUser?.socialAccounts[0]}
                           className="m-2"
                         />
 
@@ -662,7 +659,7 @@ const UserProfile = () => {
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue="facebook"
+                          defaultValue={fetchedUser?.socialAccounts[1]}
                           className="m-2"
                         />
 
@@ -670,7 +667,7 @@ const UserProfile = () => {
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue="instagram"
+                          defaultValue={fetchedUser?.socialAccounts[2]}
                           className="m-2"
                         />
 
@@ -688,7 +685,7 @@ const UserProfile = () => {
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue={`${fetchedUser?.phone}`}
+                          defaultValue={fetchedUser?.socialAccounts[3]}
                           className="m-2"
                         />
                       </Form.Group>

@@ -9,6 +9,7 @@ import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import img from "../image/course-react.jpg";
 import avaterimg from "../image/avatar-1-100x100.jpg";
+import axios from "axios";
 
 const Slidercourse = ({
   trainingId,
@@ -31,6 +32,27 @@ const Slidercourse = ({
   //   console.log("THE LINK COMPLETION IS : ");
   //   console.log(createLink());
   // }, []);
+  const [training, setTraining] = useState(null);
+  const [range, setRange] = useState(null);
+  useEffect(() => {
+    const fetchTraining = async () => {
+      const resp = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/trainings/getTraining/${trainingId}`
+      );
+      setTraining(resp.data);
+    };
+    fetchTraining();
+  }, []);
+  useEffect(() => {
+    const defineRange = () => {
+      const table = [];
+      for (let i = 0; i < training?.rating; ++i) {
+        table.push(i);
+      }
+      setRange(table);
+    };
+    defineRange();
+  }, [training]);
   return (
     <Box className={classes.Slidercourse}>
       <Link>
@@ -45,19 +67,21 @@ const Slidercourse = ({
         <Link to={`/singleCourse/${trainingId}`}>{title?.slice(0, 30)}...</Link>
       </Typography>
       <Typography variant="h5" component="p" className={classes.slider_time}>
-        <AccessTimeOutlinedIcon /> 2 hours 46 minutes
+        <AccessTimeOutlinedIcon /> {training?.subscribers.length + 12} minutes
       </Typography>
       <Typography variant="h5" component="p" className={classes.slider_label}>
         <SignalCellularAltOutlinedIcon /> {difficulty}
       </Typography>
       <Box className={classes.slider_Rating}>
-        <StarOutlinedIcon />
-        <StarOutlinedIcon />
-        <StarOutlinedIcon />
-        <StarOutlinedIcon />
-        <StarHalfOutlinedIcon />
-        <span style={{ color: "#FFAA46", marginLeft: "5px" }}>4.8</span>
-        <span style={{ color: "#85848b", marginLeft: "5px" }}>(26)</span>
+        {<StarOutlinedIcon />}
+        <span style={{ color: "#FFAA46", marginLeft: "5px" }}>
+          {training?.rating}
+        </span>
+        <span style={{ color: "#85848b", marginLeft: "5px" }}>
+          {training?.subscribers.length
+            ? training?.rating
+            : "Aucune évalation pour le moment"}{" "}
+        </span>
       </Box>
       <Box className={classes.divider}></Box>
       <Box className={classes.slider_bottom_section}>

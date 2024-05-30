@@ -12,7 +12,7 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-const ChaptersList = ({ task, className, chapterId }) => {
+const ChaptersList = ({ training, task, className, chapterId }) => {
   // LOGIQUE BACKEND :
   const navigate = useNavigate();
   const deleteChapter = async () => {
@@ -34,11 +34,9 @@ const ChaptersList = ({ task, className, chapterId }) => {
   const redirectToEdit = async () => {
     navigate(`/dashboard/app/updateChapter/${chapterId}`);
   };
-  
+
   const handleReadChapter = (chapterId) => {
-    navigate(`http://localhost:3000/course/1/chapter/1`);
-    //navigate(`http://localhost:3000/training/TrainingID/chapter/${chapterId}`);
-    /* Remplacer par course par training et ajuster*/
+    navigate(`/course/${training?._id}/chapter/${chapterId}`);
   };
   return (
     <div

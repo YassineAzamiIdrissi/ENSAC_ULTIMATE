@@ -5,11 +5,6 @@ const quizSchema = new Schema(
       type: String,
       required: true,
     },
-    mark: {
-      type: Number,
-      default: 0,
-      max: 20,
-    },
     questions: {
       type: [String], // linked to questions
     },

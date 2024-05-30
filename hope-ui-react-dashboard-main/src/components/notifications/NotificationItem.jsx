@@ -27,7 +27,6 @@ const NotificationItem = ({ notification, className }) => {
                 {notification.interactionIcon}
               </span>
               <span>{notification.interaction}</span>
-
               <span className="ms-2 text-body-quaternary text-opactity-75 fw-bold fs-10">
                 {notification.ago}
               </span>

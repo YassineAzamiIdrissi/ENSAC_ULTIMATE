@@ -11,6 +11,7 @@ const ReviewModal = ({ show, handleClose, commentsList, setCommentsList }) => {
   // LOGIQE BACKEND COMMENCE ICI :
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
+  const entity = currentUser?.entity;
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const handleChange = (e) => {
@@ -26,6 +27,7 @@ const ReviewModal = ({ show, handleClose, commentsList, setCommentsList }) => {
           elementId: chapterID,
           content: comment,
           rating,
+          entity,
         },
         {
           withCredentials: true,

@@ -62,6 +62,7 @@ import ReadTrainingLayout from "../components/lecture/ReadTrainingLayout";
 import ReadChapterVideo from "../components/lecture/readChapterVideo";
 import CreateQuiz from "../components/Quiz/CreateQuiz";
 import ViewQuiz from "../components/Quiz/ViewQuiz";
+import Certifs from "../views/dashboard/table/Certifs";
 export const DefaultRouter = [
   {
     path: "/",
@@ -218,6 +219,10 @@ export const DefaultRouter = [
       {
         path: "dashboard/table/bootstrap-table",
         element: <BootstrapTable />,
+      },
+      {
+        path: "dashboard/app/mycertifications",
+        element: <Certifs />,
       },
       {
         path: "dashboard/table/table-data",

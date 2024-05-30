@@ -83,6 +83,7 @@ const Courses = () => {
         const trainingsResponse = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/trainings/getAllTrainings`
         );
+        console.log("HNA___0");
         const fetchedTrainings = trainingsResponse.data;
         const academiesPromises = fetchedTrainings.map(async (training) => {
           const academyResponse = await axios.get(
@@ -90,6 +91,7 @@ const Courses = () => {
           );
           return academyResponse.data;
         });
+        console.log("HNA___1");
         const fetchedAcademies = await Promise.all(academiesPromises);
         setFetchedTrainings(fetchedTrainings);
         setFetchedAcademies(fetchedAcademies);

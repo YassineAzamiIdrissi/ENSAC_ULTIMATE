@@ -80,6 +80,7 @@ const CourseList = ({ handleClose, selectedItem, training }) => {
                     key={index}
                     task={item}
                     chapterId={item._id}
+                    training={training}
                     className={classNames({
                       "border-top border-translucent": index === 0,
                     })}

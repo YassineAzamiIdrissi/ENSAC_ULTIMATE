@@ -45,20 +45,6 @@ const generateCertificate = (studentName, trainingName, academyName) => {
 function CertificateGenerator(props) {
   return (
     <div>
-      {/* <Button
-        variant=""
-        className="w-100  fs-9"
-        size="md"
-        onClick={() =>
-          generateCertificate(
-            props.studentName,
-            props.trainingName,
-            props.academyName
-          )
-        }
-      >
-        Télécharger mon certification
-      </Button> */}
       <Button
         variant="success"
         className="w-100  fs-9 mt-2"
@@ -72,12 +58,7 @@ function CertificateGenerator(props) {
           )
         }
       >
-        <FontAwesomeIcon
-          size="lg"
-          icon={faShare}
-          style={{ paddingRight: "20px", fontSize: "22px" }}
-        />
-        TELECHARGER LE CERTIFICAT
+        Télécharger
       </Button>
     </div>
   );
