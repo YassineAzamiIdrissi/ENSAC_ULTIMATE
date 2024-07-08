@@ -263,8 +263,13 @@ exports.acceptEnroll = async (req, res, next) => {
     // Accord d'une progression :
     // -- Getting first ever chapter id :
     const firstCourseId = concernedTraining.courses[0];
+
     const firstCourseObj = await Course.findById(firstCourseId);
+    console.log("FIRST COURSE OBJECT ");
+    console.log(firstCourseObj);
     const stopChap = firstCourseObj.chapters[0];
+    console.log("THIS IS THE STOOPPP CHAP ");
+    console.log(stopChap);
     await Progression.create({
       studentId,
       trainingId,

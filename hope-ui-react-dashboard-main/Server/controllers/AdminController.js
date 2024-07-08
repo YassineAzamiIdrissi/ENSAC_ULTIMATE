@@ -2,6 +2,7 @@ const Domain = require("../models/AppSchemas/Domain");
 const Professor = require("../models/AppSchemas/Professor");
 const Academy = require("../models/AppSchemas/Academy");
 const HttpError = require("../models/HttpError/ErrorModel");
+const Testimonial = require("../models/AppSchemas/Testimonial.js");
 const bcrypt = require("bcrypt");
 // ces controlleurs ne sont pas liés directement à un certain shéma mais ce sont des taches effectuées par un membrz d'administration.
 

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateQuiz = () => {
   //Toutes les questions sont dans la variable d'état "questions"
@@ -18,7 +18,7 @@ const CreateQuiz = () => {
   ]);
   const [questionCount, setQuestionCount] = useState(1);
   const [answer, setAnswer] = useState("");
-
+  const navigate = useNavigate();
   const handleAddNewQuestion = () => {
     setQuestions([
       ...questions,

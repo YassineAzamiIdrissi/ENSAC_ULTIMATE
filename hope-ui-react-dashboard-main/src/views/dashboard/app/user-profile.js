@@ -19,13 +19,8 @@ import avatars4 from "../../../assets/images/avatars/04.png";
 import avatars5 from "../../../assets/images/avatars/05.png";
 
 import icon1 from "../../../assets/images/icons/01.png";
-import icon2 from "../../../assets/images/icons/02.png";
-import icon3 from "../../../assets/images/icons/03.png";
-import icon4 from "../../../assets/images/icons/04.png";
+import icon2 from "../../../assets/images/icons/02.png";import icon4 from "../../../assets/images/icons/04.png";
 import icon8 from "../../../assets/images/icons/08.png";
-import icon6 from "../../../assets/images/icons/06.png";
-import icon7 from "../../../assets/images/icons/07.png";
-
 import icon5 from "../../../assets/images/icons/05.png";
 import shap2 from "../../../assets/images/shapes/02.png";
 import shap4 from "../../../assets/images/shapes/04.png";
@@ -646,46 +641,36 @@ const UserProfile = () => {
                   <Card.Body>
                     <Form>
                       <Form.Group className="form-group ">
-                        <h6>MES URL RESEAUX</h6>
+                        <h6>Prénom</h6>
                         <Form.Control
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue={fetchedUser?.socialAccounts[0]}
+                          defaultValue={fetchedUser?.firstName}
                           className="m-2"
                         />
-
+                        <h6>Nom</h6>
                         <Form.Control
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue={fetchedUser?.socialAccounts[1]}
+                          defaultValue={fetchedUser?.lastName}
                           className="m-2"
                         />
-
+                        <h6>Email </h6>
                         <Form.Control
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue={fetchedUser?.socialAccounts[2]}
+                          defaultValue={fetchedUser?.email}
                           className="m-2"
                         />
-
                         <h6>Email académique</h6>
                         <Form.Control
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
                           value={`${fetchedUser?.firstName}${fetchedUser?.lastName}@usmba.ac.ma`}
-                          className="m-2"
-                        />
-
-                        <h6>Contact</h6>
-                        <Form.Control
-                          type="text"
-                          id="exampleInputDisabled1"
-                          disabled
-                          defaultValue={fetchedUser?.socialAccounts[3]}
                           className="m-2"
                         />
                       </Form.Group>

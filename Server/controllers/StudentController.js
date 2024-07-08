@@ -14,7 +14,7 @@ const bcrypt = require("bcrypt");
 exports.registerStudent = async (req, res, next) => {
   try {
     console.log("Corps de la requette : ");
-    console.log(req.body);
+    console.log(req.body); 
     const { firstname, lastname, email, password, password2, profilePicture } =
       req.body;
     if (!firstname.trim() || !lastname.trim() || !email.trim() || !password) {
@@ -32,7 +32,7 @@ exports.registerStudent = async (req, res, next) => {
     if (emailExists) {
       return next(
         new HttpError(
-          "Cet email est déja utilisé par un autre étudiant ! catch(registerStudent)"
+          "Cet email est déja utilisé par un autre étudiant !"
         )
       );
     }
@@ -73,7 +73,7 @@ exports.registerStudent = async (req, res, next) => {
     console.log(error);
     return next(
       new HttpError(
-        "Inscription de l'etudiant a echoué , catch(registerStudent)",
+        "Inscription de l'etudiant a echoué",
         422
       )
     );

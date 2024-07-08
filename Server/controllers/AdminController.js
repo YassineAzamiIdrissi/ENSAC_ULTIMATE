@@ -1,3 +1,6 @@
+const Admin = require("../models/AppSchemas/Admin");
+const jwt = require("jsonwebtoken");
+
 const Domain = require("../models/AppSchemas/Domain");
 const Professor = require("../models/AppSchemas/Professor");
 const Academy = require("../models/AppSchemas/Academy");
@@ -5,9 +8,191 @@ const Training = require("../models/AppSchemas/Training");
 const Progression = require("../models/AppSchemas/Progression");
 const Course = require("../models/AppSchemas/Course");
 const HttpError = require("../models/HttpError/ErrorModel");
+const Testimonal = require("../models/AppSchemas/Testimonial");
 const bcrypt = require("bcrypt");
 // ces controlleurs ne sont pas liés directement à un certain shéma mais ce sont des taches effectuées par un membrz d'administration.
 
+exports.newAdmin = async (req, res, next) => {
+  let { firstName, lastName, email, password, profilePicture } = req.body;
+  if (!firstName || !lastName || !email || !password) {
+    return next(new HttpError("Des données nécassaires qui manquent !"));
+  }
+  try {
+    const check = await Admin.find({ email });
+    if (check.length > 0) {
+      return next(
+        new HttpError("Ce mail est déja utilisé par un autre admin ! ")
+      );
+    }
+    if (password.trim().length <= 12) {
+      return next(
+        new HttpError(
+          "Le mot de passe doit contenir au moins 12 caractéres non vides !"
+        )
+      );
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(password, salt);
+    let newAdmin;
+    email = email.toLowerCase();
+    if (profilePicture) {
+      newAdmin = await Admin.create({
+        firstName,
+        lastName,
+        email,
+        password: hashedPass,
+        profilePicture,
+      });
+    } else {
+      newAdmin = await Admin.create({
+        firstName,
+        lastName,
+        email,
+        password: hashedPass,
+      });
+    }
+    res.status(201).json(newAdmin);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.loginAdmin = async (req, res, next) => {
+  let { email, password } = req.body;
+  if (!email || !password) {
+    return next(new HttpError("Des données obligaoires qui manquent !"));
+  }
+  try {
+    email = email.toLowerCase();
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return next(
+        new HttpError("Ce mail ne convient aucune ressource existante...")
+      );
+    }
+    const comparePass = await bcrypt.compare(password, admin.password);
+    if (!comparePass) {
+      return next(new HttpError("Mot de passe incorrecte !", 422));
+    }
+    // Generation du token :
+    const { _id: id, firstName, lastName } = admin;
+    const fullName = firstName + " " + lastName;
+    const token = jwt.sign(
+      { id, fullName, entity: "admin" },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+    res.status(200).json({ token, fullName, id, entity: "admin" });
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getAdmin = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const concernedAdmin = await Admin.findById(id);
+    if (!concernedAdmin) {
+      return next(new HttpError("Ressource introuvable", 404));
+    }
+    res.status(201).json(concernedAdmin);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.editAdminInfo = async (req, res, next) => {
+  const { id } = req.user;
+  const {
+    firstName,
+    lastName,
+    newPassword,
+    confirmNewPassword,
+    newProfilePicture,
+    currentPassword,
+    email,
+  } = req.body;
+  if (!firstName || !lastName || !currentPassword || !email) {
+    return next(new HttpError("Données obligatoires qui manquent..."));
+  }
+  try {
+    const thisUser = await Admin.findById(id);
+    const usedMail = await Admin.findOne({ email });
+    if (usedMail && email !== thisUser.email) {
+      return next(
+        new HttpError(
+          "Ce mail est déja utilisé par un autre administrateur....",
+          400
+        )
+      );
+    }
+    let updateObject = {
+      firstName,
+      lastName,
+      email,
+    };
+    if (newProfilePicture) {
+      if (newPassword && confirmNewPassword) {
+        if (newPassword.trim().length < 12) {
+          return next(
+            new HttpError(
+              "Attention le mot de passe doit au moins contenir 12 caractéres non vides.."
+            )
+          );
+        }
+        if (newPassword != confirmNewPassword) {
+          return next(new HttpError("Mot de passes ne sont pas indentiques.."));
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedNewPass = await bcrypt.hash(newPassword, salt);
+        updateObject = {
+          ...updateObject,
+          password: hashedNewPass,
+          profilePicture: newProfilePicture,
+        };
+      } else {
+        if (newPassword || confirmNewPassword) {
+          return next(new HttpError("Des données obligatoires qui manquent "));
+        } else {
+          updateObject = { ...updateObject, profilePicture: newProfilePicture };
+        }
+      }
+    } else {
+      if (newPassword && confirmNewPassword) {
+        if (newPassword.trim().length < 12) {
+          return next(
+            new HttpError(
+              "Attention le mot de passe doit au moins contenir 12 caractéres non vides.."
+            )
+          );
+        }
+        if (newPassword != confirmNewPassword) {
+          return next(new HttpError("Mot de passes ne sont pas identiques.."));
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedNewPass = await bcrypt.hash(newPassword, salt);
+        updateObject = {
+          ...updateObject,
+          password: hashedNewPass,
+        };
+      } else {
+        if (newPassword || confirmNewPassword) {
+          return next(new HttpError("Des données obligatoires qui manquent "));
+        }
+      }
+    }
+    const compare = await bcrypt.compare(currentPassword, thisUser.password);
+    if (!compare) {
+      return next(new HttpError("Mot de passe actuel est incorrecte !", 400));
+    } else {
+      const updated = await Admin.findByIdAndUpdate(id, updateObject, {
+        new: true,
+      });
+      res.status(201).json(updated);
+    }
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
 exports.addProfessor = async (req, res, next) => {
   try {
     const {
@@ -68,7 +253,7 @@ exports.addProfessor = async (req, res, next) => {
         email: newMail,
         password: hashedPass,
         phone,
-        profilePicture: profilePicture,
+        profilePicture,
         isResponsable: false,
         description,
       });
@@ -355,6 +540,28 @@ exports.addProgression = async (req, res, next) => {
       progression,
     });
     res.status(200).json(newProg);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.addTestiMonial = async (req, res, next) => {
+  const { personName, personImg, personPos, testimonial } = req.body;
+  try {
+    const newRes = await Testimonal.create({
+      personName,
+      personImg,
+      personPos,
+      testimonial,
+    });
+    res.status(201).json(newRes);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getAllTestimonials = async (req, res, next) => {
+  try {
+    const all = await Testimonal.find();
+    res.status(200).json(all);
   } catch (err) {
     return next(new HttpError(err));
   }

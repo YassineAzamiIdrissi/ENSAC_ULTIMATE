@@ -43,9 +43,10 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const sendPic = async () => {
+  const sendPic = async (file) => {
     setLoadingPreview(true);
-    const urlOb = await upload(profilePicture);
+    console.log(file);
+    const urlOb = await upload(file);
     setUrl(urlOb);
     setForm({ ...form, profilePicture: urlOb });
     setLoadingPreview(false);
@@ -243,8 +244,7 @@ const SignUp = () => {
                                 id="picture"
                                 type="file"
                                 onChange={(e) => {
-                                  setProfilePicture(e.target.files[0]);
-                                  sendPic();
+                                  sendPic(e.target.files[0]);
                                 }}
                               />
                               <Upload size={34} />

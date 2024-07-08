@@ -173,7 +173,6 @@ const Navbar = () => {
               >
                 S'inscrire
               </Button>
-
               <RevealDropdown icon={faUser} placeholder="Connexion">
                 <Dropdown.Item eventKey="1">
                   <Link
@@ -184,7 +183,6 @@ const Navbar = () => {
                     Professeur
                   </Link>
                 </Dropdown.Item>
-
                 <Dropdown.Item eventKey="2">
                   <Link
                     style={{ textDecoration: "none", color: "inherit" }}
@@ -194,8 +192,16 @@ const Navbar = () => {
                     Etudiant
                   </Link>
                 </Dropdown.Item>
+                <Dropdown.Item eventKey="2">
+                  <Link
+                    style={{ textDecoration: "none", color: "inherit" }}
+                    // onClick={addQuiz}
+                    to="/auth/sign-in-admin"
+                  >
+                    Administrateur
+                  </Link>
+                </Dropdown.Item>
               </RevealDropdown>
-
               {/* <Button
                 href="/auth/sign-in"
                 className={`${classes.button} ${classes.button_2}`}

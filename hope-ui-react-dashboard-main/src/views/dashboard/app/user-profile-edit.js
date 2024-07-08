@@ -429,41 +429,43 @@ const UserAccountSetting = () => {
                   <fieldset
                     className={`${show === "Image" ? "d-block" : "d-none"}`}
                   >
-                    <div className="form-card">
-                      <div className="row">
-                        <div className="col-7">
-                          <h3 className="mb-4 text-left">Terminer :</h3>
+                    {false && (
+                      <div className="form-card">
+                        <div className="row">
+                          <div className="col-7">
+                            <h3 className="mb-4 text-left">Terminer :</h3>
+                          </div>
+                          <div className="col-5">
+                            <h2 className="steps">Étape 4 - 4</h2>
+                          </div>
                         </div>
-                        <div className="col-5">
-                          <h2 className="steps">Étape 4 - 4</h2>
+                        <br />
+                        <br />
+                        <h2 className="text-success text-center">
+                          <strong>SUCCÈS !</strong>
+                        </h2>
+                        <br />
+                        <div className="row justify-content-center">
+                          <div className="col-3">
+                            {" "}
+                            <Image
+                              src={imgsuccess}
+                              className="img-fluid"
+                              alt="fit-image"
+                            />{" "}
+                          </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div className="row justify-content-center">
+                          <div className="col-7 text-center">
+                            <h5 className="purple-text text-center">
+                              Votre profile a été mis à jour
+                            </h5>
+                          </div>
                         </div>
                       </div>
-                      <br />
-                      <br />
-                      <h2 className="text-success text-center">
-                        <strong>SUCCÈS !</strong>
-                      </h2>
-                      <br />
-                      <div className="row justify-content-center">
-                        <div className="col-3">
-                          {" "}
-                          <Image
-                            src={imgsuccess}
-                            className="img-fluid"
-                            alt="fit-image"
-                          />{" "}
-                        </div>
-                      </div>
-                      <br />
-                      <br />
-                      <div className="row justify-content-center">
-                        <div className="col-7 text-center">
-                          <h5 className="purple-text text-center">
-                            Votre profile a été mis à jour
-                          </h5>
-                        </div>
-                      </div>
-                    </div>
+                    )}
                   </fieldset>
                 </Form>
               </Card.Body>

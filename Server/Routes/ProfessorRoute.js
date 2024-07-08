@@ -11,7 +11,7 @@ const {
   refuseEnroll,
   getAllProfessorsInAcademy,
   excludeStudent,
-  excludeProfessor,
+  excludeProfessor
 } = require("../controllers/ProfessorController");
 const authMiddleware = require("../middlewares/Authorize");
 const router = Router();

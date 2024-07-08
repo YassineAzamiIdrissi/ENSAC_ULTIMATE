@@ -6,7 +6,7 @@ const Professor = require("../models/AppSchemas/Professor");
 exports.getSpecProgression = async (req, res, next) => {
   const { trainingId, studentId } = req.params;
   try {
-    const specProg = await Progression.find({ trainingId });
+    const specProg = await Progression.find({ trainingId, studentId });
     if (specProg[0].studentId == studentId) {
       res.status(200).json(specProg[0]);
     } else {

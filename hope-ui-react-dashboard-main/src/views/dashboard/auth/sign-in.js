@@ -17,7 +17,7 @@ const SignIn = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const { setCurrentUser } = useContext(UserContext);
+  const { setCurrentUser, currentUser } = useContext(UserContext);
   const loginUser = async (e) => {
     e.preventDefault();
     setError("");
@@ -28,7 +28,7 @@ const SignIn = () => {
       );
       const user = await result.data;
       setCurrentUser(user);
-      navigate("/dashboard");
+      navigate("/dashboard/app/list-training");
     } catch (err) {
       toast.error("Echec de connexion ");
       console.log(err.response.data);

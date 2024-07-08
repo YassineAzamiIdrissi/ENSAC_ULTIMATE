@@ -154,21 +154,11 @@ const CourseSidebar = () => {
             variant="h4"
             className={classes.course_sidebar_box_2_content}
           >
-            <PlayCircleOutlineIcon
-              style={{ color: "#754ffe" }}
-              className={classes.single_course_sidebar_icon}
-            />
-            12 hours video
-          </Typography>
-          <Typography
-            variant="h4"
-            className={classes.course_sidebar_box_2_content}
-          >
             <WorkspacePremiumRoundedIcon
               style={{ color: "#45D6DE" }}
               className={classes.single_course_sidebar_icon}
             />
-            Certificate
+            Certification
           </Typography>
           <Typography
             variant="h4"
@@ -178,17 +168,7 @@ const CourseSidebar = () => {
               style={{ color: "#83CCFA" }}
               className={classes.single_course_sidebar_icon}
             />
-            12 Article
-          </Typography>
-          <Typography
-            variant="h4"
-            className={classes.course_sidebar_box_2_content}
-          >
-            <VideocamRoundedIcon
-              style={{ color: "#D0CFC5" }}
-              className={classes.single_course_sidebar_icon}
-            />
-            Watch Offline
+            Cours bien explqués
           </Typography>
           <Typography
             variant="h4"
@@ -198,7 +178,7 @@ const CourseSidebar = () => {
               style={{ color: "#FFAB6A" }}
               className={classes.single_course_sidebar_icon}
             />
-            Lifetime access
+            Accés à vie
           </Typography>
         </Box>
       </Box>

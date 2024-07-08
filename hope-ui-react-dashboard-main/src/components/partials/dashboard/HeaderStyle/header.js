@@ -85,6 +85,8 @@ const Header = memo((props) => {
           }`
         );
         setFetchedUser(response.data);
+        console.log("This is the fetched user : ");
+        console.log(response.data);
       } catch (err) {
         // un toast pour indiquer que des choses ne marchent pas...
         toast.error(
@@ -537,8 +539,10 @@ const Header = memo((props) => {
                       {currentUser?.fullName}
                     </h6>
                     <p className="mb-0 caption-sub-title">
-                      {currentUser?.entity == "Professor"
+                      {currentUser?.entity == "professor"
                         ? "Professeur"
+                        : currentUser?.entity == "admin"
+                        ? "Administrateur"
                         : "Etudiant"}
                     </p>
                   </div>

@@ -138,7 +138,6 @@ const SingleCourse = () => {
                                     className={classes.single_course_tabs_icon}
                                   />
                                   <Link
-                                    to={`http://localhost:3000/course/1/chapter/1`}
                                     style={{
                                       textDecoration: "none",
                                       color: "inherit",

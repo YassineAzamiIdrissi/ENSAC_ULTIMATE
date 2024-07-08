@@ -73,11 +73,13 @@ const Slidercourse = ({
         <SignalCellularAltOutlinedIcon /> {difficulty}
       </Typography>
       <Box className={classes.slider_Rating}>
-        {<StarOutlinedIcon />}
-        <span style={{ color: "#FFAA46", marginLeft: "5px" }}>
+        {range?.map((item) => (
+          <StarOutlinedIcon />
+        ))}
+        {/* <span style={{ color: "#FFAA46", marginLeft: "5px" }}>
           {training?.rating}
-        </span>
-        <span style={{ color: "#85848b", marginLeft: "5px" }}>
+        </span> */}
+        <span style={{ color: "#FFAA46", marginLeft: "5px" }}>
           {training?.subscribers.length
             ? training?.rating
             : "Aucune évalation pour le moment"}{" "}

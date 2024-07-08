@@ -22,6 +22,7 @@ const Home = () => {
   const classes = pageCss();
   // LOGIQUE BACKEND COMMENCE ICI :
   const [fetchedTrainings, setFetchedTrainings] = useState(null);
+  const [sortedFetchedTrainings, setSortedFetchedTrainings] = useState(null);
   const [fetchedAcademies, setFetchedAcademies] = useState([]);
   const [fetchedProfs, setFetchedProfs] = useState([]);
   const { currentUser } = useContext(UserContext);
@@ -42,6 +43,11 @@ const Home = () => {
         });
         const fetchedAcademies = await Promise.all(academiesPromises);
         setFetchedTrainings(fetchedTrainings);
+        setSortedFetchedTrainings(
+          [...fetchedTrainings].sort(
+            (a, b) => b.subscribers.length - a.subscribers.length
+          )
+        );
         setFetchedAcademies(fetchedAcademies);
       } catch (error) {
         console.error(error);
@@ -51,10 +57,15 @@ const Home = () => {
   }, []);
   useEffect(() => {
     const fetchProfs = async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/professors/getAllProfs`
-      );
-      setFetchedProfs(response.data);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/professors/getAllProfs`
+        );
+        setFetchedProfs(response.data);
+      } catch (err) {
+        console.log("Distg tag =D");
+        console.log(err);
+      }
     };
     fetchProfs();
   }, []);
@@ -109,8 +120,8 @@ const Home = () => {
             </Box>
             <Box className={classes.home_course_slider}>
               <Slider {...settings}>
-                {fetchedTrainings &&
-                  fetchedTrainings.map((training, index) => (
+                {sortedFetchedTrainings &&
+                  sortedFetchedTrainings?.map((training, index) => (
                     <Slidercourse
                       key={index}
                       trainingId={training._id}
@@ -207,8 +218,18 @@ const Home = () => {
                 </Typography>
                 <Box className={classes.home_testimonial_box}>
                   <Slider {...testimonial}>
-                    {data.map((item) => (
-                      <TextimonialCom key={item} />
+                    {data?.map((item) => (
+                      <TextimonialCom
+                        key={item}
+                        desc={
+                          "En tant qu'utilisateur régulier, je peux affirmer sans hésitation que cette plateforme est absolument parfaite. Dès le premier jour, j'ai été impressionné par sa simplicité d'utilisation et son interface intuitive. Tout y est pensé pour faciliter l'expérience utilisateur, rendant chaque tâche non seulement réalisable, mais agréable."
+                        }
+                        img={
+                          "https://i.le360.ma/le360sport/sites/default/files/styles/img_738_520/public/assets/images/2022/10-reda/5760907_1660126629.jpg"
+                        }
+                        pos={"Développeur Web"}
+                        name={"Achraf Bencherki"}
+                      />
                     ))}
                   </Slider>
                 </Box>

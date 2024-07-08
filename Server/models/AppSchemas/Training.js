@@ -44,6 +44,9 @@ const trainingSchema = new Schema(
     description: {
       type: [String],
     },
+    difficulty: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

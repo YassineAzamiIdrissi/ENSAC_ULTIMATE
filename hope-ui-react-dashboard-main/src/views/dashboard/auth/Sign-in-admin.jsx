@@ -1,19 +1,18 @@
 import { faKey, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { Col, Form, Row, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import bg from "../../../assets/images/auth/30.png";
-//import "../../../css/theme.min.css";
-
+import bg from "../../../assets/images/auth/Adminbanner.jpg";
 import { UserContext } from "../../../context/userContext";
 import { useContext, useState } from "react";
 import axios from "axios";
-import socket from "../../../Socket/socket";
-const SignInFormProf = () => {
-  const [error, setError] = useState("");
+const SignInFormAdmin = () => {
+  // local session :
   const { setCurrentUser } = useContext(UserContext);
-  const navigate = useNavigate("");
+  // navigator :
+  const navigate = useNavigate();
+  // error :
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -26,22 +25,14 @@ const SignInFormProf = () => {
     setError("");
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/professors/login`,
+        `${process.env.REACT_APP_BASE_URL}/admins/loginAdmin`,
         formData
       );
       setCurrentUser(response.data);
-      if (response.data.isResp) {
-        let room = "";
-        for (let i = 0; i < response.data.academyResponsables.length; ++i) {
-          room += response.data.academyResponsables[i];
-        }
-        socket.emit("join_room", room);
-        console.log("Professor room : " + room);
-      }
-      navigate("/dashboard/app/list-training");
+      navigate("/dashboard");
     } catch (err) {
-      console.error(err);
       setError(err.response.data);
+      console.log(err);
     }
   };
   return (
@@ -108,8 +99,8 @@ const SignInFormProf = () => {
                     <Form.Control
                       id="password"
                       name="password"
-                      onChange={handleChange}
                       type="password"
+                      onChange={handleChange}
                       className="form-icon-input"
                     />
                     <FontAwesomeIcon
@@ -142,4 +133,4 @@ const SignInFormProf = () => {
   );
 };
 
-export default SignInFormProf;
+export default SignInFormAdmin;
