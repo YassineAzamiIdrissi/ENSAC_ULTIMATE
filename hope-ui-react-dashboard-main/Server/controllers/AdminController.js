@@ -27,12 +27,7 @@ exports.addProfessor = async (req, res, next) => {
       !phone.trim() ||
       !description.trim()
     ) {
-      return next(
-        new HttpError(
-          "Des données nécéssaires qui manquent , catch(addProfessor !)",
-          422
-        )
-      );
+      return next(new HttpError("Des données nécéssaires qui manquent", 422));
     }
     const newMail = email.toLowerCase();
     const emailExists = await Professor.findOne({ email: newMail });

@@ -214,12 +214,7 @@ exports.addProfessor = async (req, res, next) => {
       !phone.trim() ||
       !description.trim()
     ) {
-      return next(
-        new HttpError(
-          "Des données nécéssaires qui manquent , catch(addProfessor !)",
-          422
-        )
-      );
+      return next(new HttpError("Des données nécéssaires qui manquent", 422));
     }
     const newMail = email.toLowerCase();
     const emailExists = await Professor.findOne({ email: newMail });
@@ -562,6 +557,185 @@ exports.getAllTestimonials = async (req, res, next) => {
   try {
     const all = await Testimonal.find();
     res.status(200).json(all);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.adminEditProfessor = async (req, res, next) => {
+  const id = req.params.id;
+  const {
+    firstName,
+    lastName,
+    newPassword,
+    confirmNewPassword,
+    profilePicture,
+    description,
+    email,
+    phone,
+  } = req.body;
+  const newMail = email.toLowerCase();
+  try {
+    const concernedUser = await Professor.findById(id);
+    if (!firstName || !lastName || !email) {
+      return next(new HttpError("Données nécéssaires qui manquent.."));
+    }
+    const exists = await Professor.findOne({ email: newMail });
+    if (exists && exists._id != id) {
+      return next(
+        new HttpError("Ce mail est déja utilisé par un autre utilisateur..")
+      );
+    }
+    if (profilePicture) {
+      if (newPassword) {
+        if (!confirmNewPassword) {
+          return next(new HttpError("Données nécéssaires que manquent..."));
+        }
+        if (newPassword != confirmNewPassword) {
+          return next(
+            new HttpError("Les mots de passe ne sont pas indetiques !")
+          );
+        }
+        if (newPassword.trim().length < 12) {
+          return next(
+            new HttpError(
+              "Le mot de passe doit contenir au moins 12 caractéres non blancs.."
+            )
+          );
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedNewPass = await bcrypt.hash(newPassword, salt);
+        // -------------------------------------
+        concernedUser.password = hashedNewPass;
+        concernedUser.profilePicture = profilePicture;
+        concernedUser.email = newMail;
+        concernedUser.firstName = firstName;
+        concernedUser.lastName = lastName;
+        concernedUser.phone = phone;
+        concernedUser.description = description;
+        // -------------------------------------
+        concernedUser.save();
+      } else {
+        if (confirmNewPassword) {
+          return next(
+            new HttpError("Attention des données nécéssaires que manquent...")
+          );
+        }
+
+        concernedUser.firstName = firstName;
+        concernedUser.lastName = lastName;
+        concernedUser.profilePicture = profilePicture;
+        concernedUser.email = newMail;
+        concernedUser.phone = phone;
+        concernedUser.description = description;
+
+        concernedUser.save();
+      }
+    } else {
+      if (newPassword) {
+        if (!confirmNewPassword) {
+          return next(new HttpError("Données nécéssaires que manquent..."));
+        }
+        if (newPassword != confirmNewPassword) {
+          return next(
+            new HttpError("Les mots de passe ne sont pas indetiques !")
+          );
+        }
+        if (newPassword.trim().length < 12) {
+          return next(
+            new HttpError(
+              "Le mot de passe doit contenir au moins 12 caractéres non blancs.."
+            )
+          );
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedNewPass = await bcrypt.hash(newPassword, salt);
+        // -------------------------------------
+        concernedUser.password = hashedNewPass;
+        concernedUser.email = newMail;
+        concernedUser.firstName = firstName;
+        concernedUser.lastName = lastName;
+        concernedUser.phone = phone;
+        concernedUser.description = description;
+
+        concernedUser.save();
+      } else {
+        if (confirmNewPassword) {
+          return next(
+            new HttpError("Attention des données nécéssaires que manquent...")
+          );
+        }
+
+        concernedUser.firstName = firstName;
+        concernedUser.lastName = lastName;
+        concernedUser.email = newMail;
+        concernedUser.phone = phone;
+        concernedUser.description = description;
+
+        concernedUser.save();
+      }
+    }
+    res.status(200).json(concernedUser);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getAllAcademies = async (req, res, next) => {
+  try {
+    const academies = await Academy.find();
+    const ret = [];
+    academies.forEach((academy) => {
+      const name = academy.name;
+      const bg = academy.picture;
+      const start = academy.createdAt;
+      const id = academy._id;
+      ret.push({ name, bg, start, id });
+    });
+    res.status(200).json(ret);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.updateAcademy = async (req, res, next) => {
+  const { id } = req.params;
+  const { name, picture, domain, description } = req.body;
+  if (!name || !domain || !description) {
+    return next(new HttpError("Des données nécéssaires qui manquent..."));
+  }
+  try {
+    const concernedAcademy = await Academy.findById(id);
+    if (!concernedAcademy) {
+      return next(new HttpError("Académie n'existe pas..."));
+    }
+    if (picture) {
+      concernedAcademy.picture = picture;
+      concernedAcademy.name = name;
+      concernedAcademy.description = description;
+      concernedAcademy.domain = domain;
+    } else {
+      concernedAcademy.name = name;
+      concernedAcademy.description = description;
+      concernedAcademy.domain = domain;
+    }
+    concernedAcademy.save();
+    res.status(200).json("Done");
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.getCustomAcademy = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const concernedAcademy = await Academy.findById(id);
+    if (!concernedAcademy) {
+      return next(new HttpError("Académie non trouvée.."));
+    }
+    const domainId = concernedAcademy.domain;
+    const concernedDomain = await Domain.findById(domainId);
+    const domain = concernedDomain.name;
+    const description = concernedAcademy.description;
+    const picture = concernedAcademy.picture;
+    const name = concernedAcademy.name;
+    res.status(200).json({ domain, description, picture, name });
   } catch (err) {
     return next(new HttpError(err));
   }

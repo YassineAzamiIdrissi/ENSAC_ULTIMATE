@@ -44,8 +44,10 @@ import UserProvider from "../context/userContext";
 import Logout from "../components/partials/dashboard/FunctionnalityComponent/Logout";
 import AddAcademy from "../views/dashboard/app/add-academy";
 import AddNewTraining from "../views/dashboard/app/add-new-training";
+import AddNewProfessor from "../views/dashboard/app/add-new-professor";
 import TrainingsList from "../views/dashboard/app/trainings-list";
 import Progressions from "../components/listViews/Progressions";
+import AdminAddAcademy from "../views/dashboard/app/admin-add-academy";
 //import AddCourseToTraining from "../views/dashboard/app/add-chapter";
 import TrainingCardView from "../components/TrainingCardView";
 import ListView from "../components/listViews/ListView";
@@ -63,6 +65,8 @@ import ReadChapterVideo from "../components/lecture/readChapterVideo";
 import CreateQuiz from "../components/Quiz/CreateQuiz";
 import ViewQuiz from "../components/Quiz/ViewQuiz";
 import Certifs from "../views/dashboard/table/Certifs";
+import AdminAllProfessors from "../components/listViews/admin-all-the-profs";
+import AdminAllAcademies from "../components/listViews/admin-all-the-academies";
 export const DefaultRouter = [
   {
     path: "/",
@@ -124,6 +128,7 @@ export const DefaultRouter = [
         path: "/dashboard/app/addChapter/:id",
         element: <AddAcademy />,
       },
+
       {
         path: "/dashboard/app/updateChapter/:id",
         element: <UpdateChapter />,
@@ -131,6 +136,18 @@ export const DefaultRouter = [
       {
         path: "/dashboard/app/add-new-training",
         element: <AddNewTraining />,
+      },
+      {
+        path: "/dashboard/app/add-new-professor",
+        element: <AddNewProfessor />,
+      },
+      {
+        path: "/dashboard/app/admin-all-academies",
+        element: <AdminAllAcademies />,
+      },
+      {
+        path: "/dashboard/app/admin-update-professor/:id",
+        element: <AddNewProfessor />,
       },
       {
         path: "/dashboard/app/update-training/:id",
@@ -167,6 +184,10 @@ export const DefaultRouter = [
       {
         path: "/dashboard/app/academy-all-professors",
         element: <AllProfessors />,
+      },
+      {
+        path: "/dashboard/app/admin-all-profs",
+        element: <AdminAllProfessors />,
       },
       {
         path: "/dashboard/app/academy-all-students",
@@ -252,6 +273,18 @@ export const DefaultRouter = [
       {
         path: "/visualize-quiz/:trainingId",
         element: <ViewQuiz />,
+      },
+      {
+        path: "/dashboard/app/add-to-academies",
+        element: <AdminAddAcademy />,
+      },
+      {
+        path: "/dashboard/app/update-academy/:id",
+        element: <AdminAddAcademy />,
+      },
+      {
+        path: "/dashboard/app/admin-update-academy/:id",
+        element: <AdminAddAcademy />,
       },
     ],
   },

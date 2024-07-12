@@ -250,6 +250,18 @@ const VerticalNav = memo((props) => {
             </Link>
           </li>
         )}
+        {entity == "admin" && (
+          <li className="nav-item static-item">
+            <Link
+              className="nav-link static-item disabled"
+              to="#"
+              tabIndex="-1"
+            >
+              <span className="default-icon">Actions d'administration</span>
+              <span className="mini-icon">-</span>
+            </Link>
+          </li>
+        )}
         {/* {entity == "Professor" && ( */}
         <ul className="sub-nav">
           {entity == "professor" && (
@@ -413,6 +425,110 @@ const VerticalNav = memo((props) => {
 
                 <i className="sidenav-mini-icon"> E </i>
                 <span className="item-name">Mes certifications</span>
+              </Link>
+            </li>
+          )}
+          {entity == "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/add-new-professor"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/add-new-professor"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
+
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Ajouter un professeur</span>
+              </Link>
+            </li>
+          )}
+          {entity == "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/add-to-academies"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/add-to-academies"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
+
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Ajouter une académie</span>
+              </Link>
+            </li>
+          )}
+          {entity == "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/admin-all-profs"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/admin-all-profs"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
+
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Liste des professeurs</span>
+              </Link>
+            </li>
+          )}
+          {entity == "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/admin-all-academies"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/admin-all-academies"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
+
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Liste des académies</span>
               </Link>
             </li>
           )}

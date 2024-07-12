@@ -17,6 +17,10 @@ const {
   loginAdmin,
   getAdmin,
   editAdminInfo,
+  adminEditProfessor,
+  getAllAcademies,
+  updateAcademy,
+  getCustomAcademy,
 } = require("../controllers/AdminController");
 router.post("/newDomain", addDomain);
 router.post("/newCategory", addCategory);
@@ -33,4 +37,8 @@ router.post("/newAdmin", newAdmin);
 router.post("/loginAdmin", loginAdmin);
 router.get("/get/:id", getAdmin);
 router.put("/edit", authMiddleware, editAdminInfo);
+router.put("/editProf/:id", adminEditProfessor);
+router.get("/getCustomAcademies", getAllAcademies);
+router.put("/updateAcademy/:id", updateAcademy);
+router.get("/getCustomAcademy/:id", getCustomAcademy);
 module.exports = router;

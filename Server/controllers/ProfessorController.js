@@ -96,6 +96,25 @@ exports.getAllProfs = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
+exports.getAllProfsCustomize = async (req, res, next) => {
+  try {
+    const profs = await Professor.find();
+    let ret = [];
+    profs.forEach((prof, index) => {
+      const newObj = {
+        name: prof.firstName + " " + prof.lastName,
+        bg: prof.profilePicture,
+        start: prof.createdAt,
+        contributions: prof.trainingsList.length,
+        id: prof._id,
+      };
+      ret.push(newObj);
+    });
+    res.status(200).json(ret);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
 exports.editProfessor = async (req, res, next) => {
   const id = req.user.id;
   const {

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import bg from "../../../assets/images/auth/Adminbanner.jpg";
 import { UserContext } from "../../../context/userContext";
 import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 const SignInFormAdmin = () => {
   // local session :
@@ -31,7 +32,7 @@ const SignInFormAdmin = () => {
       setCurrentUser(response.data);
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response.data);
+      toast.error("Check the console..");
       console.log(err);
     }
   };

@@ -60,10 +60,8 @@ exports.getAcademy = async (req, res, next) => {
   }
 };
 exports.getAllAcademies = async (req, res, next) => {
-  console.log("THIS IS THE CURRENT CONTROLLER");
   try {
     const allAcademies = await Academy.find();
-    console.log(allAcademies);
     res.status(201).json(allAcademies);
   } catch (err) {
     return next(new HttpError(err));

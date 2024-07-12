@@ -3,24 +3,19 @@ import AdvanceTableProvider from "../../provider/AdvanceTableProvider";
 
 import React, { useContext, useEffect, useState } from "react";
 import TopSection from "../TopSection";
-import ListTable, { ListTableColumns } from "./ListTable";
+import ListTable, { ListTableColumns } from "./admin-all-profs-list";
 
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/userContext";
-const AllProfessors = () => {
+const AdminAllProfessors = () => {
   const { currentUser } = useContext(UserContext);
-  const token = currentUser?.token;
   const [allProfessors, setAllProfessors] = useState(null);
   useEffect(() => {
     const fetchAllProfessors = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/professors/getAllProfessorsInAcademy`,
-          {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          `${process.env.REACT_APP_BASE_URL}/professors/getAllProfsAdmin`
         );
         setAllProfessors(response.data);
       } catch (err) {
@@ -53,4 +48,4 @@ const AllProfessors = () => {
   );
 };
 
-export default AllProfessors;
+export default AdminAllProfessors;

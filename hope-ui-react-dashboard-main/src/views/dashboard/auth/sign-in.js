@@ -26,7 +26,7 @@ const SignIn = () => {
         `${process.env.REACT_APP_BASE_URL}/students/login`,
         form
       );
-      const user = await result.data;
+      const user = result.data;
       setCurrentUser(user);
       navigate("/dashboard/app/list-training");
     } catch (err) {

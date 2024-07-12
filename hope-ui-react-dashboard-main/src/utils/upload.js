@@ -16,7 +16,7 @@ export const upload = async (file) => {
     const { url } = res.data;
     return url;
   } catch (err) {
-    console.log("ERREUR DANS L'UPLOAD PICTUURE DE CLOUDINARY : ");
+    console.log("ERREUR DANS L'UPLOAD PICTURE DE CLOUDINARY : ");
     console.log(err);
   }
 };

@@ -3,37 +3,32 @@ import AdvanceTableProvider from "../../provider/AdvanceTableProvider";
 
 import React, { useContext, useEffect, useState } from "react";
 import TopSection from "../TopSection";
-import ListTable, { ListTableColumns } from "./ListTable";
+import ListTable, { ListTableColumns } from "./admin-all-academies-list";
 
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/userContext";
-const AllProfessors = () => {
+const AdminAllAcademies = () => {
   const { currentUser } = useContext(UserContext);
-  const token = currentUser?.token;
-  const [allProfessors, setAllProfessors] = useState(null);
+  const [allAcademies, setAllAcademies] = useState(null);
   useEffect(() => {
-    const fetchAllProfessors = async () => {
+    const fetchCustomizedAcs = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/professors/getAllProfessorsInAcademy`,
-          {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${token}` },
-          }
+        const resp = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/admins/getCustomAcademies`
         );
-        setAllProfessors(response.data);
+        setAllAcademies(resp.data);
       } catch (err) {
         toast.error(
-          "Une erreur est survenue à l'essaie de lire les professeurs"
+          "Une erreur est survenue à l'essaie de lire les académies personnalisées"
         );
         console.log(err);
       }
     };
-    fetchAllProfessors();
+    fetchCustomizedAcs();
   }, []);
   const table = useAdvanceTable({
-    data: allProfessors,
+    data: allAcademies,
     columns: ListTableColumns,
     pageSize: 6,
     pagination: true,
@@ -42,7 +37,7 @@ const AllProfessors = () => {
 
   return (
     <div>
-      {allProfessors && (
+      {allAcademies && (
         <AdvanceTableProvider {...table}>
           <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center mt-3"></div>
           <TopSection activeView="list" />
@@ -53,4 +48,4 @@ const AllProfessors = () => {
   );
 };
 
-export default AllProfessors;
+export default AdminAllAcademies;

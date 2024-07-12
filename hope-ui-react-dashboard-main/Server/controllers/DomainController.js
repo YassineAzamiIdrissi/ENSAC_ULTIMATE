@@ -49,7 +49,15 @@ exports.getCategoriesByAcademy = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
-
+exports.getDomainNameById = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const domain = await Domain.findById(id);
+    res.status(200).json(domain.name);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
 /* const trainingObjects = trainingsList.map(async (training) => {
       const ret = await Trainings.findById(training);
       return ret;
