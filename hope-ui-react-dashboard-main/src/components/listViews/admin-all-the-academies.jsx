@@ -8,6 +8,10 @@ import ListTable, { ListTableColumns } from "./admin-all-academies-list";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/userContext";
+import AcademyDetailsDrawer from "../acdemyDetails/academyDetails";
+import AddProfToAcademyModal from "../acdemyDetails/AddProfToAcademyModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 const AdminAllAcademies = () => {
   const { currentUser } = useContext(UserContext);
   const [allAcademies, setAllAcademies] = useState(null);
@@ -39,7 +43,11 @@ const AdminAllAcademies = () => {
     <div>
       {allAcademies && (
         <AdvanceTableProvider {...table}>
-          <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center mt-3"></div>
+          <AcademyDetailsDrawer />
+          <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center mt-3">
+            {/* <FontAwesomeIcon icon={faBoxOpen} /> */}
+          </div>
+
           <TopSection activeView="list" />
           <ListTable />
         </AdvanceTableProvider>

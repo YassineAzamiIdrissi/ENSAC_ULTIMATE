@@ -4,6 +4,7 @@ import AdvanceTable from "./AdvanceTable";
 import AdvanceTableFooter from "./AdvanceTableFooter";
 import team33 from "../../assets/images/team/33.webp";
 import Button from "react-bootstrap/Button";
+import AcademyMenu from "../acdemyDetails/AcademyMenu";
 
 export const ListTableColumns = [
   {
@@ -47,19 +48,34 @@ export const ListTableColumns = [
       headerProps: { style: { width: "10%" }, className: "ps-3" },
     },
   },
+
+  //Pour avoir la propriété professors sans afficher la cellule
+  {
+    accessorKey: "professors",
+    header: "Professors",
+    cell: ({ row: { original } }) => {
+      // TO DO:
+      }, // Cellule vide pour ne pas afficher la colonne
+    meta: {
+      cellProps: { style: { display: "none" } }, // Cache la cellule
+      headerProps: { style: { display: "none" } }, // Cache l'en-tête de colonne
+    },
+  },
+
   {
     header: "actions",
     id: "action",
     cell: ({ row: { original } }) => {
       const go = () => {
-        const { id } = original;
-        window.location.replace(`/dashboard/app/admin-update-academy/${id}`);
+        //const { id } = original;
+        //window.location.replace(`/dashboard/app/admin-update-academy/${id}`);
       };
       return (
         <div>
-          <Button variant="success" onClick={go}>
+          {/* <Button variant="success" onClick={go}>
             Modifier
-          </Button>
+          </Button> */}
+          <AcademyMenu Academy={original} />
         </div>
       );
     },

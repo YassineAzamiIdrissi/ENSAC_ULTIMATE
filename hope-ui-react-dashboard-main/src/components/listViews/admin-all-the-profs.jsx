@@ -8,6 +8,7 @@ import ListTable, { ListTableColumns } from "./admin-all-profs-list";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/userContext";
+
 const AdminAllProfessors = () => {
   const { currentUser } = useContext(UserContext);
   const [allProfessors, setAllProfessors] = useState(null);

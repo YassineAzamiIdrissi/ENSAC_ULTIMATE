@@ -4,6 +4,14 @@ import AdvanceTable from "./AdvanceTable";
 import AdvanceTableFooter from "./AdvanceTableFooter";
 import team33 from "../../assets/images/team/33.webp";
 import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEllipsis,
+  faEllipsisVertical,
+  faLayerGroup,
+} from "@fortawesome/free-solid-svg-icons";
+import ProfDetailsModal from "../profDetails/ProfDetailsModal";
+import { useState } from "react";
 
 export const ListTableColumns = [
   {
@@ -31,7 +39,7 @@ export const ListTableColumns = [
           src={row.original.bg}
           variant={team33 ? "image" : "name"}
           size="s"
-        ></Avatar>
+        />
       );
     },
     meta: {
@@ -40,14 +48,13 @@ export const ListTableColumns = [
     },
   },
   {
-    header: "Start date",
+    header: "Date d'adhésion",
     accessorKey: "start",
     meta: {
       cellProps: { className: "ps-3 fs-9 text-body white-space-nowrap py-4" },
       headerProps: { style: { width: "10%" }, className: "ps-3" },
     },
   },
-
   {
     accessorKey: "contributions",
     header: "Contributions",
@@ -60,17 +67,7 @@ export const ListTableColumns = [
     header: "actions",
     id: "action",
     cell: ({ row: { original } }) => {
-      const go = () => {
-        const { id } = original;
-        window.location.replace(`/dashboard/app/admin-update-professor/${id}`);
-      };
-      return (
-        <div>
-          <Button variant="success" onClick={go}>
-            Modifier
-          </Button>
-        </div>
-      );
+      return <ActionButtons original={original} />;
     },
     meta: {
       headerProps: { style: { width: "10%" }, className: "text-end" },
@@ -79,6 +76,50 @@ export const ListTableColumns = [
   },
 ];
 
+const ActionButtons = ({ original }) => {
+  const [openDetailsModal, setOpenDetailsModal] = useState(false);
+  const [profId, setProfId] = useState("");
+
+  const go = () => {
+    // const { id } = original;
+    // window.location.replace(`/dashboard/app/admin-update-professor/${id}`);
+    setProfId(original.id);
+    setOpenDetailsModal(true);
+  };
+
+  const profTrainings = [
+    {
+      name: "ReactJS_Tutorial",
+      preview: "https://via.placeholder.com/64x64",
+      date: "21st July, 10:00 AM",
+    },
+    {
+      name: "VueJS_Tutorial",
+      preview: "https://via.placeholder.com/64x64",
+      date: "22nd July, 11:00 AM",
+    },
+    {
+      name: "Angular_Tutorial ",
+      preview: "https://via.placeholder.com/64x64",
+      date: "23rd July, 12:00 PM",
+    },
+  ];
+
+  return (
+    <div>
+      <Button variant="Button" onClick={go}>
+        <FontAwesomeIcon icon={faEllipsisVertical} />
+      </Button>
+      <ProfDetailsModal
+        show={openDetailsModal}
+        handleClose={() => setOpenDetailsModal(false)}
+        profTrainings={profTrainings}
+        profId={profId}
+      />
+    </div>
+  );
+};
+
 const ListTable = () => {
   return (
     <div className="border-bottom border-translucent">
@@ -86,6 +127,7 @@ const ListTable = () => {
         tableProps={{
           className: "phoenix-table border-top border-translucent fs-9",
         }}
+        columns={ListTableColumns}
       />
       <AdvanceTableFooter pagination className="py-3" />
     </div>

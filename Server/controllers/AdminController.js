@@ -686,9 +686,10 @@ exports.getAllAcademies = async (req, res, next) => {
     academies.forEach((academy) => {
       const name = academy.name;
       const bg = academy.picture;
+      const professors = academy.professors;
       const start = academy.createdAt;
       const id = academy._id;
-      ret.push({ name, bg, start, id });
+      ret.push({ name, bg, start, id, professors });
     });
     res.status(200).json(ret);
   } catch (err) {
