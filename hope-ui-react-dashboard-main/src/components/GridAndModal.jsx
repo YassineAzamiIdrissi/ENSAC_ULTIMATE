@@ -46,16 +46,14 @@ const GridAndModalItem = ({ project, token }) => {
   const addNewDemand = async (id) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/students/sendDemand/${id}`,
-        { studentId: currentUser?.id }
+        `${process.env.REACT_APP_BASE_URL}/students/enrollTraining/${id}`,
+        { studentId: currentUser?.id }, 
+        {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
-      if (response.data == "dj") {
-        toast.warn(
-          "Formation déja enrollée, Veuillez attendre la réponse du responsable"
-        );
-      } else {
-        toast.success("Demande envoyée");
-      }
+      navigate("/dashboard/app/card-list-training"); 
     } catch (err) {
       toast.error(
         "Une erreur est survenue lors de la tentaitve de définir une nvl demande..."

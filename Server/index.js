@@ -22,6 +22,10 @@ const quizRoute = require("./Routes/QuizRoute");
 const questionRoute = require("./Routes/QuestionRoute");
 const markRoute = require("./Routes/MarkRoute");
 const certifRoute = require("./Routes/CertificationRoute");
+const postRoute = require("./Routes/PostRoute");
+const generalRoute = require("./Routes/GeneralRoute");
+const commentReplyRoute = require("./Routes/CommentReplyRoute");
+const postCommentRoute = require("./Routes/PostCommentRoute");
 // --------------------------------------------------------
 const app = express();
 app.use(express.json({ extended: true }));
@@ -44,6 +48,10 @@ app.use("/api/quiz", quizRoute);
 app.use("/api/questions", questionRoute);
 app.use("/api/marks", markRoute);
 app.use("/api/certifs", certifRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/generals", generalRoute);
+app.use("/api/commentReplies", commentReplyRoute);
+app.use("/api/postComments", postCommentRoute);
 //----- logique socket :
 const server = http.createServer(app);
 const io = new Server(server, {

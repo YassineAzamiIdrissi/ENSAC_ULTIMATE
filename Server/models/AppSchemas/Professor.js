@@ -49,6 +49,14 @@ const profSchema = new Schema(
       type: [String], // linked to Training
       default: [],
     },
+    followers: {
+      type: [String],
+      default: [],
+    },
+    followings: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

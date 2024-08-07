@@ -14,7 +14,7 @@ const bcrypt = require("bcrypt");
 exports.registerStudent = async (req, res, next) => {
   try {
     console.log("Corps de la requette : ");
-    console.log(req.body); 
+    console.log(req.body);
     const { firstname, lastname, email, password, password2, profilePicture } =
       req.body;
     if (!firstname.trim() || !lastname.trim() || !email.trim() || !password) {
@@ -31,9 +31,7 @@ exports.registerStudent = async (req, res, next) => {
     const emailExists = await Student.findOne({ email: newMail });
     if (emailExists) {
       return next(
-        new HttpError(
-          "Cet email est déja utilisé par un autre étudiant !"
-        )
+        new HttpError("Cet email est déja utilisé par un autre étudiant !")
       );
     }
     if (password.trim().length < 12) {
@@ -71,12 +69,7 @@ exports.registerStudent = async (req, res, next) => {
     res.status(201).json(`Etudiant ${newStudent.email} Ajouté`);
   } catch (error) {
     console.log(error);
-    return next(
-      new HttpError(
-        "Inscription de l'etudiant a echoué",
-        422
-      )
-    );
+    return next(new HttpError("Inscription de l'etudiant a echoué", 422));
   }
 };
 exports.loginStudent = async (req, res, next) => {
@@ -352,6 +345,94 @@ exports.deleteAcess = async (req, res, next) => {
       }
     }
     // deleting the student's progressions in the
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.acceptEnroll = async (req, res, next) => {
+  const { idEnroll } = req.params;
+  try {
+    const concernedEnrollment = await Enrollement.findById(idEnroll);
+    const studentId = concernedEnrollment.studentId;
+    const trainingId = concernedEnrollment.trainingId;
+    const concernedStudent = await Student.findById(studentId);
+    const concernedTraining = await Training.findById(trainingId);
+    if (!concernedStudent.followedTrainings.includes(trainingId)) {
+      concernedStudent.followedTrainings.push(trainingId);
+    }
+    if (!concernedStudent.enrollments.includes(idEnroll)) {
+      concernedStudent.enrollments.push(idEnroll);
+    }
+    if (!concernedStudent.academies.includes(concernedTraining.academyId)) {
+      concernedStudent.academies.push(concernedTraining.academyId);
+    }
+    if (!concernedTraining.subscribers.includes(studentId)) {
+      concernedTraining.subscribers.push(studentId);
+    }
+    concernedEnrollment.decision = true;
+    concernedEnrollment.answered = true;
+    concernedEnrollment.save();
+    concernedStudent.save();
+    concernedTraining.save();
+
+    // Accord d'une progression :
+    // -- Getting first ever chapter id :
+    const firstCourseId = concernedTraining.courses[0];
+
+    const firstCourseObj = await Course.findById(firstCourseId);
+    console.log("FIRST COURSE OBJECT ");
+    console.log(firstCourseObj);
+    const stopChap = firstCourseObj.chapters[0];
+    console.log("THIS IS THE STOOPPP CHAP ");
+    console.log(stopChap);
+    await Progression.create({
+      studentId,
+      trainingId,
+      stopChap,
+      progression: 0,
+    });
+    res
+      .status(201)
+      .json(
+        `l'etudiant ${concernedStudent.firstName} ${concernedStudent.lastName} est bien inscrit à la formation ${concernedTraining.name}`
+      );
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+exports.joinTraining = async (req, res, next) => {
+  const {id}  = req.user;
+  const { trainingId } = req.params;
+  try {
+    const studentId = id;
+    const concernedStudent = await Student.findById(id);
+    const concernedTraining = await Training.findById(trainingId);
+    if (!concernedStudent.followedTrainings.includes(trainingId)) {
+      concernedStudent.followedTrainings.push(trainingId);
+    }
+    if (!concernedTraining.subscribers.includes(studentId)) {
+      concernedTraining.subscribers.push(studentId);
+    }
+    concernedStudent.save(); 
+    concernedTraining.save(); 
+    const firstCourseId = concernedTraining.courses[0];
+    const firstCourseObj = await Course.findById(firstCourseId);
+    console.log("FIRST COURSE OBJECT ");
+    console.log(firstCourseObj);
+    const stopChap = firstCourseObj.chapters[0];
+    console.log("THIS IS THE STOOPPP CHAP ");
+    console.log(stopChap);
+    await Progression.create({
+      studentId,
+      trainingId,
+      stopChap,
+      progression: 0,
+    });
+    res
+      .status(201)
+      .json(
+        `l'etudiant ${concernedStudent.firstName} ${concernedStudent.lastName} est bien inscrit à la formation ${concernedTraining.name}`
+      );
   } catch (err) {
     return next(new HttpError(err));
   }

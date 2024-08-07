@@ -46,6 +46,14 @@ const studentSchema = new Schema(
       type: [String], // linked to Certification
       default: [],
     },
+    followers: {
+      type: [String],
+      default: [],
+    },
+    followings: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

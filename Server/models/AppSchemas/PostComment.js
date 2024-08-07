@@ -1,35 +1,35 @@
 const { Schema, model } = require("mongoose");
-const adminSchema = new Schema(
+const PostComment = new Schema(
   {
-    firstName: {
+    content: {
       type: String,
       required: true,
     },
-    lastName: {
+    postId: {
       type: String,
       required: true,
     },
-    profilePicture: {
-      type: String,
-    },
-    password: {
+    userId: {
       type: String,
       required: true,
     },
-    email: {
+    userName: {
       type: String,
       required: true,
     },
-    followers: {
+    picture: {
+      type: String,
+    },
+    replies: {
       type: [String],
       default: [],
     },
-    followings: {
-      type: [String],
-      default: [],
+    modified: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
 );
-const modelAdmin = model("Admin", adminSchema);
-module.exports = modelAdmin;
+const postModel = model("PostComment", PostComment);
+module.exports = postModel;

@@ -47,6 +47,7 @@ exports.markRespsAsRead = async (req, res, next) => {
   try {
     const userNotifications = await Notification.find({ toNotified: id });
     for (let i = 0; i < userNotifications.length; ++i) {
+      // . . . . . 
       userNotifications[i].read = true;
       userNotifications[i].save();
     }
