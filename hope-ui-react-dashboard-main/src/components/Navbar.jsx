@@ -46,7 +46,7 @@ const Navbar = () => {
   };
   window.addEventListener("scroll", changeBackground);
   // LOGIQUE BACKEND COMMENCE ICI :
-  const { currentUser, fetchedUser, token} = useCurrentUser()
+  const { currentUser, fetchedUser, token } = useCurrentUser();
   return (
     <Box
       className={
@@ -79,7 +79,10 @@ const Navbar = () => {
                 <Link to="/courses" className={`${classes.nav_link}`}>
                   Nos formations
                 </Link>
-                <Link to="/dashboard/social-media" className={`${classes.nav_link}`}>
+                <Link
+                  to="/social-profile/userID/Profile"
+                  className={`${classes.nav_link}`}
+                >
                   Ensaf Media
                 </Link>
 
