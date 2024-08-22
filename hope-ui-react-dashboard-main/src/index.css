@@ -1,6 +1,13 @@
 body {
   font-family: "Nunito" !important;
 }
+body {
+  font-family: "Roboto", "Segoe UI", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #eef2f6;
+}
 body::-webkit-scrollbar {
   height: 5px !important;
   width: 10px !important;

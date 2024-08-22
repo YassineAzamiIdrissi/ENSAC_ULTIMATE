@@ -26,6 +26,7 @@ import B_Search_Results_List from "./B_Search_Results_List";
 import logo from "../assets/logoEnsac.png";
 import RevealDropdown from "./base/RevealDropdown";
 import { faEllipsisV, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useCurrentUser } from "../hook/use-user";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -45,30 +46,7 @@ const Navbar = () => {
   };
   window.addEventListener("scroll", changeBackground);
   // LOGIQUE BACKEND COMMENCE ICI :
-  const { currentUser } = useContext(UserContext);
-  const token = currentUser?.token;
-  const entity = currentUser?.entity;
-  const [fetchedUser, setFetchedUser] = useState(null);
-  useEffect(() => {
-    const fetchConcernedUser = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/get/${
-            currentUser?.id
-          }`
-        );
-        setFetchedUser(response.data);
-      } catch (err) {
-        // un toast pour indiquer que des choses ne marchent pas...
-        toast.error(
-          "Ops! il semble que quelque chose ne marche pas, veuillez actualiser cette page !"
-        );
-      }
-    };
-    if (token) {
-      fetchConcernedUser();
-    }
-  }, []);
+  const { currentUser, fetchedUser, token} = useCurrentUser()
   return (
     <Box
       className={
@@ -100,6 +78,9 @@ const Navbar = () => {
                 </Link>
                 <Link to="/courses" className={`${classes.nav_link}`}>
                   Nos formations
+                </Link>
+                <Link to="/dashboard/social-media" className={`${classes.nav_link}`}>
+                  Ensaf Media
                 </Link>
 
                 {/* <Link to="/blog" className={`${classes.nav_link}`}>

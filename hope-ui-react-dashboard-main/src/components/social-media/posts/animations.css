@@ -1,0 +1,28 @@
+/* animations.css */
+.slide-enter {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10%);
+  transition: max-height 0.3s ease-in, opacity 0.3s ease-in,
+    transform 0.3s ease-in;
+}
+
+.slide-enter-active {
+  max-height: 200px; /* Ajustez la hauteur maximale selon vos besoins */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-exit {
+  max-height: 200px;
+  opacity: 0;
+  transform: translateY(0);
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+
+.slide-exit-active {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10%);
+}

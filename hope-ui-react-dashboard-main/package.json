@@ -83,7 +83,7 @@
     "react-sortablejs": "^6.0.0",
     "react-time-ago": "^7.3.1",
     "react-toastify": "^10.0.5",
-    "react-transition-group": "^4.4.2",
+    "react-transition-group": "^4.4.5",
     "redux": "^4.1.1",
     "smooth-scrollbar": "^8.6.3",
     "socket.io-client": "^4.7.5",

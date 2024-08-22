@@ -60,6 +60,8 @@ const Default = memo((props) => {
     navigate("/sign-in");
   }
 
+  const { pathname } = useLocation();
+  console.log(pathname.split("/").pop());
   return (
     <Fragment>
       <Loader />
@@ -68,7 +70,7 @@ const Default = memo((props) => {
       <main className="main-content">
         <div className="position-relative">
           <Header />
-          <SubHeader />
+          {!pathname.includes("social-media") &&  (<SubHeader />)}
         </div>
         <div className="py-0 conatiner-fluid content-inner mt-n5">
           {/* <DefaultRouter /> */}

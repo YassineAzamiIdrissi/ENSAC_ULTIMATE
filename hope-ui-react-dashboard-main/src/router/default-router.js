@@ -36,8 +36,6 @@ import RtlSupport from "../views/dashboard/special-pages/RtlSupport";
 //admin
 import Admin from "../views/dashboard/admin/admin";
 import Default from "../layouts/dashboard/default";
-import Home from "../page/Home";
-import About from "../page/About";
 import UserAccountSetting from "../views/dashboard/app/user-profile-edit";
 import FormationList from "../views/dashboard/app/formation-list";
 import UserProvider from "../context/userContext";
@@ -67,6 +65,14 @@ import ViewQuiz from "../components/Quiz/ViewQuiz";
 import Certifs from "../views/dashboard/table/Certifs";
 import AdminAllProfessors from "../components/listViews/admin-all-the-profs";
 import AdminAllAcademies from "../components/listViews/admin-all-the-academies";
+
+// Social media section
+import HomePage from "../page/social-media-pages/home";
+import UserProfilePosts from "../page/social-media-pages/posts/PostsByUser";
+import Followers from "../page/social-media-pages/followers/Followers";
+import Followings from "../page/social-media-pages/followings/Followings";
+import AllPosts from "../page/social-media-pages/posts/AllPosts";
+
 export const DefaultRouter = [
   {
     path: "/",
@@ -286,6 +292,25 @@ export const DefaultRouter = [
         path: "/dashboard/app/admin-update-academy/:id",
         element: <AdminAddAcademy />,
       },
+      //social media part
+      // {
+      //   path: "dashboard/social-media",
+      //   element: (
+      //     <UserProvider>
+      //       <SocialMediaLayout />
+      //     </UserProvider>
+      //   ),
+      //   children: [
+      //     {
+      //       path: "all",
+      //       element: <ShowAllPosts />,
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: "dashboard/social-media",
+      //   element: <ShowAllPosts />,
+      // },
     ],
   },
 ];
@@ -302,6 +327,32 @@ export const ViewChaptersRouter = [
       {
         path: "chapter/:chapterID",
         element: <ReadChapterVideo />,
+      },
+    ],
+  },
+];
+
+export const EnsafSocialMedia = [
+  {
+    path: "/social-profile",
+    element: <HomePage />,
+    // loader: rootLoader,
+    children: [
+      {
+        path: "/social-profile/:userID/Profile",
+        element: <UserProfilePosts />,
+      },
+      {
+        path: "/social-profile/Followers",
+        element: <Followers />,
+      },
+      {
+        path: "/social-profile/Followings",
+        element: <Followings />,
+      },
+      {
+        path: "/social-profile/posts",
+        element: <AllPosts />,
       },
     ],
   },
