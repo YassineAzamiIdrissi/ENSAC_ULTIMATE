@@ -18,8 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { BadgeCheck,  ThumbsUp } from "lucide-react";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { BadgeCheck, ThumbsUp } from "lucide-react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
@@ -45,8 +45,8 @@ const CommentAndReplyCard = ({ img }) => {
   };
 
   return (
-    <Stack direction={"column"} mb={"20px"} >
-      <Item variant="" sx={{background: '#eef2f6'}}>
+    <Stack direction={"column"} mb={"20px"}>
+      <Item variant="" sx={{ background: "#eef2f6" }}>
         <Stack
           direction={"row"}
           sx={{ display: "flex", justifyContent: "space-between", mb: "15px" }}
@@ -58,7 +58,7 @@ const CommentAndReplyCard = ({ img }) => {
           >
             <Avatar src={AvatarPh} />
             <Typography fontWeight={"bold"}>John Doe</Typography>
-            <Chip
+            {/* <Chip
               size="medium"
               label="Professeur"
               variant="outlined"
@@ -69,10 +69,10 @@ const CommentAndReplyCard = ({ img }) => {
                 color: "#0F5C2E",
                 borderColor: "#2196F3",
               }}
-            />
+            /> */}
           </Stack>
-
-          <div>
+          {/* Tooltip */}
+          {/* <div>
             <Tooltip title="Menu">
               <IconButton
                 onClick={handleClick}
@@ -130,7 +130,7 @@ const CommentAndReplyCard = ({ img }) => {
                 Visiter le profil
               </MenuItem>
             </Menu>
-          </div>
+          </div> */}
         </Stack>
 
         <Typography textAlign={"justify"} mb={"15px"}>
@@ -158,7 +158,8 @@ const CommentAndReplyCard = ({ img }) => {
               justifyContent: "space-between",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
+            {/* Boutton like  */}
+            {/* <div style={{ display: "flex", alignItems: "center" }}>
               <Button
                 sx={{
                   display: "flex",
@@ -177,8 +178,7 @@ const CommentAndReplyCard = ({ img }) => {
               >
                 <span>12 J'aimes</span>
               </Button>
-
-            </div>
+            </div> */}
 
             <div>
               <Button
@@ -192,7 +192,7 @@ const CommentAndReplyCard = ({ img }) => {
                 }
                 onClick={() => setComment((prev) => !prev)}
               >
-                <span>Commenter</span>
+                <span>Repondre</span>
               </Button>
             </div>
           </Box>

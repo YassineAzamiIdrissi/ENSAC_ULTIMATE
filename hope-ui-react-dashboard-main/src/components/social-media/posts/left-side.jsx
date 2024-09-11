@@ -8,8 +8,10 @@ import { Item } from "../NewCard";
 import Diversity1TwoToneIcon from "@mui/icons-material/Diversity1TwoTone";
 import GroupsTwoToneIcon from "@mui/icons-material/GroupsTwoTone";
 import { socialMediaLinks } from "../../../constantes";
+import { useCurrentUser } from "../../../hook/use-user";
 
 const ProfileLeftSide = () => {
+  const { fetchedUser } = useCurrentUser();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -55,9 +57,9 @@ const ProfileLeftSide = () => {
                     sx={{ width: "100%" }}
                     component={"div"}
                   >
-                    Followers
+                    Abonnés
                     <div style={{ color: "black", textAlign: "center" }}>
-                      240K
+                      {fetchedUser?.followers?.length}
                     </div>
                   </Typography>
                 </div>
@@ -111,7 +113,9 @@ const ProfileLeftSide = () => {
                     component={"div"}
                   >
                     Suivi(e)s
-                    <div style={{ color: "black" }}>20M</div>
+                    <div style={{ color: "black" }}>
+                      {fetchedUser?.followings?.length}
+                    </div>
                   </Typography>
                   <Divider />
                 </div>

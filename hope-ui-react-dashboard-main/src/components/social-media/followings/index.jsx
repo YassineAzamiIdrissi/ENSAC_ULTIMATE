@@ -14,13 +14,23 @@ import {
 import React, { useState } from "react";
 import { Item } from "../NewCard";
 import { GroupAdd, PersonAdd, TravelExplore } from "@mui/icons-material";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AvatarPh from "../../../profile/profile-user.png";
 import ReplyAllTwoToneIcon from "@mui/icons-material/ReplyAllTwoTone";
-const SingleFollowingCard = () => {
+import { useNavigate } from "react-router-dom";
+import DeleteModal from "../delete-modal";
+const SingleFollowingCard = ({ following }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [isOpen, setIsOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -28,8 +38,14 @@ const SingleFollowingCard = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const router = useNavigate();
+
+  const onNavigate = () => {
+    router(`/social-profile/${following?._id}/${following?.entity}/Profile`);
+  };
   /** background: "#E8F3FC",
 color="#2196F3" */
+  console.log(following._id);
 
   return (
     <Item
@@ -48,16 +64,25 @@ color="#2196F3" */
         direction={"row"}
         sx={{ display: "flex", justifyContent: "space-between", mb: "15px" }}
       >
-        <Stack direction={"row"} gap={2}>
-          <Avatar src={AvatarPh} />
+        <Stack
+          direction={"row"}
+          gap={2}
+          onClick={onNavigate}
+          sx={{
+            cursor: "pointer",
+            transition: "all 0.3s ease-in-out",
+            "&:hover": { color: "#DE2E4B", transform: "scale(1.1)" },
+          }}
+        >
+          <Avatar src={following?.profilePicture || AvatarPh} />
           <Stack
             direction={"column"}
             sx={{ display: "flex", justifyContent: "start" }}
           >
             <Typography fontWeight={"bold"} fontSize={12}>
-              John Doe
+              {following?.firstName} {following?.lastName}
             </Typography>
-            <Typography fontSize={12}>Etudiant</Typography>
+            <Typography fontSize={12}>{following?.entity}</Typography>
           </Stack>
         </Stack>
 
@@ -105,14 +130,14 @@ color="#2196F3" */
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleClickOpen}>
               <ListItemIcon>
                 <ReplyAllTwoToneIcon fontSize="small" />
               </ListItemIcon>
               Ne plus suivre
             </MenuItem>
 
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={onNavigate}>
               <ListItemIcon>
                 <TravelExplore fontSize="small" />
               </ListItemIcon>
@@ -135,14 +160,20 @@ color="#2196F3" */
           gap: "10px",
           "&:hover": {
             background: "#DCDED6",
-            color: 'black'
+            color: "black",
             // border: "2px solid #1992F3",
           },
         }}
+        onClick={handleClickOpen}
       >
         <ReplyAllTwoToneIcon />
         <Typography>Se désabonner</Typography>
       </Button>
+      <DeleteModal
+        isOpen={isOpen}
+        handleClose={handleCloseModal}
+        user={following}
+      />
     </Item>
   );
 };

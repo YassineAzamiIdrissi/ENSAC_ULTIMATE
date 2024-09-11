@@ -8,15 +8,22 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/userContext";
 import CertificateGenerator from "../Certification/CertificateGenerator";
+import { useCurrentUser } from "../../hook/use-user";
 const QuizContent = ({ content }) => {
   // LOGIQUE BACKEND COMMENCE ICI :::
   // user data :
-  const { currentUser } = useContext(UserContext);
+  const { currentUser } = useCurrentUser();
   const studentId = currentUser?.id;
   const entity = currentUser?.entity;
   const { trainingID } = useParams();
   const [quizId, setQuizId] = useState(null);
   const [questions, setQuestions] = useState(null);
+
+  //console.lo trainingID, entity, studentId
+  console.log("trainingID :", trainingID);
+  console.log("studentId :", studentId);
+  console.log("entity :", entity);
+
   const [mark, setMark] = useState(null);
   const [studentAnswers, setStudentAnswers] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
@@ -43,6 +50,7 @@ const QuizContent = ({ content }) => {
       fetchStudentName();
     }
   }, []);
+
   useEffect(() => {
     const fetchTrainingName = async () => {
       try {
@@ -58,10 +66,11 @@ const QuizContent = ({ content }) => {
         console.log(err);
       }
     };
-    if (entity == "Student") {
+    if (entity === "Student") {
       fetchTrainingName();
     }
   }, []);
+
   useEffect(() => {
     const fetchAcName = async () => {
       try {
@@ -78,6 +87,7 @@ const QuizContent = ({ content }) => {
       fetchAcName();
     }
   }, [trainingName]);
+  
   useEffect(() => {
     console.log(trainingID);
     const fetchQuizQuestions = async () => {
@@ -87,9 +97,7 @@ const QuizContent = ({ content }) => {
         );
         setQuestions(response.data);
       } catch (err) {
-        toast.error(
-          "Une erreur est survenue à l'essaie les constitutifs d'un QUIZ...."
-        );
+        toast.error("Erreur survenue à la récupération des questions....");
         console.log(err);
       }
     };
@@ -103,7 +111,7 @@ const QuizContent = ({ content }) => {
         );
         setCorrectAnswers(response.data);
       } catch (err) {
-        toast.error("Une erreur est survenue à l'essaie de je sais pas....");
+        toast.error("Erreur survenue pendant la vérification des reponses");
         console.log(err);
       }
     };

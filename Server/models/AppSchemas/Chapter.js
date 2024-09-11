@@ -17,6 +17,10 @@ const chapterSchema = new Schema(
       type: String,
       required: true,
     },
+    views: {
+      type: Number,
+      default: 0, // Valeur par défaut à 0
+    },
   },
   { timestamps: true }
 );

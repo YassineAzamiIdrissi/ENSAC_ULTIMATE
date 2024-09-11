@@ -32,6 +32,28 @@ export const useCurrentUser = () => {
   return {
     fetchedUser,
     token,
-    currentUser
+    entity,
+    currentUser,
   };
+};
+
+export const useGetPostOnwerInfo = (entity, userId) => {
+  const [postUser, setPostUser] = useState(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/${entity}s/get/${userId}`
+        );
+
+        setPostUser(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  return { postUser };
 };

@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Item } from "../../../components/social-media/NewCard";
-import { Box, Chip, Divider, Grid, TextField, Typography } from "@mui/material";
+import { Box, Divider, Grid, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { Search } from "lucide-react";
-import SingleFollowerCard from "../../../components/social-media/followers/single-follower-card";
-import SingleFollowingCard from "../../../components/social-media/followings";
 import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
+import SingleFollowingCard from "../../../components/social-media/followings";
 import { usePage } from "../../../hook/use-page";
+import { useCurrentUser } from "../../../hook/use-user";
+import { useRealation } from "../../../hook/use-relation";
+import Empty from "../../../components/social-media/Empty";
 
 const Followings = () => {
-  const { page } = usePage();
+  const { userSocialMediaInfos } = useRealation("followings"); // Liste des followings
+  const [searchTerm, setSearchTerm] = useState(""); // État pour le terme de recherche
+  const [filteredFollowings, setFilteredFollowings] = useState([]); // Suivis filtrés
+
+  let { page } = usePage();
+  if (page === "Followings") page = "Suivi(e)s";
+
+  // Filtrer les followings en fonction du nom
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredFollowings(userSocialMediaInfos);
+    } else {
+      const lowercasedSearchTerm = searchTerm.toLowerCase().trim();
+      const filtered = userSocialMediaInfos?.filter((following) => {
+        const fullName = `${following?.firstName || ""} ${
+          following?.lastName || ""
+        }`;
+        return fullName.toLowerCase().includes(lowercasedSearchTerm);
+      });
+      setFilteredFollowings(filtered);
+    }
+  }, [searchTerm, userSocialMediaInfos]);
+
   return (
     <Item variant="" sx={{ marginBottom: "20px" }}>
       <Stack
@@ -23,23 +46,20 @@ const Followings = () => {
             variant="text"
             sx={{ fontSize: "22px", fontWeight: "bold", color: "black" }}
           >
-            {page}
-            <span> (200) </span>
-            {/* <Chip
-              label={200}
-              variant="outlined"
-              sx={{ ml: "10px", padding: "0px", }}
-            /> */}
+            <span> {filteredFollowings?.length} </span> {page}
           </Typography>
           <span>
             Cette section vous présente les personnes que vous suivez.
           </span>
         </Stack>
 
+        {/* Champ de recherche */}
         <TextField
           variant="outlined"
-          placeholder="Recherche un following"
+          placeholder="Recherche  par nom"
           label={<PersonSearchTwoToneIcon />}
+          value={searchTerm} // Valeur liée à l'état
+          onChange={(e) => setSearchTerm(e.target.value)} // Mise à jour de l'état à chaque changement
           sx={{
             width: "25%",
             height: "50px",
@@ -48,43 +68,23 @@ const Followings = () => {
           }}
         />
       </Stack>
+
       <Divider sx={{ mr: "-40px", ml: "-40px", mt: "20px", mb: "20px" }} />
 
       <Box sx={{ flexGrow: 1, mt: "25px" }}>
         <Grid container spacing={3}>
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>{" "}
-          <Grid item lg={3} md={4} xs={12}>
-            <SingleFollowingCard />
-          </Grid>
+          {/* Affichage des followings filtrés */}
+
+          <>
+            {filteredFollowings.map((following) => (
+              <Grid key={following?._id} item lg={3} md={4} xs={12}>
+                <SingleFollowingCard following={following} />
+              </Grid>
+            ))}
+          </>
+          {filteredFollowings.length === 0 && (
+            <Empty label={"Aucune relation trouvée."} />
+          )}
         </Grid>
       </Box>
     </Item>

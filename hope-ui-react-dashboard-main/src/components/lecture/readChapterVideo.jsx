@@ -116,11 +116,11 @@ const ReadChapterVideo = () => {
     }
   };
   const moveBack = () => {
-    navigate(`/course/${courseID}/chapter/${extObject.prev}`);
+    navigate(`/training/${courseID}/chapter/${extObject.prev}`);
     navigate(0);
   };
   const moveForward = () => {
-    navigate(`/course/${courseID}/chapter/${extObject.next}`);
+    navigate(`/training/${courseID}/chapter/${extObject.next}`);
     if (entity == "Student") {
       handleProgress();
     }
@@ -138,9 +138,9 @@ const ReadChapterVideo = () => {
         <div className="item">
           <Iframe style={style} src={chapter.video} />
         </div>
-        {extObject?.length != 1 && extObject?.next != "last" ? (
+        {extObject?.length !== 1 && extObject?.next !== "last" ? (
           <Row className="gx-2 p-3 ">
-            {extObject && extObject.prev != "first" && (
+            {extObject && extObject.prev !== "first" && (
               <Col
                 style={{
                   display: "flex",

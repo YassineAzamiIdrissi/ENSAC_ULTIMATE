@@ -30,7 +30,7 @@ const ListItemCard = ({ courses, trainingId }) => {
       {courses.map((ch, i) => (
         <Nav.Link
           onClick={() => {
-            navigate(`/course/${trainingId}/chapter/${ch._id}`);
+            navigate(`/training/${trainingId}/chapter/${ch._id}`);
             navigate(0);
           }}
           key={ch._id}

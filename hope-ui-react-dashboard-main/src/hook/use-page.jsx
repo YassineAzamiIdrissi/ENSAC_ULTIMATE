@@ -10,6 +10,9 @@ export const usePage = () => {
   // if (page === "followings") page = "Suivi(e)s";
   // if (page === "explore") page = "Explorer";
   // if (page === "posts") page = "Profile";
+  if (page === "Posts") page = "Tous les posts";
+  if (page === "Followings") page = "Mes suivis";
+  if (page === "Followers") page = "Mes abonnés";
 
   return {
     page,

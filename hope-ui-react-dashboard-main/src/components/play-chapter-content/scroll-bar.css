@@ -1,0 +1,27 @@
+/* Styles pour les barres de défilement dans les navigateurs Webkit (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  /* width: 3px; Largeur de la barre de défilement */
+  display: none;
+}
+/* 
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; Couleur de l'arrière-plan de la piste de défilement
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ccc;  Couleur de la barre de défilement 
+  border-radius: 25px; Coins arrondis pour la barre de défilement
+  display: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #888; Couleur de la barre de défilement au survol
+  display: none;
+} */
+
+/* Styles pour les barres de défilement dans Firefox */
+.custom-scrollbar {
+  scrollbar-width: none; /* Barre de défilement fine */
+  /* scrollbar-width: thin; Barre de défilement fine */
+  scrollbar-color: #ccc transparent; /* Couleur de la barre de défilement et de la piste */
+}

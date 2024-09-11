@@ -36,7 +36,7 @@ const ChaptersList = ({ training, task, className, chapterId }) => {
   };
 
   const handleReadChapter = (chapterId) => {
-    navigate(`/course/${training?._id}/chapter/${chapterId}`);
+    navigate(`/training/${training?._id}/chapter/${chapterId}`);
   };
   return (
     <div

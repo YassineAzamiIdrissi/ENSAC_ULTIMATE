@@ -13,14 +13,22 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Item } from "../NewCard";
-import {  PersonAdd, TravelExplore } from "@mui/icons-material";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { PersonAdd, TravelExplore } from "@mui/icons-material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import AvatarPh from "../../../profile/profile-user.png";
-import GroupTwoToneIcon from "@mui/icons-material/GroupTwoTone";
 import GroupAddTwoToneIcon from "@mui/icons-material/GroupAddTwoTone";
-const SingleFollowerCard = () => {
+import ReplyAllTwoToneIcon from "@mui/icons-material/ReplyAllTwoTone";
+import { useNavigate } from "react-router-dom";
+import { useFollow, useRealation } from "../../../hook/use-relation";
+
+const SingleFollowerCard = ({ follower }) => {
+  const { handleFollow } = useFollow(follower?._id, follower?.entity);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const router = useNavigate();
+  const onNavigate = () => {
+    router(`/social-profile/${follower?._id}/${follower?.entity}/Profile`);
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,8 +37,6 @@ const SingleFollowerCard = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  /** background: "#E8F3FC",
-color="#2196F3" */
 
   return (
     <Item
@@ -40,7 +46,6 @@ color="#2196F3" */
         border: "1.5px solid #EDF1F6",
         padding: "15px",
         "&:hover": {
-          // border: "1px solid #1992F3",
           outline: "2px solid #1992F3",
         },
       }}
@@ -49,16 +54,25 @@ color="#2196F3" */
         direction={"row"}
         sx={{ display: "flex", justifyContent: "space-between", mb: "15px" }}
       >
-        <Stack direction={"row"} gap={2}>
-          <Avatar src={AvatarPh} />
+        <Stack
+          direction={"row"}
+          gap={2}
+          onClick={onNavigate}
+          sx={{
+            cursor: "pointer",
+            transition: "all 0.3s ease-in-out",
+            "&:hover": { color: "#1992F3", transform: "scale(1.1)" },
+          }}
+        >
+          <Avatar src={follower?.profilePicture || AvatarPh} />
           <Stack
             direction={"column"}
             sx={{ display: "flex", justifyContent: "start" }}
           >
             <Typography fontWeight={"bold"} fontSize={12}>
-              John Doe
+              {follower?.firstName} {follower?.lastName}
             </Typography>
-            <Typography fontSize={12}>Etudiant</Typography>
+            <Typography fontSize={12}>{follower?.entity}</Typography>
           </Stack>
         </Stack>
 
@@ -113,7 +127,7 @@ color="#2196F3" */
               Suivre
             </MenuItem>
 
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={onNavigate}>
               <ListItemIcon>
                 <TravelExplore fontSize="small" />
               </ListItemIcon>
@@ -122,6 +136,7 @@ color="#2196F3" */
           </Menu>
         </div>
       </Stack>
+
       <Button
         variant=""
         sx={{
@@ -139,6 +154,7 @@ color="#2196F3" */
             border: "2px solid #1992F3",
           },
         }}
+        onClick={handleFollow}
       >
         <GroupAddTwoToneIcon />
         <Typography>Suivre</Typography>

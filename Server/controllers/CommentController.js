@@ -45,7 +45,9 @@ exports.createComment = async (req, res, next) => {
 exports.readAllCommentsOnChap = async (req, res, next) => {
   const { chapId } = req.params;
   try {
-    const allComments = await Comment.find({ elementId: chapId });
+    const allComments = await Comment.find({ elementId: chapId }).sort({
+      _id: -1,
+    }); // Tri décroissant;
     let effectiveComments = [];
     for (let i = 0; i < allComments.length; ++i) {
       let concernedStudent;
@@ -61,6 +63,7 @@ exports.readAllCommentsOnChap = async (req, res, next) => {
           concernedStudent.firstName + " " + concernedStudent.lastName,
         content: allComments[i].content,
         rating: allComments[i].rating,
+        // nbComments: allComments.length,
       });
     }
     res.status(201).json(effectiveComments);

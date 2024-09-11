@@ -80,10 +80,10 @@ const Navbar = () => {
                   Nos formations
                 </Link>
                 <Link
-                  to="/social-profile/userID/Profile"
+                  to={`/social-profile/Posts`}
                   className={`${classes.nav_link}`}
                 >
-                  Ensaf Media
+                  Réseau ENSAF
                 </Link>
 
                 {/* <Link to="/blog" className={`${classes.nav_link}`}>

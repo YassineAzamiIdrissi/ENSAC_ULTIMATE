@@ -11,18 +11,18 @@ import PersonPinTwoToneIcon from "@mui/icons-material/PersonPinTwoTone";
 import PostAddTwoToneIcon from "@mui/icons-material/PostAddTwoTone";
 
 export const menuSocialMediaItems = [
-  {
-    label: "Profile",
-    icon: <PersonPinTwoToneIcon />, // Remplace par l'icône souhaitée
-    path: "1/Profile",
-    sx: {
-      color: "black",
-      fontWeight: "semi-bold",
-      textTransform: "none",
-      borderBottom: "2px solid #1B96F3",
-      borderRadius: "0px",
-    },
-  },
+  // {
+  //   label: "Profile",
+  //   icon: <PersonPinTwoToneIcon />, // Remplace par l'icône souhaitée
+  //   path: "1/Profile",
+  //   sx: {
+  //     color: "black",
+  //     fontWeight: "semi-bold",
+  //     textTransform: "none",
+  //     borderBottom: "2px solid #1B96F3",
+  //     borderRadius: "0px",
+  //   },
+  // },
   {
     label: "Followers",
     icon: <PeopleAltTwoToneIcon />, // Remplace par l'icône souhaitée

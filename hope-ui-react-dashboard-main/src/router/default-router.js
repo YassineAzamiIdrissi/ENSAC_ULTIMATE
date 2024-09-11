@@ -72,6 +72,8 @@ import UserProfilePosts from "../page/social-media-pages/posts/PostsByUser";
 import Followers from "../page/social-media-pages/followers/Followers";
 import Followings from "../page/social-media-pages/followings/Followings";
 import AllPosts from "../page/social-media-pages/posts/AllPosts";
+import ChapterLayout from "../page/play-chapter-content/Display-chapter-content-layout";
+import Play from "../page/play-chapter-content/play";
 
 export const DefaultRouter = [
   {
@@ -315,6 +317,36 @@ export const DefaultRouter = [
   },
 ];
 
+export const EnsafSocialMedia = [
+  {
+    path: "/social-profile",
+
+    element: (
+      <UserProvider>
+        <HomePage />
+      </UserProvider>
+    ),
+    // loader: rootLoader,
+    children: [
+      {
+        path: "/social-profile/:userID/:userEntity/Profile",
+        element: <UserProfilePosts />,
+      },
+      {
+        path: "/social-profile/Followers",
+        element: <Followers />,
+      },
+      {
+        path: "/social-profile/Followings",
+        element: <Followings />,
+      },
+      {
+        path: "/social-profile/posts",
+        element: <AllPosts />,
+      },
+    ],
+  },
+];
 export const ViewChaptersRouter = [
   {
     path: "/course/:courseID",
@@ -332,27 +364,20 @@ export const ViewChaptersRouter = [
   },
 ];
 
-export const EnsafSocialMedia = [
+export const DisplayTraining = [
   {
-    path: "/social-profile",
-    element: <HomePage />,
-    // loader: rootLoader,
+    // Display training content
+    path: "/training/:trainingID",
+
+    element: (
+      <UserProvider>
+        <ChapterLayout />
+      </UserProvider>
+    ),
     children: [
       {
-        path: "/social-profile/:userID/Profile",
-        element: <UserProfilePosts />,
-      },
-      {
-        path: "/social-profile/Followers",
-        element: <Followers />,
-      },
-      {
-        path: "/social-profile/Followings",
-        element: <Followings />,
-      },
-      {
-        path: "/social-profile/posts",
-        element: <AllPosts />,
+        path: "chapter/:chapterID",
+        element: <Play />,
       },
     ],
   },

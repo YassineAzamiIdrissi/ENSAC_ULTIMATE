@@ -2,6 +2,57 @@ const PostComment = require("../models/AppSchemas/PostComment");
 const Post = require("../models/AppSchemas/Post");
 const HttpError = require("../models/HttpError/ErrorModel");
 
+exports.createPostComment = async (req, res, next) => {
+  const { postId, content, userId, userName, picture } = req.body;
+
+  // Validation pour s'assurer que toutes les données sont présentes
+  if (!postId || !content || !userId || !userName) {
+    return next(
+      new HttpError(
+        "Tous les champs obligatoires doivent être fournis pour créer un commentaire.",
+        400
+      )
+    );
+  }
+
+  try {
+    // Création du commentaire
+    const newComment = new PostComment({
+      postId,
+      content,
+      userId,
+      userName,
+      picture,
+    });
+
+    // Sauvegarde du commentaire dans la base de données
+    await newComment.save();
+
+    // Trouver le post associé et ajouter le commentaire à sa liste de commentaires
+    const concernedPost = await Post.findById(postId);
+    if (!concernedPost) {
+      return next(
+        new HttpError("Tentative de commenter un post inexistant.", 404)
+      );
+    }
+
+    concernedPost.comments.push(newComment._id);
+    await concernedPost.save();
+
+    res
+      .status(201)
+      .json({ message: "Commentaire créé avec succès !", newComment });
+  } catch (err) {
+    console.error(err);
+    return next(
+      new HttpError(
+        "Une erreur est survenue lors de la création du commentaire.",
+        500
+      )
+    );
+  }
+};
+
 exports.deleteComment = async (req, res, next) => {
   const { id, entity } = req.user;
   const { commentId } = req.params;
@@ -33,6 +84,7 @@ exports.deleteComment = async (req, res, next) => {
     );
   }
 };
+
 exports.updateComment = async (req, res, next) => {
   const { id, entity } = req.user;
   const { commentId } = req.params;

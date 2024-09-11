@@ -77,3 +77,35 @@ exports.unfollowUser = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
+
+// Get the followings and followers of the user
+
+exports.getFollowingsOrFollowingsDetails = async (req, res, next) => {
+  const { idsAndEntities } = req.body; // Liste d'IDs des followings
+
+  try {
+    const users = await Promise.all(
+      idsAndEntities.map(async (singleUser) => {
+        const [id, entity] = singleUser.split(" "); // Extraire l'ID et l'entité
+        const userEntity = entity.toLowerCase();
+        const UserEntities = {
+          professor: Professor,
+          student: Student,
+          admin: Admin,
+        };
+        const User = UserEntities[userEntity];
+
+        const user = await User.findById(id).select("-password");
+
+        // Ajouter l'entité dans les informations de l'utilisateur
+        return { ...user?._doc, entity };
+      })
+    );
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+    return next(
+      new HttpError("Erreur pendant de la récupération des followings", 500)
+    );
+  }
+};

@@ -389,3 +389,19 @@ exports.getLastChapterId = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
+
+exports.getTrainingsByProfessorId = async (req, res, next) => {
+  const { professorId } = req.params; // On récupère l'ID du professeur à partir des paramètres de la requête
+
+  try {
+    const trainings = await Training.find({ providerProf: professorId });
+
+    if (!trainings.length) {
+      return next(new HttpError("Aucune formation trouvée pour ce professeur.", 404));
+    }
+
+    res.status(200).json(trainings);
+  } catch (err) {
+    return next(new HttpError("Erreur lors de la récupération des formations.", 500));
+  }
+};

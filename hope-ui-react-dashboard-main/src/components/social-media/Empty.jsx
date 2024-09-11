@@ -1,12 +1,37 @@
 import React from "react";
 import EmptySvg from "../../profile/empty-scg.gif";
+import Lottie from "react-lottie";
+import { Box, Typography } from "@mui/material";
+import EmptySVG from "../../assets/empty-animation.json";
 
-const Empty = () => {
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: EmptySVG,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
+const Empty = ({ label }) => {
   return (
-    <div style={{ textAlign: "center" }}>
-      <img src={EmptySvg} alt="" style={{ width: "60px", height: "60px" }} />
-      <h1 style={{ color: "gray" }}>Aucune entité trouvée ...</h1>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "30px",
+        width: "100%",
+      }}
+    >
+      <Lottie
+        options={defaultOptions}
+        width={"200px"}
+        height={"200px"}
+        // animationData={Empty}
+      />
+      <Typography variant="h6">{label}</Typography>
+    </Box>
   );
 };
 

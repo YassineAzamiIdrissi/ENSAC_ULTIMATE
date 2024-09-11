@@ -45,6 +45,13 @@ exports.getChapter = async (req, res, next) => {
   const chapterId = req.params.chapterId;
   try {
     const concernedChapter = await Chapter.findById(chapterId);
+
+    // Incrémenter le nombre de vues
+    //Apres débugage, je me rends compte que pour chaque appelle,
+    // la fonction est exécutée 4 fois: 4x0.25 = 1 view
+    concernedChapter.views += 0.25;
+    await concernedChapter.save();
+
     res.status(201).json(concernedChapter);
   } catch (err) {
     return next(new HttpError());

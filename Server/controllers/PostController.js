@@ -8,33 +8,36 @@ const PostReaction = require("../models/AppSchemas/PostReaction");
 const { connections } = require("mongoose");
 
 exports.addNewPost = async (req, res, next) => {
-  const { caption, picture } = req.body;
-  const { id, entity } = req.user;
-  try {
-    let concernedUser;
-    let userName;
-    const UserEntities = {
-      professor: Professor,
-      student: Student,
-      admin: Admin,
-    };
-    const User = UserEntities[entity];
+  const { caption, picture, userId, userName, entity } = req.body;
 
-    if (entity == "professor") {
-      concernedUser = await Professor.findById(id);
-      userName = concernedUser.firstName + " " + concernedUser.lastName;
-    } else if (entity == "student") {
-      concernedUser = await Student.findById(id);
-      userName = concernedUser.firstName + " " + concernedUser.lastName;
-    } else {
-      concernedUser = await Admin.findById(id);
-      userName = concernedUser.firstName + " " + concernedUser.lastName;
-    }
+  //Oublier le fonctionnement
+  // const { id, entity } = req.user;
+  try {
+    // let concernedUser;
+    // let userName;
+    // const UserEntities = {
+    //   professor: Professor,
+    //   student: Student,
+    //   admin: Admin,
+    // };
+    // const User = UserEntities[entity];
+
+    // if (entity == "professor") {
+    //   concernedUser = await Professor.findById(id);
+    //   userName = concernedUser.firstName + " " + concernedUser.lastName;
+    // } else if (entity == "student") {
+    //   concernedUser = await Student.findById(id);
+    //   userName = concernedUser.firstName + " " + concernedUser.lastName;
+    // } else {
+    //   concernedUser = await Admin.findById(id);
+    //   userName = concernedUser.firstName + " " + concernedUser.lastName;
+    // }
     const savedPost = await Post.create({
-      userId: id,
+      userId,
       userName,
       caption,
       picture,
+      userType: entity,
     });
     res.status(201).json(savedPost);
   } catch (err) {
@@ -103,10 +106,35 @@ exports.getAllMyPosts = async (req, res, next) => {
     );
   }
 };
-exports.getPostsOfUser = async (req, res, next) => {
-  const { userId } = req.user;
+exports.getAllPosts = async (req, res, next) => {
   try {
-    const allPosts = await Post.find({ userId });
+    // Récupérer tous les posts dans la collection "Post"
+    //trier dans l'ordre decroissant
+
+    const allPosts = await Post.find().sort({ createdAt: -1 });
+
+    // Vérifier si des posts existent
+    if (!allPosts || allPosts.length === 0) {
+      return res.status(404).json({ message: "Aucun post trouvé" });
+    }
+
+    // Renvoie de la liste des posts
+    res.status(200).json(allPosts);
+  } catch (err) {
+    console.log(err);
+    return next(
+      new HttpError(
+        "Une erreur est survenue à la tentative de récupérer les posts.",
+        500
+      )
+    );
+  }
+};
+
+exports.getPostsOfUser = async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const allPosts = await Post.find({ userId }).sort({ createdAt: -1 });
     res.status(200).json(allPosts);
   } catch (err) {
     console.log(err);

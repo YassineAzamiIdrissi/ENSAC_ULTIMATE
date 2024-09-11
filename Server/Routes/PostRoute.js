@@ -10,11 +10,14 @@ const {
   getTimeLine,
   commentPost,
   reactToPost,
+  getAllPosts,
 } = require("../controllers/PostController");
 
 router.get("/posts/:userId", getPostsOfUser);
+router.get("/allposts", getAllPosts);
 router.get("/myPosts", authorize, getAllMyPosts);
-router.post("/newPost", authorize, addNewPost);
+router.post("/newPost", addNewPost);
+// router.post("/newPost", authorize, addNewPost);
 router.put("/update/:postId", authorize, updatePost);
 router.delete("/post/:postId", authorize, deletePost);
 router.get("/timeline", authorize, getTimeLine);

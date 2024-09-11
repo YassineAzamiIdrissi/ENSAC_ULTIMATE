@@ -10,7 +10,7 @@ const LayoutSocial = () => {
     <>
       <NewBreadcrumbs page={page} />
       {/* user info card component */}
-      <UserInfoCard page={page} />
+      {page !== "Tous les posts" && <UserInfoCard page={page} />}
       {/* <UserProfile /> */}
     </>
   );

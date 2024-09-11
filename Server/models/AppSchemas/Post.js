@@ -9,6 +9,11 @@ const Post = new Schema(
       type: String,
       required: true,
     },
+    userType: {
+      // linked to UserEntity
+      type: String,
+      required: true,
+    },
     caption: {
       type: String,
       required: true,

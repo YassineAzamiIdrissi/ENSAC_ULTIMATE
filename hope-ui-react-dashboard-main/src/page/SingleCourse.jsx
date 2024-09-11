@@ -5,6 +5,7 @@ import {
   Box,
   Container,
   Grid,
+  Link,
   Tab,
   Tabs,
   Typography,
@@ -19,7 +20,7 @@ import CourseSidebar from "../components/courses/CourseSidebar";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { comCss } from "../components/ComponentsCss";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 const itemtabs = [
   "Introduction",
@@ -133,21 +134,35 @@ const SingleCourse = () => {
                                 key={index}
                                 className={classes.single_course_tabs_content}
                               >
-                                <Typography variant="h4">
-                                  <LockOutlinedIcon
-                                    className={classes.single_course_tabs_icon}
-                                  />
-                                  <Link
-                                    style={{
+                                <Link
+                                  href={`/training/${training._id}/chapter/${chapter._id}`}
+                                  sx={{
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    width: "100%",
+                                    p: "5px",
+                                    "&:hover": {
                                       textDecoration: "none",
+                                      background: "#F5F7FA",
                                       color: "inherit",
-                                    }}
-                                  >
+                                      borderRadius: "5px",
+                                    },
+                                  }}
+                                >
+                                  <Typography variant="h4">
+                                    <LockOutlinedIcon
+                                      className={
+                                        classes.single_course_tabs_icon
+                                      }
+                                    />
                                     {chapter.title}
-                                  </Link>
-                                  {/* Remplacer course par training */}
-                                </Typography>
-                                <Typography variant="h4">2m 24s</Typography>
+                                  </Typography>
+                                  <Typography variant="h4">2m 24s</Typography>
+                                </Link>
+                                {/* Remplacer course par training */}
                               </Box>
                             ))}
                           </AccordionDetails>

@@ -15,6 +15,7 @@ const {
   getAllChaptersFromTrainingId,
   getFirstChapFromTraining,
   getLastChapterId,
+  getTrainingsByProfessorId,
 } = require("../controllers/TrainingController");
 const authMiddleware = require("../middlewares/Authorize");
 router.post("/addTraining", authMiddleware, addTraining);
@@ -26,6 +27,7 @@ router.patch("/addToAcademyTraining/:academyId", addToAcademyTraining);
 router.patch("/freeTrainings/:academyId", freeTrainingsFromAcademy);
 router.delete("/deleteTraining/:trainingId", deleteTraining);
 router.put("/updateSpecTraining/:trainingId", updateTraining);
+router.get("/getTrainingsByProfessorId/:professorId", getTrainingsByProfessorId);
 router.get(
   "/getTrainingsForStudent",
   authMiddleware,

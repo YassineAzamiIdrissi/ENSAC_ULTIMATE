@@ -29,7 +29,7 @@ const Index = () => {
           className="mb-0"
           style={{ fontWeight: "bold", fontSize: "32px", textAlign: "center" }}
         >
-          Evaluation de compétences.
+          Evaluation Finale.
         </p>
       </div>
       <Row className="kanban-create-board">

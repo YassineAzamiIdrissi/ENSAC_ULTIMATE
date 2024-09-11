@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -17,34 +17,51 @@ import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import { Comment } from "@mui/icons-material";
 import CommentAndReplyCard from "./comment-reply-card";
 import DispalyPostCard from "./display-post-card";
+import axios from "axios";
 
-function CommentsAndRepliesDrawer() {
-  const [open, setOpen] = React.useState(false);
+function CommentsAndRepliesDrawer({
+  postId,
+  userId,
+  openDrawer,
+  toggleDrawer,
+  userName,
+  caption,
+  reactions,
+  comments,
+  userEntity,
+  picture,
+  updatedAt,
+}) {
 
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedImage(URL.createObjectURL(file));
+  //recuperer les commentaires de ce post
+  useEffect(() => {
+    const fetchComments = async () => {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/posts/allposts`
+        
+      )
     }
-  };
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
-
+    fetchComments();
+  }, [postId]);
   const DrawerList = (
     <Stack
       direction={"column"}
       sx={{ maxWidth: "550px", padding: "50px" }}
       role="presentation"
     >
-      {/* <CardHeader title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Harum alias rerum porro" /> */}
+      <DispalyPostCard
+        postId={postId}
+        userId={userId}
+        userName={userName}
+        caption={caption}
+        reactions={reactions}
+        userEntity={userEntity}
+        comments={comments}
+        picture={picture}
+        updatedAt={updatedAt}
+        noButton={true}
+      />
 
-      <DispalyPostCard type={"reactions"} />
-
-      {/* <Divider sx={{ mb: "10px" }} /> */}
       <Box
         sx={{
           ml: "25px",
@@ -53,11 +70,10 @@ function CommentsAndRepliesDrawer() {
           borderLeft: "3px solid #eef2f6",
         }}
       >
-        {/* <Empty /> */}
-        <CommentAndReplyCard />
-        <CommentAndReplyCard />
-        <CommentAndReplyCard />
-        <CommentAndReplyCard />
+        <CommentAndReplyCard Noentity={true} Notootip={true} />
+        <CommentAndReplyCard type={"reactions"} />
+        <CommentAndReplyCard type={"reactions"} />
+        <CommentAndReplyCard type={"reactions"} />
 
         <CommentAndReplyCard />
         <CommentAndReplyCard />
@@ -69,23 +85,9 @@ function CommentsAndRepliesDrawer() {
   );
 
   return (
-    <>
-      <Button
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          textTransform: "capitalize",
-          color: "black",
-        }}
-        startIcon={<Comment style={{ color: "#5B31AF" }} size={18} />}
-        onClick={toggleDrawer(true)}
-      >
-        <span>12 réactions</span>
-      </Button>
-      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
-    </>
+    <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>
+      {DrawerList}
+    </Drawer>
   );
 }
 
