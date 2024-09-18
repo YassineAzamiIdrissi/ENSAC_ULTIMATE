@@ -7,7 +7,6 @@ const testimonalSchema = new Schema(
     },
     personImg: {
       type: String,
-      required: true,
     },
     personPos: {
       type: String,

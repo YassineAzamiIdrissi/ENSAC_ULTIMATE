@@ -26,6 +26,7 @@ const postRoute = require("./Routes/PostRoute");
 const generalRoute = require("./Routes/GeneralRoute");
 const commentReplyRoute = require("./Routes/CommentReplyRoute");
 const postCommentRoute = require("./Routes/PostCommentRoute");
+const testimonialRoute = require("./Routes/TestimonialRoute");
 // --------------------------------------------------------
 const app = express();
 app.use(express.json({ extended: true }));
@@ -52,6 +53,7 @@ app.use("/api/posts", postRoute);
 app.use("/api/generals", generalRoute);
 app.use("/api/commentReplies", commentReplyRoute);
 app.use("/api/postComments", postCommentRoute);
+app.use("/api/testimonials", testimonialRoute);
 //----- logique socket :
 const server = http.createServer(app);
 const io = new Server(server, {
